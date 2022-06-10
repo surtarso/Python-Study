@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # chama a views.py lista_eventos
     path('agenda/', views.lista_eventos),
+    path('agenda/evento/', views.evento),
+    path('agenda/evento/submit', views.submit_evento),
     # redireciona do root para /agenda
     path('', RedirectView.as_view(url='/agenda/')),
     # redirect para login
