@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!--injecao de header pelo model-header-->
 <head>
     {% include "model-header.html" %}
 </head>
 
+<!--injecao de body pela agenda.html-->
 <body>
     {% block content %} {% endblock %}
+<!--    injecao de footer pelo model-footer-->
     {% include "model-footer.html" %}
 </body>
 </html>

@@ -3,8 +3,14 @@ from core.models import Evento
 
 # Register your models here.
 
-class EventoAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'data_evento', 'data_criacao')
-    list_filter = ('usuario', 'data_evento',) ## add filtro lateral
+#classe para representar os eventos de admin
 
+
+class EventoAdmin(admin.ModelAdmin):
+    #lista eventos por nome/data
+    list_display = ('titulo', 'data_evento', 'data_criacao')
+    list_filter = ('usuario', 'data_evento',)   ## add filtro lateral
+
+
+#registra models.py[Eventos] e self EventoAdmin
 admin.site.register(Evento, EventoAdmin)
