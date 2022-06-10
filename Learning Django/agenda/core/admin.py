@@ -8,7 +8,7 @@ from core.models import Evento
 
 class EventoAdmin(admin.ModelAdmin):
     #lista eventos por nome/data
-    list_display = ('titulo', 'data_evento', 'data_criacao')
+    list_display = ('id', 'titulo', 'data_evento', 'data_criacao')
     list_filter = ('usuario', 'data_evento',)   ## add filtro lateral
 
 
