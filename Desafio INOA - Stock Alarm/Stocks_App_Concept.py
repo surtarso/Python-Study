@@ -3,6 +3,7 @@ This App will check the current price of a stock on a period and alarm
 the user by e-mail(wip) with buy and sell operations based on user's 
 set min/max price for a certain period. It will also display stock price
 history with a period set by the user.
+SET IS_DEBUG TO FALSE FOR REAL LIFE USAGE!
 Tarso Galvão - 12/06/2022
 """
 
@@ -45,15 +46,14 @@ if pesquisar == "s" or pesquisar == "S":
 #mostra recomendacao de compra/venda
 pesquisar = input("Gostaria de ver recomendacoes de compra/venda? s/n: ")
 if pesquisar == "s" or pesquisar == "S":
-    print("Recomendações:")
-    print(ticker.recommendations)
+    print("Recomendações:\n",ticker.recommendations)
 
 print("\nUltimo fechamento:",round(data['Close'].iloc[-1], 2))
 ##--recebe valores de compra e venda
 price_min = float(input("\nvalor de compra: "))
 price_max = float(input("valor de venda: "))
 # error handling:
-while price_min > price_max or price_max == price_min:
+while price_min >= price_max:
     print("Valor da compra tem que ser maior que o valor da venda!\n")
     price_min = float(input("valor de compra: "))
     price_max = float(input("valor de venda: "))
