@@ -17,15 +17,19 @@ StockPicker
 <div class="container">
 <h1>Live Stock Tracker</h1>
 <p>Select your favorite stocks.</p>
-<form action="">
+<form action="/stocktracker">
 <label for="stockpicker">Select Stocks</label>
 <select class="form-select form-select-lg mb-3" multiple aria-label="multiple select example" name="stockpicker">
     {% for i in stockpicker %}
     <option value="{{i}}">{{i}}</option>
     {% endfor %}
+</select><br>
+<div class="d-grid gap-2">
+    <input class="btn btn-primary " type="submit" value="Submit">
+</div>
 </form>
 </div>
-</select>
+
 {% endblock %}
 
 
