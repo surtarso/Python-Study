@@ -6,4 +6,4 @@
   - Email on operation end (w.i.p.)
 
 ## Objective:
-  - Tranlate this concept to Django
+  - Translate this concept to Django
