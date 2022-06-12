@@ -1,4 +1,6 @@
-## Stocks App concept idea:
+# Stocks Alarm
+
+## Stocks Alarm concept idea:
   - Search stock prices (any period)
   - Set price check period and full operation period
   - Set alarm for min/max price targets
