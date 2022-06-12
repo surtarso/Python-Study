@@ -140,12 +140,17 @@ def userProfile(request, pk):
 ##----------------------------------------------------CREATE ROOM:
 @login_required(login_url='login')
 def createRoom(request):
+    #get class reference
     form = RoomForm()
-
-    if request.method == 'POST':
+    #standard form on the POST method
+    if request.method == 'POST':  #get that data
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            #create an instance of a room
+            room = form.save(commit=False)
+            #a host will be added based on whos logged in
+            room.host = request.user  #set the host
+            room.save()  #save it
             return redirect('home')
 
     contexto = {'form':form}
