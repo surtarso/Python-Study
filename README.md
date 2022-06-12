@@ -3,7 +3,7 @@ Python studies and projects
 
 ## Useful commands:
 - python -m venv dev_env
-  - creates a virtual enviroment on DevEnv folder
+  - creates a virtual enviroment on dev_env folder
 - source dev_env/bin/activate
   - activates the enviroment
 - django-admin startproject ProjectName && cd ProjectName
