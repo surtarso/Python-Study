@@ -55,14 +55,14 @@ def stockTracker(request):
 
     for thread in thread_list:
         thread.join()
-    
+    #update value
     while not que.empty():
         result = que.get()
         data.update(result)
-
+    #time taken for GET operation
     end = time()
     time_taken = end - start
     print(time_taken)
-    
+    #prints data and send to the browser
     print(data)
     return render(request, 'mainapp/stocktracker.html', {'data': data})

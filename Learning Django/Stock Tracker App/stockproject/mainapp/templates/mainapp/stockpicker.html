@@ -8,24 +8,25 @@ StockPicker
 
 
 {% block css %}
-<styless>
-</styles>
+<style>
+</style>
 {% endblock %}
 
 
 {% block body %}
 <div class="container">
-<h1>Live Stock Tracker</h1>
-<p>Select your favorite stocks.</p>
+<h1>Busca de Ativos - Ibovespa</h1>
 <form action="/stocktracker">
-<label for="stockpicker">Select Stocks</label>
+<label for="stockpicker">Selecione o(s) ativo(s)</label>
+
 <select class="form-select form-select-lg mb-3" multiple aria-label="multiple select example" name="stockpicker">
     {% for i in stockpicker %}
     <option value="{{i}}">{{i}}</option>
     {% endfor %}
 </select><br>
+
 <div class="d-grid gap-2">
-    <input class="btn btn-primary " type="submit" value="Submit">
+    <input class="btn btn-primary " type="submit" value="Pesquisar">
 </div>
 </form>
 </div>

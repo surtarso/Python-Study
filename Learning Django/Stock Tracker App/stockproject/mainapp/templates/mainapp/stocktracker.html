@@ -10,12 +10,8 @@ StockTracker
 
 {% block css %}
 <style>
-  .red{
-    color: red;
-  }
-  .green{
-    color: green;
-  }
+  .red { color: red; }
+  .green { color: green; }
 </style>
 {% endblock %}
 
@@ -25,6 +21,7 @@ StockTracker
 <h1>Live Stock Tracker</h1>
 <table class="table-container">
 <table class="table">
+
     <thead>
       <tr>
         <th scope="col">SNo.</th>
@@ -37,6 +34,7 @@ StockTracker
         <th scope="col">Volume</th>
       </tr>
     </thead>
+
     <tbody>
       {% for key, value in data.items %}
       <tr>
@@ -46,6 +44,7 @@ StockTracker
         <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:2 }}</td>
         <td>{{ value|get:"Open" }}</td>
         <td id="{{key}}_change">
+          
           <script>
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
@@ -59,12 +58,14 @@ StockTracker
             }
             document.getElementById("{{key}}_change").innerHTML = change;
           </script>
+
         </td>
         <td>{{ value|get:"Market Cap" }}</td>
         <td>{{ value|get:"Volume" }}</td>
       </tr>
       {% endfor %}
     </tbody>
+
 </table>
 </table>
 </div>
