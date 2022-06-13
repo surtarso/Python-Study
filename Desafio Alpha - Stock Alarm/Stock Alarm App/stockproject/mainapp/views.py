@@ -2,7 +2,7 @@ from django.shortcuts import render
 #multithreading
 import queue
 from threading import Thread
-from time import time
+from time import time, sleep
 #error handling
 from django.http import HttpResponse
 #stocks info
@@ -80,25 +80,58 @@ def stockTracker(request):
 
 
 
-##-------------------------------is this a view?!?
-def iniciaOperacao(request):
-    print("passei por aqui...")
-    useremail = request.GET.get('user_email')
-    ativo = request.GET.get('ABEV3')
-    compra = request.GET.get('preco_compra')
-    venda = request.GET.get('preco_venda')
-    periodobusca = request.GET.get('periodo_busca')
-    tempoperacao = request.GET.get('tempo_operacao')
+##---------------------------------is this a view?!?--LOGICA ALERTA:
+# def iniciaOperacao(request):
+#     print("request de iniciaOperacao: ", request)
 
+#     #como recebo esses valores??
+#     papel_in = request.POST.get('ABEV3.SA') #testando...
+#     email_in = request.POST.get('user_email')
+#     price_min = request.POST.get('preco_compra')
+#     price_max = request.POST.get('preco_venda')
+#     periodo_in = request.POST.get('periodo_busca')
+#     dias_in = request.POST.get('tempo_operacao')
 
+#     IS_DEBUG = True  # false for real time
+#     DIA = 86400  # 1 dia em segundos
 
+#     # formata a busca inserida
+#     if IS_DEBUG:
+#         periodo = periodo_in  # mantem em segundos para debug
+#         dias = dias_in * 3  # mantem em um range aceitavel para debug
+#     else:
+#         periodo = periodo_in * 60  # formata o input para minutos
+#         dias = dias_in * DIA  # formata o input para dias
 
-    return render(request, '', {})
+#     ticker = yf.Ticker(papel_in.upper()+".SA") #formata para yahoo
 
+#     # cria nova lista de cotacoes
+#     cotacoes = []
 
+#     i = 0
+#     while i != dias:
+#         #pega preço atual do ticker
+#         cotacao = round(ticker.info['regularMarketPrice'], 2)
+#         #insere preço no inicio da tabela
+#         cotacoes.insert(0, cotacao)
 
+#         #PLACEHOLDER: adicionar sistema de email
+#         if cotacao >= price_max:
+#             print("\nPreço de VENDA atingido---> enviado para:", email_in)
+#         elif cotacao <= price_min:
+#             print("\nPreço de COMPRA atingido---> enviado para:", email_in)
+#         else:
+#             pass
+#         sleep(periodo)
+#         i += 1
 
+#     ## PLACEHOLDER: adicionar sistema de email
+#     print("Enviando para", email_in, ":\n--> Dias de operação com", papel_in.upper(), "excedidos, faça uma nova operação.\n")
+#     ## PLACEHOLDER: é para gerar uma tabela com esses valores
+#     print("Historico de", dias_in, "dia(s) de operação com", papel_in.upper(),":\n", cotacoes)
 
+#     ## I DONT WANT TO RENDER?? RETURN WHAT???
+#     return render(request, '', {})
 
 
 

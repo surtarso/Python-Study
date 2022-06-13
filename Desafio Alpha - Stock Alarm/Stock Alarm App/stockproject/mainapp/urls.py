@@ -8,4 +8,6 @@ urlpatterns = [
     path('stocktracker', views.stockTracker, name='stocktracker'),
 
     path('graph', views.configGraph, name='stockgraph'),
+
+    # path('alertoperation', views.iniciaOperacao, name='alertoperation'),
 ]

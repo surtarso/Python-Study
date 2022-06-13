@@ -1,7 +1,7 @@
 <div class="container">
     <h2>Configurar Alertas</h2>
 
-    <form>
+    <form method='POST' action="" > {% csrf_token %}
         {%comment%} CAIXA DE TEXTO DO EMAIL name="user_email" {%endcomment%}
         <div class="input-group mb-3">
             <span class="input-group-text" id="basic-addon1">@</span>
@@ -14,7 +14,7 @@
             <option selected>Escolha um ativo:</option>
 
             {% for key, value in data.items %}
-                <option name={{key}} value={{forloop.counter}}>{{ key }}</option>
+                <option name={{key}} type="text" value={{forloop.counter}}>{{ key }}</option>
             {% endfor %}
         </select>
 
