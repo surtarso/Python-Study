@@ -1,9 +1,13 @@
+from django.shortcuts import render
+#multithreading
+import queue
 from threading import Thread
 from time import time
+#error handling
 from django.http import HttpResponse
-from django.shortcuts import render
+#stocks info
 from yahoo_fin.stock_info import *
-import queue
+
 
 # Create your views here.
 
@@ -13,15 +17,18 @@ def stockPicker(request):
     stock_picker = tickers_ibovespa()
     print(stock_picker)
     return render(request, 'mainapp/stockpicker.html', {'stockpicker':stock_picker})
+    
 
 ## adds the table of stocks
+#recebe o submit ou do menu ou do searchbar
 def stockTracker(request):
-    #pega a lista do stockpicker
+    #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
     print(stockpicker)
+
     #cria um dicionario para os papeis escolhidos
     data = {}
-    #pega esses papeis do ibovespa
+    #checa com os papeis do ibovespa
     available_stocks = tickers_ibovespa()
 
     #errorcheck
@@ -31,7 +38,7 @@ def stockTracker(request):
         else:
             return HttpResponse("Ocorreu um erro.")
     
-    #test multithreading
+    #teste multithreading
     n_threads = len(stockpicker)
     thread_list = []
     que = queue.Queue()
@@ -59,7 +66,7 @@ def stockTracker(request):
     while not que.empty():
         result = que.get()
         data.update(result)
-    #time taken for GET operation
+    #time taken for get_quote_table() operations
     end = time()
     time_taken = end - start
     print(time_taken)

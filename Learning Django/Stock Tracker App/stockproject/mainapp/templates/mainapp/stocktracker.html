@@ -4,7 +4,7 @@
 
 {% block title %}
 {% load myfilters %}
-StockTracker
+StocksAlarm
 {% endblock %}
 
 
@@ -18,18 +18,18 @@ StockTracker
 
 {% block body %}
 <div class="container">
-<h1>Live Stock Tracker</h1>
+<h2>Ativo(s) selecionado(s)</h2>
 <table class="table-container">
 <table class="table">
 
     <thead>
       <tr>
-        <th scope="col">SNo.</th>
-        <th scope="col">Stock</th>
-        <th scope="col">Price</th>
-        <th scope="col">Previous Close</th>
-        <th scope="col">Open</th>
-        <th scope="col">Change</th>
+        <th scope="col">ID</th>
+        <th scope="col">Ativo</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Fechamento</th>
+        <th scope="col">Abertura</th>
+        <th scope="col">Intradia</th>
         <th scope="col">Market Cap</th>
         <th scope="col">Volume</th>
       </tr>
@@ -44,7 +44,7 @@ StockTracker
         <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:2 }}</td>
         <td>{{ value|get:"Open" }}</td>
         <td id="{{key}}_change">
-          
+
           <script>
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
@@ -69,6 +69,7 @@ StockTracker
 </table>
 </table>
 </div>
+{% include 'mainapp/config.html' %}
 {% endblock %}
 
 {% block js %}
