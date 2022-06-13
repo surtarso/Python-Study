@@ -1,53 +1,51 @@
 <div class="container">
     <h2>Configurar Alertas</h2>
 
+    <form>
+        {%comment%} CAIXA DE TEXTO DO EMAIL name="user_email" {%endcomment%}
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon1">@</span>
+            <input name="user_email" type="text" class="form-control" placeholder="E-mail para alertas" aria-label="email" aria-describedby="basic-addon1">
+        </div>
+        
 
-    {%comment%} CAIXA DE TEXTO DO EMAIL {%endcomment%}
-    <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">@</span>
-        <input type="text" class="form-control" placeholder="E-mail para alertas..." aria-label="seu@email.com" aria-describedby="basic-addon1">
-    </div>
-      
+        {%comment%} DROPDOWN DE ATIVOS name="papel_escolhido"{%endcomment%}
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Escolha um ativo:</option>
 
-    {%comment%} DROPDOWN DE ATIVOS {%endcomment%}
-    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
-        <option selected>Escolha um ativo:</option>
-
-        {% for key, value in data.items %}
-        <option value={{forloop.counter}}>{{ key }}</option>
-        {% endfor %}
-    </select>
-
-
-    {%comment%} CAIXA PRECO MIN MAX {%endcomment%}
-    <div class="input-group mb-3">
-        <span class="input-group-text">Compra</span>
-        <input type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
-        <span class="input-group-text">Venda</span>
-        <input type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
-    </div>
+            {% for key, value in data.items %}
+                <option name={{key}} value={{forloop.counter}}>{{ key }}</option>
+            {% endfor %}
+        </select>
 
 
-    {%comment%} CAIXA PERIODICIDADE {%endcomment%}
-    <div class="input-group mb-3">
-        <span class="input-group-text">Minutos entre buscas:</span>
-        <input type="text" class="form-control" placeholder="tempo entre cada pesquisa de preço" aria-label="tempo busca">
-        <span class="input-group-text">Dias de operação:</span>
-        <input type="text" class="form-control" placeholder="tempo total da operação" aria-label="tempo total">
-    </div>
+        {%comment%} CAIXA PRECO MIN MAX name="preco_compra" name="preco_venda"{%endcomment%}
+        <div class="input-group mb-3">
+            <span class="input-group-text">Compra</span>
+            <input name="preco_compra" type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
+            <span class="input-group-text">Venda</span>
+            <input name="preco_venda" type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
+        </div>
 
 
-    <div class="mb-3 form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar a operação.</label>
-    </div>
-    
+        {%comment%} CAIXA PERIODICIDADE name="periodo_busca" name="tempo_operacao"{%endcomment%}
+        <div class="input-group mb-3">
+            <span class="input-group-text">Minutos entre buscas:</span>
+            <input name="periodo_busca" type="text" class="form-control" placeholder="Intervalo entre cada pesquisa de preço" aria-label="tempo busca">
+            <span class="input-group-text">Dias de operação:</span>
+            <input name="tempo_operacao" type="text" class="form-control" placeholder="Tempo total da operação" aria-label="tempo total">
+        </div>
 
-    <button type="submit" class="btn btn-primary">Iniciar</button>
 
+        {%comment%} CHECKBOX {%endcomment%}
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+            <label class="form-check-label" for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar a operação.</label>
+        </div>
+        
 
-      
+        <button type="submit" class="btn btn-primary">Iniciar</button>
+    </form>
 
-    
 </div>
   

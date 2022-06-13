@@ -6,7 +6,11 @@ from time import time
 #error handling
 from django.http import HttpResponse
 #stocks info
-from yahoo_fin.stock_info import *
+from yahoo_fin.stock_info import *  #data for tables
+import yfinance as yf   #data for graphs
+#graphs
+import plotly.graph_objs as go
+
 
 
 # Create your views here.
@@ -24,7 +28,7 @@ def stockPicker(request):
 def stockTracker(request):
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
-    print(stockpicker)
+    print("request recebido em stockPicker:", stockpicker)
 
     #cria um dicionario para os papeis escolhidos
     data = {}
@@ -73,3 +77,64 @@ def stockTracker(request):
     #prints data and send to the browser
     print(data)
     return render(request, 'mainapp/stocktracker.html', {'data': data})
+
+
+
+##-------------------------------is this a view?!?
+def iniciaOperacao(request):
+    print("passei por aqui...")
+    useremail = request.GET.get('user_email')
+    ativo = request.GET.get('ABEV3')
+    compra = request.GET.get('preco_compra')
+    venda = request.GET.get('preco_venda')
+    periodobusca = request.GET.get('periodo_busca')
+    tempoperacao = request.GET.get('tempo_operacao')
+
+
+
+
+    return render(request, '', {})
+
+
+
+
+
+
+
+
+###-------------------------------------------GRAFICOS:
+def configGraph(request):
+    data = yf.Ticker("ITSA4.SA").history("max")
+
+    # ticker = request.GET.get("stockgraph")
+    # print("request recebido em configGraph:", ticker)
+    # data = yf.Ticker(ticker+".SA").history("max")
+
+    fig = go.Figure()
+
+    fig.add_trace(go.Candlestick(
+        x = data.index,
+        open = data['Open'],
+        high = data['High'],
+        low = data['Low'],
+        close = data['Close'],
+        name = 'market data'
+        ))
+
+    fig.update_xaxes(
+        rangeslider_visible=True,
+        rangeselector=dict(
+            buttons=list([
+                dict(count=1, label='1d', step='day', stepmode='backward'),
+                dict(count=7, label='1wk', step='day', stepmode='backward'),
+                dict(count=14, label='2wk', step='day', stepmode='backward'),
+                dict(count=1, label='1mo', step='month', stepmode='backward'),
+                dict(count=1, label='1y', step='year', stepmode='backward'),
+                dict(step='all')
+                ])
+        )
+    )
+
+    graph = fig.to_html(full_html=False, default_height=500, default_width=700)
+
+    return render(request, 'mainapp/graph.html', {'graph': graph})

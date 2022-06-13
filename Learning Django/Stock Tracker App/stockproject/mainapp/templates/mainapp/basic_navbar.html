@@ -30,9 +30,9 @@
           </li> {% endcomment %}
         </ul>
 
-        {% comment %} need to fix this search engine, value not passing {% endcomment %}
+        {% comment %} search engine {% endcomment %}
         <form class="d-flex" role="search" action="/stocktracker">
-          <input class="form-control me-2" type="search" placeholder="B3SA3" aria-label="Search" name="stockpicker">
+          <input onkeyup="this.value = this.value.toUpperCase();" class="form-control me-2" type="search" placeholder="B3SA3" aria-label="Search" name="stockpicker">
           <button class="btn btn-outline-success" type="submit">Procurar</button>
         </form>
 
