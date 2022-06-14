@@ -11,6 +11,6 @@
   - *graph_generation_tests.py*
     - graph generation with plotly and yfinance
 
-## Objective: (/Stock Alarm App)
-  - Translate this concept to Django
+## Objective: Translate this concept to Django
+
 
