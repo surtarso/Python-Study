@@ -1,4 +1,5 @@
-<h3>Browse Topics</h3>
+<h3>Busca por Tópicos</h3>
+<hr>
 <br><br>
 
 <div>
@@ -8,6 +9,6 @@
 
 {% for topic in topics %}
 <div>
-    <a href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
+    <a class="btn btn-secondary btn-sm" href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
 </div>
 {% endfor %}

@@ -1,10 +1,10 @@
-<h3>Recent Activity</h3>
+<h3>Atividade Recente</h3>
 <hr>
 {% for message in room_messages %}
     <div>
 
         <small>
-            <a href="{% url 'user-profile' message.user.id %}">
+            <a class="btn btn-secondary btn-sm" href="{% url 'user-profile' message.user.id %}">
                 @{{ message.user }}</a> ({{ message.created|timesince }} ago)
         </small>
 
@@ -13,7 +13,7 @@
         <p>{{ message }}</p>
 
         {% if request.user == message.user %}
-            <a href="{% url 'delete-message' message.id %}">Delete</a>
+            <a class="btn btn-danger btn-sm"href="{% url 'delete-message' message.id %}">Delete</a>
         {% endif %}
         <hr>
 
