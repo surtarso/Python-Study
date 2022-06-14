@@ -11,8 +11,8 @@ Python studies and projects
 - django-admin startapp AppName
   - creates the default files for a working empty web app
 - python manage.py migrate
-  - creates a (as default) sqlite db compability
+  - migrate models to the database
 - python manage.py makemigrations
   - queues new classes (models) to the database
-- python3 manage.py createsuperuser
+- python manage.py createsuperuser
   - creates admin user for admin panel
