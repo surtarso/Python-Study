@@ -1,0 +1,13 @@
+
+
+<iframe src="{% url 'graph' %}" class="container">  
+    
+    {% if graph %}
+
+        {{ graph|safe }}
+    {% else %}
+        <br><br>
+        <p>Nenhum ativo selecionado.</p>
+    {% endif %}
+
+</iframe>

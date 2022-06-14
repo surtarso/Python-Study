@@ -25,7 +25,7 @@ from .forms import RoomForm
 
 # Create your views here.
 
-## -----------------------------------------------------LOGIN:
+## --------------------------------------------------------LOGIN:
 def loginPage(request):
     page = 'login'
     # redirect logged in users to home page
@@ -227,9 +227,19 @@ def deleteMessage(request, pk):
 ## ------------------------------------------------------STOCK PICKER:
 @login_required(login_url='login')
 def stockPicker(request):
-    #popula a lista de mercado: (yahoo-fin docs)
-    stock_picker = tickers_ibovespa()
-    print(stock_picker)
+    #popula a lista de mercado pelo yahoo-fin
+    # stock_picker = tickers_ibovespa()
+    stock_picker = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
+            'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
+            'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
+            'CVCB3', 'CYRE3', 'ECOR3', 'EGIE3', 'ELET3', 'ELET6', 'EMBR3', 'ENBR3', 
+            'ENGI11', 'EQTL3', 'FLRY3', 'GGBR4', 'GNDI3', 'GOAU4', 'GOLL4', 'HAPV3', 
+            'HGTX3', 'HYPE3', 'IGTA3', 'IRBR3', 'ITSA4', 'ITUB4', 'JBSS3', 'KLBN11', 
+            'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
+            'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
+            'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
+            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']
+    # print(stock_picker)  #fonte da lista acima
     return render(request, 'mainapp/stockpicker.html', {'stockpicker':stock_picker})
 
 
@@ -245,8 +255,18 @@ def stockTracker(request):
 
     #cria um dicionario para os papeis escolhidos
     data = {}
-    #checa com os papeis do ibovespa
-    available_stocks = tickers_ibovespa()
+    #checa com os papeis do ibovespa (yahoo-fin)
+    # available_stocks = tickers_ibovespa()
+    available_stocks = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
+            'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
+            'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
+            'CVCB3', 'CYRE3', 'ECOR3', 'EGIE3', 'ELET3', 'ELET6', 'EMBR3', 'ENBR3', 
+            'ENGI11', 'EQTL3', 'FLRY3', 'GGBR4', 'GNDI3', 'GOAU4', 'GOLL4', 'HAPV3', 
+            'HGTX3', 'HYPE3', 'IGTA3', 'IRBR3', 'ITSA4', 'ITUB4', 'JBSS3', 'KLBN11', 
+            'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
+            'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
+            'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
+            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']
 
     #errorcheck
     for i in stockpicker:
@@ -329,6 +349,8 @@ def configGraph(request):
     graph = fig.to_html(full_html=False, default_height=500, default_width=700)
 
     return render(request, 'mainapp/graph.html', {'graph': graph})
+
+
 
 
 
