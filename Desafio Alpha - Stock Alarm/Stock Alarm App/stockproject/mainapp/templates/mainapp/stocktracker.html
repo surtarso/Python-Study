@@ -70,7 +70,16 @@ StocksAlarm
 </table>
 </div>
 {% include 'mainapp/config.html' %}
-{% include 'mainapp/graph.html' %}
+
+{% comment %} <div class="container">  
+  {% if graph %}
+      {{ graph|safe }}
+  {% else %}
+      <br><br>
+      <p>I should be a Graph, sorry... =((</p>
+  {% endif %}
+</div> {% endcomment %}
+
 {% endblock %}
 
 {% block js %}

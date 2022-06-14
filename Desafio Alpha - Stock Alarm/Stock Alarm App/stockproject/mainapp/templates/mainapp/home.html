@@ -1,0 +1,39 @@
+{% extends 'mainapp/basic.html' %}
+
+{% block body %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+        padding: 10px;
+    }
+    .topics_component{
+        background-color: whitesmoke;
+    }
+    .activity_component{
+        background-color: whitesmoke;
+    }
+</style>
+
+<div class="home-container">
+
+    <div class="topics_component">
+        {% include 'mainapp/topics_component.html' %}
+    </div>
+
+    <div>
+        <h3>Rooms</h3>
+        <h5>{{ room_count }} room(s) available</h5>
+        <a href="{% url 'create-room' %}">Create Room</a>
+        <br><br>
+        {% include 'mainapp/feed_component.html' %}
+    </div>
+
+    <div class="activity_component">
+        {% include 'mainapp/activity_component.html' %}
+    </div>
+
+</div>
+
+{% endblock %}
