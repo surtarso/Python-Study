@@ -1,1 +1,1 @@
-# StockAlarm
+# StockAlarm in Python / Django
