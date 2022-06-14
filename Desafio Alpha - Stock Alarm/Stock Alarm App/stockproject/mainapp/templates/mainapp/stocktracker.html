@@ -4,8 +4,8 @@
 
 {% block title %}
 {% load myfilters %}
-StocksAlarm
-{% endblock %}
+StocksAlarm - TRACKER
+{% endblock title %}
 
 
 {% block css %}
@@ -13,7 +13,7 @@ StocksAlarm
   .red { color: red; }
   .green { color: green; }
 </style>
-{% endblock %}
+{% endblock css %}
 
 
 {% block body %}
@@ -71,18 +71,14 @@ StocksAlarm
 </div>
 {% include 'mainapp/config.html' %}
 
-{% comment %} <div class="container">  
+<div class="container">  
   {% if graph %}
       {{ graph|safe }}
   {% else %}
       <br><br>
-      <p>I should be a Graph, sorry... =((</p>
+      <p>I should be a Graph, sorry... </p>
   {% endif %}
-</div> {% endcomment %}
 
-{% endblock %}
+</div>
 
-{% block js %}
-<script>
-</script>
-{% endblock %}
+{% endblock body %}

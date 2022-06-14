@@ -1,15 +1,17 @@
 {% extends 'mainapp/basic.html' %}
 
+
 {% block title %}
-StocksAlarm
+StocksAlarm - LOGIN
 {% endblock title %}
+
+
 
 {% block body %}
 
-
 {% if page == 'login' %}
     <br>
-    <div class="container">
+    <div class="container form-control">
         <form method="POST" action="">
             {% csrf_token %}
 
@@ -28,14 +30,15 @@ StocksAlarm
     
 {% else %}
     
-        <form class="container" style="padding: 20px" method="POST" action="">
+        <form class="container form-control" 
+                style="padding: 20px" method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Register" />
 
         </form>
 
-        <div class="container" style="padding: 20px">
+        <div class="container form-control" style="padding: 20px">
         <p>Already signed up?</p>
         <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
         </div>

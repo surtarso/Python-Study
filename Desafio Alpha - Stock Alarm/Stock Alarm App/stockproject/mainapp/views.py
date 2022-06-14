@@ -241,7 +241,7 @@ def stockPicker(request):
 def stockTracker(request):
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
-    print("request recebido em stockTracker:", stockpicker)
+    print("Request recebido em stockTracker:", stockpicker)
 
     #cria um dicionario para os papeis escolhidos
     data = {}

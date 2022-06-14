@@ -1,7 +1,7 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-StocksAlarm
+StocksAlarm - SALA
 {% endblock title %}
 
 {% block body %}
@@ -15,14 +15,14 @@ StocksAlarm
 </style>
 
 <div class="room-container">
-    <div>
+    <div class="container">
 
         <h1>{{room.name}}</h1>
 
         <p>{{ room.description }}</p>
 
         <div class="comment-wrapper">
-            <h3>Comments</h3>
+            <h3>Comentários</h3>
             <hr>
             {% for message in room_messages %}
             <div>
@@ -41,15 +41,15 @@ StocksAlarm
         <div class="comment-form">
             <form method="POST" action="">
                 {% csrf_token %}
-                <input type="text" name="body" placeholder="type here..." />
+                <input type="text" name="body" placeholder="mensagem..." />
             </form>
         </div>
         {% endif %}
 
     </div>
 
-    <div>
-        <h3>Participants</h3>
+    <div class="container">
+        <h3>Participantes</h3>
         <hr>
 
         {% for user in participants %}
@@ -60,4 +60,4 @@ StocksAlarm
     </div>
 
 </div>
-{% endblock %}
+{% endblock body %}

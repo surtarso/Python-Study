@@ -4,10 +4,10 @@
   
   <head>
     {% include 'mainapp/basic_head.html' %}
-    {% comment %} If I close this ">" line bellow it bugs the JS in stocktracker.html, donno why {% endcomment %}
-    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/css/basic.css' %}"
-    <style>{% block css %} {% endblock %}</style>
-    <title>{% block title %} {% endblock %}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{% static 'mainapp/css/basic.css' %}">
+    <style>{% block css %} {% endblock css %}</style>
+    <title>{% block title %} {% endblock title %}</title>
   </head>
 
   <body>
@@ -28,7 +28,7 @@
 
     {% block body %}
 
-    {% endblock %}
+    {% endblock body %}
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
   </body>
@@ -36,6 +36,6 @@
   <script>
   </script>
 
-  {% block js %} {% endblock %}
+  {% block js %} {% endblock js %}
 
 </html>

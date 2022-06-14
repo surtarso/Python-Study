@@ -2,7 +2,8 @@
     <h2>Configurar Alertas</h2>
     
     <div>
-        <button type="submit" class="btn btn-primary">Mostrar gráfico</button>
+        <button type="submit" 
+                class="btn btn-primary justify-content-md-end">Mostrar gráfico</button>
     </div>
     <div>
     <form method='POST'> {% csrf_token %}
@@ -28,25 +29,30 @@
         {%comment%} CAIXA PRECO MIN MAX name="preco_compra" name="preco_venda"{%endcomment%}
         <div class="input-group mb-3">
             <span class="input-group-text">Compra</span>
-            <input name="preco_compra" type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
+            <input name="preco_compra" type="text" 
+                class="form-control" placeholder="R$ 0.00" aria-label="R$">
             <span class="input-group-text">Venda</span>
-            <input name="preco_venda" type="text" class="form-control" placeholder="R$ 0.00" aria-label="R$">
+            <input name="preco_venda" type="text" 
+                class="form-control" placeholder="R$ 0.00" aria-label="R$">
         </div>
 
 
         {%comment%} CAIXA PERIODICIDADE name="periodo_busca" name="tempo_operacao"{%endcomment%}
         <div class="input-group mb-3">
             <span class="input-group-text">Minutos entre buscas:</span>
-            <input name="periodo_busca" type="text" class="form-control" placeholder="Intervalo entre cada pesquisa de preço" aria-label="tempo busca">
+            <input name="periodo_busca" type="text" 
+                class="form-control" placeholder="Intervalo entre cada pesquisa de preço" aria-label="tempo busca">
             <span class="input-group-text">Dias de operação:</span>
-            <input name="tempo_operacao" type="text" class="form-control" placeholder="Tempo total da operação" aria-label="tempo total">
+            <input name="tempo_operacao" type="text" 
+                class="form-control" placeholder="Tempo total da operação" aria-label="tempo total">
         </div>
 
 
         {%comment%} CHECKBOX {%endcomment%}
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar a operação.</label>
+            <label class="form-check-label" 
+                for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar a operação.</label>
         </div>
         
         <button type="submit" class="btn btn-primary">Iniciar</button>

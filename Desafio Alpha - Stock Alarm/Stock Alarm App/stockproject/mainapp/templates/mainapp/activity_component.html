@@ -8,12 +8,12 @@
                 @{{ message.user }}</a> ({{ message.created|timesince }} ago)
         </small>
 
-        <small>replied to "{{ message.room }}"</small>
+        <small>respondeu em "{{ message.room }}"</small>
 
         <p>{{ message }}</p>
 
         {% if request.user == message.user %}
-            <a class="btn btn-danger btn-sm"href="{% url 'delete-message' message.id %}">Delete</a>
+            <a class="btn btn-danger btn-sm"href="{% url 'delete-message' message.id %}">Apagar</a>
         {% endif %}
         <hr>
 

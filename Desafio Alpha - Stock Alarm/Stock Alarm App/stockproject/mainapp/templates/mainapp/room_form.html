@@ -1,9 +1,13 @@
 {% extends 'mainapp/basic.html' %}
 
+{% block title %}
+StocksAlarm - CRIAR
+{% endblock title %}
+
 {% block body %}
 
-<div>
-    <form method="POST" action=""> {% csrf_token %}
+<div class="container" style="margin-top: 20px">
+    <form class="form-control" method="POST" action=""> {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />
     </form>

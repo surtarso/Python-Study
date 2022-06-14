@@ -9,6 +9,9 @@
 
 {% for topic in topics %}
 <div>
-    <a class="btn btn-secondary btn-sm" href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
+    <a
+        style="margin: 3px"
+        class="btn btn-secondary btn-sm" 
+        href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
 </div>
 {% endfor %}

@@ -1,14 +1,21 @@
 {% extends 'mainapp/basic.html' %}
 
+
+{% block title %}
+StocksAlarm - DELETE
+{% endblock title %}
+
+
 {% block body %}
 
-    <form method="POST" action="">
+    <form class="container" method="POST" action="">
         {% csrf_token %}
-        <p>
-            Really DELETE "{{ obj }}"?
+        <p style="margin-top: 20px">
+            Realmente APAGAR "{{ obj }}"?
         </p>
         
-        <a href="{{ request.META.HTTP_REFERER }}">Back</a>
-        <input type="submit" value="Confirm" />
+        <a class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">voltar</a>
+        <input class="btn btn-danger" type="submit" value="Confirmar" />
     </form>
+
 {% endblock body %}
