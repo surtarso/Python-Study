@@ -1,10 +1,11 @@
 <div class="container">
     <h2>Configurar Alertas</h2>
-    
     <div>
-    <form class="form-control" method='POST'> {% csrf_token %}
 
-        {%comment%} DROPDOWN DE ATIVOS name="papel_escolhido"{%endcomment%}
+
+    <form class="form-control" action="alarm-ibov"> {% csrf_token %}
+
+        {%comment%} DROPDOWN DE ATIVOS {%endcomment%}
         <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
             <option selected>Escolha um ativo:</option>
 
@@ -48,13 +49,15 @@
         <div class="mb-3 form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1">
             <label class="form-check-label" 
-                for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar a operação.</label>
+                for="exampleCheck1">Entendo que receberei e-mails periódicos ao inciar esta operação.</label>
         </div>
 
         <button type="submit" class="btn btn-primary">Iniciar</button>
-        <button type="submit" class="btn btn-primary">Mostrar gráfico</button>
+        {% comment %} <button onclick="" class="btn btn-primary">Mostrar gráfico</button> {% endcomment %}
 
     </form>
+
+
 </div>
 </div>
   

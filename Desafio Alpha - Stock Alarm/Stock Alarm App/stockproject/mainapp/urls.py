@@ -39,5 +39,5 @@ urlpatterns = [
 
     ##WIP
     path('graph', views.configGraph, name='graph'),
-    # path('aleta', views.iniciaOperacao, name='alerta'),
+    path('alarm-ibov', views.iniciaOperacao, name='alarm-ibov'),
 ]
