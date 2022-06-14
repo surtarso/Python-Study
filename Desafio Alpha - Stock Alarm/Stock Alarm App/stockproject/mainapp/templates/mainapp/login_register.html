@@ -15,23 +15,23 @@ StocksAlarm - LOGIN
         <form method="POST" action="">
             {% csrf_token %}
 
-            <label>Username:</label>
+            <label>Nome:</label>
             <input type="text" name="username" placeholder="Enter username"/>
 
-            <label>Password:</label>
+            <label>Senha:</label>
             <input type="password" name="password" placeholder="Enter password"/>
 
 
-            <input type="submit" value="Login" />
+            <input type="submit" value="Entrar" />
         </form>
         <br>
-        <p>Didn't sign up yet?</p>
-        <a class="btn btn-primary" href="{% url 'register' %}">Sign up</a>
+        <p>Ainda não é registrado?</p>
+        <a class="btn btn-primary" href="{% url 'register' %}">Registrar</a>
     
 {% else %}
     
         <form class="container form-control" 
-                style="padding: 20px" method="POST" action="">
+                style="padding: 20px; margin-top: 20px" method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Register" />
@@ -39,8 +39,8 @@ StocksAlarm - LOGIN
         </form>
 
         <div class="container form-control" style="padding: 20px">
-        <p>Already signed up?</p>
-        <a class="btn btn-primary" href="{% url 'login' %}">Login</a>
+        <p>Já possui um registro?</p>
+        <a class="btn btn-primary" href="{% url 'login' %}">Entrar</a>
         </div>
     </div>
 {% endif %}
