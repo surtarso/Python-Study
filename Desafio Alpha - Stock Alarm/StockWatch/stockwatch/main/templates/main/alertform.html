@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% comment %}
+----------------------FORMULARIO PARA ALERTAS-------------------
+{% endcomment %}
+
+{% block body %}
+    <form method="POST" action="">
+        {% csrf_token %}
+
+        {{alert_form.as_p}}
+
+        <button type="submit", name="save">Iniciar</button>
+    </form>
+{% endblock body %}

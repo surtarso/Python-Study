@@ -3,11 +3,12 @@ from django.views.generic.base import RedirectView
 from django.urls import path
 from . import views
 
+
 urlpatterns = [
-    #favicon
+    # favicon
     path('favicon.ico', RedirectView.as_view(
         url=staticfiles_storage.url('main/images/favicon.ico'))),
     
-    #home
-    path('', views.home, name="home"),
+    # formulario para alertas
+    path('alert', views.alertForm, name="form_alert"),
 ]
