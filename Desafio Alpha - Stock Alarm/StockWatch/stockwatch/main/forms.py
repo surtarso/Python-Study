@@ -1,10 +1,10 @@
 from django import forms
 from yahoo_fin.stock_info import *
 from stockwatch.settings import DEBUG
-from .models import Ativo, Mercado
+from .models import Mercado
 
 """
-Este arquivo, e todas as suas funcoes e loops etc rodam no momento que o servidor inicia!
+CUIDADO! Este arquivo, e todas as suas funcoes e loops etc rodam no momento que o servidor inicia!
 """
 
 ##--------------------------------------------FORMULARIO PARA ALERTAS:
@@ -24,11 +24,11 @@ class AlertForm(forms.Form):
     ##----------USANDO A DATABASE:
     # pega o nome do mercado disponivel (por enquanto so 1)
     mercado_disponivel = Mercado.objects.get(name="Ibovespa")
-    # cria uma tupla de escolha
+    # cria uma tupla de escolha (por enquanto estatica)
     mercado_choices = [(mercado_disponivel.name, mercado_disponivel.name)]
 
 
-    ##--- baixa lista de arquivos e insere na database de ativos
+    ##--- baixa lista de ativos e insere na database de mercado
     ##--- para ser rodado apenas quando for necessario mexer na database
     ##--- se for rodado novamente vai duplicar a lista (add fix for this later!)
     # ativos_ibovespa = tickers_ibovespa()

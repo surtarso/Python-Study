@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
-from main.models import Mercado
+from main.models import *
 from .forms import AlertForm
 
 """
@@ -18,23 +18,23 @@ def alertForm(chamado):
 
         # checa se o formulario esta valido:
         if alertform.is_valid():
+            #cria um novo pedido
+            pedido = Pedido()
             # pega os dados e desencripta usando as variaveis de alertform
-            email = alertform.cleaned_data["email"]
-            mercado = alertform.cleaned_data["mercado"]
-            ativo = alertform.cleaned_data["ativo"]
-            precocompra = alertform.cleaned_data["precocompra"]
-            precovenda = alertform.cleaned_data["precovenda"]
-            periodo = alertform.cleaned_data["periodo"]
-            duracao = alertform.cleaned_data["duracao"]
-            checkbox = alertform.cleaned_data["checkbox"]
-            print("RECEBI:",email, mercado, ativo, precocompra, precovenda, periodo, duracao, checkbox)
+            pedido.email = alertform.cleaned_data["email"]
+            pedido.mercado = alertform.cleaned_data["mercado"]
+            pedido.ativo = alertform.cleaned_data["ativo"]
+            pedido.precocompra = alertform.cleaned_data["precocompra"]
+            pedido.precovenda = alertform.cleaned_data["precovenda"]
+            pedido.periodo = alertform.cleaned_data["periodo"]
+            pedido.duracao = alertform.cleaned_data["duracao"]
+            pedido.checkbox = alertform.cleaned_data["checkbox"]
+            
+            #salva o pedido
+            pedido.save()
 
-            # # manda processar??
-            # pedido = Mercado
-            # # salva os dados??
-            # pedido.save()
+            Pedido.iniciaOperacao(pedido)
 
-            # return HttpResponseRedirect("/%i" % pedido.id)
             return HttpResponse("Seu pedido foi enviado com sucesso.")
 
     else:  # acabou de entrar na pagina:
@@ -44,3 +44,4 @@ def alertForm(chamado):
     # "alert_form" pode ser usado em alertform.html
     contexto = {"alert_form":alertform} 
     return render(chamado, 'main/alertform.html', contexto)
+
