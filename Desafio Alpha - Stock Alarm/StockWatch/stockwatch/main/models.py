@@ -1,7 +1,7 @@
 from datetime import date
 from time import sleep
 from django.db import models
-from yahoo_fin.stock_info import *
+import yfinance as yf
 
 
 ##-----------------------------------------------------MERCADO:
@@ -38,38 +38,32 @@ class Pedido(models.Model):
     modificado = models.DateTimeField(auto_now=True) # snapshot every time
     criado = models.DateTimeField(auto_now_add=True) # snapshot once
 
+
     def __str__(self):
-        return str(self.criado)
+        return str(self.criado) #ordema por criacao na database
+
 
     def iniciaOperacao(pedido):
-        print(pedido.email)
-        print(pedido.mercado)
-        print(pedido.ativo)
-        print(pedido.precocompra)
-        print(pedido.precovenda)
-        print(pedido.periodo)
-        print(pedido.duracao)  ## transformar em int!! (days from today)
-        ## untested!!
-        # dias = date.today - pedido.duracao
-        # cotacoes = []
-        # i = 0
-        # while i != dias:
-        #     #pega preço atual do ticker
-        #     cotacao = "" ## GET TICKER PRICE!!!
-        #     print(cotacao)
-        #     #insere preço no inicio da tabela
-        #     cotacoes.insert(0, cotacao)
+        today = date.today()  #data inicio da operacao
+        end_day = pedido.duracao  #data final da operacao
+        periodo = int(pedido.periodo) * 60  #tempo entre precos
+        ticker = yf.Ticker(pedido.ativo+".SA")  #ticker escolhido
 
-        # #PLACEHOLDER: adicionar sistema de email
-        # if cotacao >= float(pedido.precovenda):
-        #     print("\nPreço de VENDA atingido---> enviado para:")
-        # elif cotacao <= float(pedido.precocompra):
-        #     print("\nPreço de COMPRA atingido---> enviado para:")
-        # else:
-        #     pass
-        # sleep(int(pedido.periodo))
-        # i += 1
+        while today != end_day: 
+            #pega preço atual do ticker
+            cotacao = round(ticker.info['regularMarketPrice'], 2)
 
+            #PLACEHOLDER: adicionar sistema de email
+            if cotacao >= pedido.precovenda:
+                print("\nPreço de VENDA atingido---> enviado para:")
+            elif cotacao <= pedido.precocompra:
+                print("\nPreço de COMPRA atingido---> enviado para:")
+            else:
+                pass
+
+            sleep(int(periodo))
+
+        print("este deveria ser um email avisando q o processo acabou")
     
 
 
