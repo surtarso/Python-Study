@@ -2,6 +2,7 @@ from datetime import date
 from time import sleep
 from django.db import models
 import yfinance as yf
+from django.core.mail import send_mail
 
 
 ##-----------------------------------------------------MERCADO:
@@ -49,21 +50,28 @@ class Pedido(models.Model):
         periodo = int(pedido.periodo) * 60  #tempo entre precos
         ticker = yf.Ticker(pedido.ativo+".SA")  #ticker escolhido
 
+        msg_venda = ("{} - preço de VENDA {} foi atingido.").format(pedido.ativo, pedido.precovenda)
+        msg_compra = ("{} - preço de COMPRA {} foi atingido.").format(pedido.ativo, pedido.precocompra)
+        msg_fim = ('Sua operação com {} terminou!').format(pedido.ativo)
+
         while today != end_day: 
             #pega preço atual do ticker
             cotacao = round(ticker.info['regularMarketPrice'], 2)
 
-            #PLACEHOLDER: adicionar sistema de email
             if cotacao >= pedido.precovenda:
-                print("\nPreço de VENDA atingido---> enviado para:")
+                send_mail('StockWatch Alerta!', msg_venda,'admin@stockwatch.com',
+                            [pedido.email], fail_silently=False,)
+
             elif cotacao <= pedido.precocompra:
-                print("\nPreço de COMPRA atingido---> enviado para:")
+                send_mail('StockWatch Alerta!', msg_compra,'admin@stockwatch.com',
+                            [pedido.email], fail_silently=False,)
             else:
                 pass
 
             sleep(int(periodo))
 
-        print("este deveria ser um email avisando q o processo acabou")
+        send_mail('StockWatch Alerta!',msg_fim,'admin@stockwatch.com',
+                    [pedido.email], fail_silently=False,)
     
 
 
