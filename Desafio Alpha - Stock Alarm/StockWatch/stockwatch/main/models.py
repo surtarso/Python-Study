@@ -50,8 +50,8 @@ class Pedido(models.Model):
         periodo = int(pedido.periodo) * 60  #tempo entre precos
         ticker = yf.Ticker(pedido.ativo+".SA")  #ticker escolhido
 
-        msg_venda = ("{} - preço de VENDA {} foi atingido.").format(pedido.ativo, pedido.precovenda)
-        msg_compra = ("{} - preço de COMPRA {} foi atingido.").format(pedido.ativo, pedido.precocompra)
+        msg_venda = ("{} - preço de VENDA R${} foi atingido.").format(pedido.ativo, pedido.precovenda)
+        msg_compra = ("{} - preço de COMPRA R${} foi atingido.").format(pedido.ativo, pedido.precocompra)
         msg_fim = ('Sua operação com {} terminou!').format(pedido.ativo)
 
         while today != end_day: 
@@ -70,7 +70,7 @@ class Pedido(models.Model):
 
             sleep(int(periodo))
 
-        send_mail('StockWatch Alerta!',msg_fim,'admin@stockwatch.com',
+        send_mail('StockWatch Alerta!', msg_fim,'admin@stockwatch.com',
                     [pedido.email], fail_silently=False,)
     
 
