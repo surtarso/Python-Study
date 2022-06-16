@@ -18,13 +18,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 #models
-from .models import Message, Room, Topic  #, AlarmIbovespa
-from .forms import RoomForm
+from .models import Alerta, Message, Room, Topic  #, AlarmIbovespa
+from .forms import RoomForm, AlertForm
 #iframe security
 #from django.views.decorators.clickjacking import xframe_options_exempt
 
 # Create your views here.
 
+
+##----------------------------------------------------------HOME:
+def home(request):
+    return render(request, 'mainapp/home.html', {})
+
+
+##-------------------------START USER------------------------------##
 ## --------------------------------------------------------LOGIN:
 def loginPage(request):
     page = 'login'
@@ -84,13 +91,24 @@ def registerPage(request):
     return render(request, 'mainapp/login_register.html', {'form': form})
 
 
+##----------------------------------------------------USER PROFILE:
+@login_required(login_url='login')
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    rooms = user.room_set.all()  # modelname_set.all()
+    room_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    contexto = {
+        'user':user,
+        'rooms':rooms,
+        'room_messages':room_messages,
+        'topics':topics
+        }
+    return render(request, 'mainapp/profile.html', contexto)
+##---------------------------END USER-------------------------------##
 
-##--------------------------------------------------------HOME:
-def home(request):
-    return render(request, 'mainapp/home.html', {})
 
-
-
+##-------------------------START FORUM------------------------------##
 ##--------------------------------------------------------FORUM:
 @login_required(login_url='login')
 def forum(request):
@@ -143,22 +161,6 @@ def room(request, pk):
     return render(request, 'mainapp/room.html', contexto)
 
 
-##----------------------------------------------------USER PROFILE:
-@login_required(login_url='login')
-def userProfile(request, pk):
-    user = User.objects.get(id=pk)
-    rooms = user.room_set.all()  # modelname_set.all()
-    room_messages = user.message_set.all()
-    topics = Topic.objects.all()
-    contexto = {
-        'user':user,
-        'rooms':rooms,
-        'room_messages':room_messages,
-        'topics':topics
-        }
-    return render(request, 'mainapp/profile.html', contexto)
-
-
 ##-----------------------------------------------------CREATE ROOM:
 @login_required(login_url='login')
 def createRoom(request):
@@ -173,7 +175,7 @@ def createRoom(request):
             #a host will be added based on whos logged in
             room.host = request.user  #set the host
             room.save()  #save it
-            return redirect('home')
+            return redirect('forum')
 
     contexto = {'form':form}
     return render(request, 'mainapp/room_form.html', contexto)
@@ -230,6 +232,67 @@ def deleteMessage(request, pk):
         return redirect('home')
 
     return render(request, 'mainapp/delete.html', { 'obj':message })
+##-------------------------END FORUM------------------------------##
+
+
+##-------------------------START ALERTS---------------------------##
+##-----------------------------------------------------CREATE ALERT:
+@login_required(login_url='login')
+def createAlert(request):
+    #get class reference
+    form = AlertForm()
+    #standard form on the POST method
+    if request.method == 'POST':  #get that data
+        form = AlertForm(request.POST)
+        if form.is_valid():
+            #create an instance of a room
+            alert = form.save(commit=False)
+            #a host will be added based on whos logged in
+            alert.host = request.user  #set the host
+            alert.save()  #save it
+            return redirect('forum')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
+
+    contexto = {'alert_form':form}
+    return render(request, 'mainapp/alert_form.html', contexto)
+
+
+
+##------------------------------------------------------UPDATE ALERT:
+@login_required(login_url='login')
+def updateAlert(request, pk):
+    alert = Alerta.objects.get(id=pk)
+    form = AlertForm(instance=alert)
+
+    #prevents logged in users to alter other users posts
+    if request.user != alert.host:
+        return HttpResponse("you are not allowed here")
+
+    if request.method == 'POST':
+        form = AlertForm(request.POST, instance=alert)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    contexto = {'alert_form':form}
+    return render(request, 'mainapp/alert_form.html', contexto)
+
+
+
+##------------------------------------------------------DELETE ALERT:
+@login_required(login_url='login')
+def deleteAlert(request, pk):
+    alert = Alerta.objects.get(id=pk)
+
+    #prevents logged in users to delete other users posts
+    if request.user != alert.host:
+        return HttpResponse("it does not belong to you")
+
+    if request.method == 'POST':
+        alert.delete()
+        return redirect('home')
+
+    return render(request, 'mainapp/delete.html', { 'obj':alert })
+##-------------------------END ALERTS-----------------------------##
 
 
 

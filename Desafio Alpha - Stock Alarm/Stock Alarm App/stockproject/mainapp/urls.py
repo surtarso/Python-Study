@@ -4,38 +4,34 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
 
 urlpatterns = [
-    #favicon
+    #----- FAVICON
     path('favicon.ico', RedirectView.as_view(
         url=staticfiles_storage.url('mainapp/images/favicon.ico'))),
 
-    #login related
+    #----- HOME
+    path('', views.home, name="home"),
+
+    #----- USER
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
-
-    #home folder (empty path)
-    path('', views.home, name="home"),
-
-    #discussion forum
-    path('forum/', views.forum, name="forum"),
-
-    #rooms by ID
-    path('room/<str:pk>/', views.room, name="room"),
-
-    #user profile page by ID
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
 
-    #room page
+    #----- FORUM
+    path('forum/', views.forum, name="forum"),
+    path('room/<str:pk>/', views.room, name="room"),
     path('create-room/', views.createRoom, name="create-room"),
-
-    #room manipulation by ID
     path('update-room/<str:pk>/', views.updateRoom, name="update-room"),
     path('delete-room/<str:pk>/', views.deleteRoom, name="delete-room"),
     path('delete-message/<str:pk>/', views.deleteMessage, name="delete-message"),
 
-    #stockpicker
+    #----- ALERTS
+    path('create-alert/', views.createAlert, name="create-alert"),
+    path('update-alert/<str:pk>/', views.updateAlert, name="update-alert"),
+    path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),
+
+    #----- STOCKS (picker/tracker)
     path('stockpicker', views.stockPicker, name='stockpicker'),
-    #stocktracker
     path('stocktracker', views.stockTracker, name='stocktracker'),
 
 

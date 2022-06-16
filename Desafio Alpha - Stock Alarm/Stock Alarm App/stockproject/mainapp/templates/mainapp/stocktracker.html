@@ -70,11 +70,8 @@ StocksWatch - TRACKER
 
 </table>
 </table>
+<a class="btn btn-primary btn-sm d-grid gap-2" 
+        href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
-
-{%comment%}
-{% include 'mainapp/fixlater/config.html' %}
-{% include 'mainapp/fixlatergraph.html' %}
-{%endcomment%}
 
 {% endblock body %}
