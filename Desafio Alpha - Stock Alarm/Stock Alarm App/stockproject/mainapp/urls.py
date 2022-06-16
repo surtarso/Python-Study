@@ -26,6 +26,8 @@ urlpatterns = [
     path('delete-message/<str:pk>/', views.deleteMessage, name="delete-message"),
 
     #----- ALERTS
+    path('alerts/', views.alerts, name="alerts"),
+    path('alert/<str:pk>/', views.alert, name="alert"),
     path('create-alert/', views.createAlert, name="create-alert"),
     path('update-alert/<str:pk>/', views.updateAlert, name="update-alert"),
     path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),
@@ -33,10 +35,4 @@ urlpatterns = [
     #----- STOCKS (picker/tracker)
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
-
-
-
-    ##WIP
-    #path('graph', views.configGraph, name='graph'),
-    #path('alarm-ibov', views.iniciaOperacao, name='alarm-ibov'),
 ]

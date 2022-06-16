@@ -1,0 +1,17 @@
+<h3>Busca por Mercados</h3>
+<hr>
+<br><br>
+
+<div>
+    <a href="{% url 'alerts' %}">All</a>
+</div>
+
+
+{% for mercado in mercado %}
+<div>
+    <a
+        style="margin: 3px"
+        class="btn btn-secondary btn-sm" 
+        href="{% url 'alerts' %}?q={{ mercado.name }}">{{ mercado.name }}</a>
+</div>
+{% endfor %}

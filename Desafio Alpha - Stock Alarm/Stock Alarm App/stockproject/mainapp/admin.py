@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 
-from .models import Room, Topic, Message, Mercado, Alerta  #, AlarmIbovespa
+from .models import Room, Topic, Message, Mercado, Alerta
 
 #forum DB
 admin.site.register(Room)
@@ -12,5 +12,3 @@ admin.site.register(Message)
 #alertas DB
 admin.site.register(Mercado)
 admin.site.register(Alerta)
-# #WIP
-# admin.site.register(AlarmIbovespa)

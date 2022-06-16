@@ -1,0 +1,26 @@
+{% extends 'mainapp/basic.html' %}
+
+{% block title %}
+StocksWatch - ALERTAS
+{% endblock title %}
+
+{% block body %}
+
+<style>
+    .alert-container{
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        padding: 20px;
+    }
+</style>
+
+<div class="alert-container">
+    <div class="container">
+
+        <h1>{{alert.mercado}}</h1>
+
+        <p>{{ alert.ativo }}</p>
+
+    </div>
+</div>
+{% endblock body %}

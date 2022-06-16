@@ -18,20 +18,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 #models
-from .models import Alerta, Message, Room, Topic  #, AlarmIbovespa
+from .models import Alerta, Mercado, Message, Room, Topic  #, AlarmIbovespa
 from .forms import RoomForm, AlertForm
-#iframe security
-#from django.views.decorators.clickjacking import xframe_options_exempt
+#iframe security (graph attempts...)
+from django.views.decorators.clickjacking import xframe_options_exempt
 
 # Create your views here.
 
 
-##----------------------------------------------------------HOME:
+## -HOME:
 def home(request):
     return render(request, 'mainapp/home.html', {})
 
 
-##-------------------------START USER------------------------------##
+##---------------------------------START USER----------------------------------##
+
 ## --------------------------------------------------------LOGIN:
 def loginPage(request):
     page = 'login'
@@ -105,10 +106,12 @@ def userProfile(request, pk):
         'topics':topics
         }
     return render(request, 'mainapp/profile.html', contexto)
-##---------------------------END USER-------------------------------##
+##-------------------------------------END USER---------------------------------##
 
 
-##-------------------------START FORUM------------------------------##
+
+##-----------------------------------START FORUM--------------------------------##
+
 ##--------------------------------------------------------FORUM:
 @login_required(login_url='login')
 def forum(request):
@@ -232,10 +235,47 @@ def deleteMessage(request, pk):
         return redirect('home')
 
     return render(request, 'mainapp/delete.html', { 'obj':message })
-##-------------------------END FORUM------------------------------##
+##------------------------------------END FORUM--------------------------------##
 
 
-##-------------------------START ALERTS---------------------------##
+
+##----------------------------------START ALERTS-------------------------------##
+
+##------------------------------------------------------ALERT LIST:
+@login_required(login_url='login')
+def alerts(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    alerta = Alerta.objects.filter(
+        Q(mercado__name__icontains=q) |
+        Q(ativo__icontains=q)
+        )
+
+    mercado = Mercado.objects.all()
+    alerta_count = alerta.count()
+
+    contexto = { # itera em alerts.html
+        'alerta': alerta,
+        'mercado': mercado,
+        'alerta_count':alerta_count,
+        }
+
+    return render(request, 'mainapp/alerts.html', contexto)
+
+
+##---------------------------------------------------------ALERT:
+@login_required(login_url='login')
+def alert(request, pk):
+    alert = Alerta.objects.get(id=pk)
+
+    if request.method == 'POST': 
+        return redirect('alert', pk=alert.id)
+
+    contexto = {
+        'alert':alert}
+    return render(request, 'mainapp/alert.html', contexto)
+
+
 ##-----------------------------------------------------CREATE ALERT:
 @login_required(login_url='login')
 def createAlert(request):
@@ -250,7 +290,7 @@ def createAlert(request):
             #a host will be added based on whos logged in
             alert.host = request.user  #set the host
             alert.save()  #save it
-            return redirect('forum')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
+            return redirect('alerts')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
 
     contexto = {'alert_form':form}
     return render(request, 'mainapp/alert_form.html', contexto)
@@ -271,7 +311,7 @@ def updateAlert(request, pk):
         form = AlertForm(request.POST, instance=alert)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('alerts')
 
     contexto = {'alert_form':form}
     return render(request, 'mainapp/alert_form.html', contexto)
@@ -289,10 +329,10 @@ def deleteAlert(request, pk):
 
     if request.method == 'POST':
         alert.delete()
-        return redirect('home')
+        return redirect('alerts')
 
     return render(request, 'mainapp/delete.html', { 'obj':alert })
-##-------------------------END ALERTS-----------------------------##
+##--------------------------------END ALERTS-----------------------------------##
 
 
 
@@ -382,6 +422,17 @@ def stockTracker(request):
     #prints data and send to the browser
     print(data)
     return render(request, 'mainapp/stocktracker.html', {'data': data})
+
+##------------------------- END OF FILE ---------------------------------##
+
+
+
+
+
+
+
+
+
 
 
 

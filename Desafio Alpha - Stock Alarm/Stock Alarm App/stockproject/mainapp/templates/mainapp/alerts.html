@@ -1,0 +1,50 @@
+{% extends 'mainapp/basic.html' %}
+
+{% block title %}
+StocksWatch - ALERTS
+{% endblock title %}
+
+{% block body %}
+
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 5fr;
+        padding: 10px;
+    }
+    .mercado_component{
+        background-color: whitesmoke;
+        padding: 20px;
+        text-align: center;
+        display: flexbox;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: 4px;
+    }
+    .feed_component{
+        padding: 20px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="home-container">
+
+    <div class="mercado_component">
+        {% include 'mainapp/mercado_component.html' %}
+    </div>
+
+    <div class="feed_component d-grid gap-2 d-md-block">
+        {% include 'mainapp/alerts_component.html' %}
+    </div>
+
+</div>
+
+{% endblock body %}
