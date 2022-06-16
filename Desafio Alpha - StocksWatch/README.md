@@ -1,16 +1,15 @@
-# Stocks Alarm
+# Desafio Alpha
 
-## Stocks Alarm concept idea:
+## Conceito:
   - *Stocks_App_Concept.py*
-    - Search stock prices (any period)
-    - Set price check period and full operation period
-    - Set alarm for min/max price targets
-    - Email on target prices (w.i.p.)
-    - Email on operation end (w.i.p.)
+    - Procurar preço de papéis (ativos)
+    - Setar preço compra/venda e duração da operação
+    - Mandar e-mails em preços atingidos
 
   - *graph_generation_tests.py*
-    - graph generation with plotly and yfinance
+    - Gera gráficos com plotly e yfinance
 
-## Objective: Translate this concept to Django
+## Objetivo: Traduzir o conceito para Django.
+
 
 
