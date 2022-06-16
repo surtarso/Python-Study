@@ -16,6 +16,9 @@ urlpatterns = [
     #home folder (empty path)
     path('', views.home, name="home"),
 
+    #discussion forum
+    path('forum/', views.forum, name="forum"),
+
     #rooms by ID
     path('room/<str:pk>/', views.room, name="room"),
 
@@ -38,6 +41,6 @@ urlpatterns = [
 
 
     ##WIP
-    path('graph', views.configGraph, name='graph'),
-    path('alarm-ibov', views.iniciaOperacao, name='alarm-ibov'),
+    #path('graph', views.configGraph, name='graph'),
+    #path('alarm-ibov', views.iniciaOperacao, name='alarm-ibov'),
 ]

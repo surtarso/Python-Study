@@ -6,17 +6,17 @@ from django.contrib.auth.models import User
 
 
 ##---------------------------------------ALERTA IBOV: (WIP)
-class AlarmIbovespa(models.Model):
+# class AlarmIbovespa(models.Model):
 
-    usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    ativo = models.CharField(max_length=7, null=False, blank=False)
-    preco_compra = models.FloatField(max_length=5,null=False, blank=False)
-    preco_venda = models.FloatField(max_length=5,null=False, blank=False)
-    periodo = models.PositiveIntegerField(null=False, blank=False)
-    tempo = models.PositiveIntegerField(null=False, blank=False)
+#     usuario = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+#     ativo = models.CharField(max_length=7, null=False, blank=False)
+#     preco_compra = models.FloatField(max_length=5,null=False, blank=False)
+#     preco_venda = models.FloatField(max_length=5,null=False, blank=False)
+#     periodo = models.PositiveIntegerField(null=False, blank=False)
+#     tempo = models.PositiveIntegerField(null=False, blank=False)
 
-    def __str__(self):
-        return self.name
+#     def __str__(self):
+#         return self.name
 
 ##------------------------------------------------TOPIC:
 class Topic(models.Model):

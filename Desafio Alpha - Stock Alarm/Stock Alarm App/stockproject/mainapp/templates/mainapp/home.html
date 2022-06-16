@@ -1,54 +1,45 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-StocksAlarm - HOME
+StocksWatch - HOME
 {% endblock title %}
 
 {% block body %}
-
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 3fr 1fr;
-        padding: 10px;
-    }
-    .topics_component, .activity_component{
-        background-color: whitesmoke;
-        padding: 20px;
-        text-align: center;
-        display: flexbox;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        border-radius: 4px;
-    }
-    .feed_component{
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        border-radius: 4px;
-    }
-</style>
-
-<div class="home-container">
-
-    <div class="topics_component">
-        {% include 'mainapp/topics_component.html' %}
+<div class="container">
+    <div class="container">
+    <h1>Stocks Watch</h1>
     </div>
-
-    <div class="feed_component d-grid gap-2 d-md-block">
-        {% include 'mainapp/feed_component.html' %}
+<div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingOne">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          Stocks Watch
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Stocks Watch é uma ferramenta para te alertar sobre possiveis oportunidades no mercado acionário.</div>
+      </div>
     </div>
-
-    <div class="activity_component">
-        {% include 'mainapp/activity_component.html' %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+          Forum
+        </button>
+      </h2>
+      <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Converse com outros investidores ou compartilhe estratégias de investimento.</div>
+      </div>
     </div>
-
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="flush-headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+          Mercado
+        </button>
+      </h2>
+      <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Escolha um mercado de ações para pesquisar cotações e configurar alertas.</div>
+      </div>
+    </div>
+  </div>
 </div>
-
 {% endblock body %}

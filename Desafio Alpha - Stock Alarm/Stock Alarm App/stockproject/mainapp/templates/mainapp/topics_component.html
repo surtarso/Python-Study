@@ -3,7 +3,7 @@
 <br><br>
 
 <div>
-    <a href="{% url 'home' %}">All</a>
+    <a href="{% url 'forum' %}">All</a>
 </div>
 
 
@@ -12,6 +12,6 @@
     <a
         style="margin: 3px"
         class="btn btn-secondary btn-sm" 
-        href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
+        href="{% url 'forum' %}?q={{ topic.name }}">{{ topic.name }}</a>
 </div>
 {% endfor %}

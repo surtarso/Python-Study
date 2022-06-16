@@ -31,8 +31,8 @@ class Pedido(models.Model):
     email = models.EmailField()
     mercado = models.CharField(max_length=20)
     ativo = models.CharField(max_length=20)
-    precocompra = models.DecimalField(max_digits=6, decimal_places=2, default=0.01)
-    precovenda = models.DecimalField(max_digits=6, decimal_places=2, default=0.01)
+    precocompra = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    precovenda = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     periodo = models.IntegerField(default=15)
     duracao = models.DateField(default=date.today)
     checkbox = models.BooleanField(default=False)
@@ -44,7 +44,7 @@ class Pedido(models.Model):
         return str(self.criado) #ordema por criacao na database
 
 
-    def iniciaOperacao(pedido):
+    def iniciaAlerta(pedido):
         today = date.today()  #data inicio da operacao
         end_day = pedido.duracao  #data final da operacao
         periodo = int(pedido.periodo) * 60  #tempo entre precos

@@ -4,7 +4,7 @@
 
 {% block title %}
 {% load myfilters %}
-StocksAlarm - TRACKER
+StocksWatch - TRACKER
 {% endblock title %}
 
 
@@ -72,8 +72,9 @@ StocksAlarm - TRACKER
 </table>
 </div>
 
-{% include 'mainapp/config.html' %}
-{% include 'mainapp/graph.html' %}
-
+{%comment%}
+{% include 'mainapp/fixlater/config.html' %}
+{% include 'mainapp/fixlatergraph.html' %}
+{%endcomment%}
 
 {% endblock body %}

@@ -18,10 +18,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 #models
-from .models import Message, Room, Topic, AlarmIbovespa
+from .models import Message, Room, Topic  #, AlarmIbovespa
 from .forms import RoomForm
 #iframe security
-from django.views.decorators.clickjacking import xframe_options_exempt
+#from django.views.decorators.clickjacking import xframe_options_exempt
 
 # Create your views here.
 
@@ -30,7 +30,7 @@ def loginPage(request):
     page = 'login'
     # redirect logged in users to home page
     if request.user.is_authenticated:
-        return redirect('home')
+        return redirect('forum')
 
     if request.method == 'POST':
         #get user name and password
@@ -51,7 +51,7 @@ def loginPage(request):
             #create a login session
             login(request, user)
             #redirect the user
-            return redirect('home')
+            return redirect('forum')
         else:
             #send error message
             messages.error(request, "user or pass does not exist")
@@ -77,15 +77,23 @@ def registerPage(request):
             user.username = user.username.lower()
             user.save()
             login(request, user) #log the user
-            return redirect('home')
+            return redirect('forum')
         else:
             messages.error(request, "registration error")
 
     return render(request, 'mainapp/login_register.html', {'form': form})
 
 
+
 ##--------------------------------------------------------HOME:
 def home(request):
+    return render(request, 'mainapp/home.html', {})
+
+
+
+##--------------------------------------------------------FORUM:
+@login_required(login_url='login')
+def forum(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     rooms = Room.objects.filter(
@@ -106,10 +114,11 @@ def home(request):
         'room_messages':room_messages
         }
 
-    return render(request, 'mainapp/home.html', contexto)
+    return render(request, 'mainapp/forum.html', contexto)
 
 
 ##---------------------------------------------------------ROOM:
+@login_required(login_url='login')
 def room(request, pk):
     room = Room.objects.get(id=pk)
     room_messages = room.message_set.all()
@@ -313,108 +322,114 @@ def stockTracker(request):
 
 
 
+
+
+
+
+
+########-------------------WIP-------------------------########
 ###---------------------------------------------------GRAFICOS:
-@xframe_options_exempt  ## ok to load in iframe
-def configGraph(request):
-    print("REQUEST chegou em configGraph! : ", request)
+# @xframe_options_exempt  ## ok to load in iframe
+# def configGraph(request):
+#     print("REQUEST chegou em configGraph! : ", request)
 
-    if request.method == 'GET' and request != None:
+#     if request.method == 'GET' and request != None:
         
-        ticker = request.GET.get('stockpicker')
-        print("apos IF recebido em configGraph:", ticker)
-        # data = yf.Ticker(ticker+".SA").history("max")
-        data = yf.Ticker("ITSA4.SA").history("max")
+#         ticker = request.GET.get('stockpicker')
+#         print("apos IF recebido em configGraph:", ticker)
+#         # data = yf.Ticker(ticker+".SA").history("max")
+#         data = yf.Ticker("ITSA4.SA").history("max")
 
-        fig = go.Figure()
+#         fig = go.Figure()
 
-        fig.add_trace(go.Candlestick(
-            x = data.index,
-            open = data['Open'],
-            high = data['High'],
-            low = data['Low'],
-            close = data['Close'],
-            name = 'market data'
-            ))
+#         fig.add_trace(go.Candlestick(
+#             x = data.index,
+#             open = data['Open'],
+#             high = data['High'],
+#             low = data['Low'],
+#             close = data['Close'],
+#             name = 'market data'
+#             ))
 
-        fig.update_xaxes(
-            rangeslider_visible=True,
-            rangeselector=dict(
-                buttons=list([
-                    dict(count=1, label='1d', step='day', stepmode='backward'),
-                    dict(count=7, label='1wk', step='day', stepmode='backward'),
-                    dict(count=14, label='2wk', step='day', stepmode='backward'),
-                    dict(count=1, label='1mo', step='month', stepmode='backward'),
-                    dict(count=1, label='1y', step='year', stepmode='backward'),
-                    dict(step='all')
-                    ])
-            )
-        )
+#         fig.update_xaxes(
+#             rangeslider_visible=True,
+#             rangeselector=dict(
+#                 buttons=list([
+#                     dict(count=1, label='1d', step='day', stepmode='backward'),
+#                     dict(count=7, label='1wk', step='day', stepmode='backward'),
+#                     dict(count=14, label='2wk', step='day', stepmode='backward'),
+#                     dict(count=1, label='1mo', step='month', stepmode='backward'),
+#                     dict(count=1, label='1y', step='year', stepmode='backward'),
+#                     dict(step='all')
+#                     ])
+#             )
+#         )
 
-        graph = fig.to_html(full_html=True, default_height=500, default_width=700)
-        # graph = fig.show()
-        return render(request, 'mainapp/graph.html', {'graph': graph})
-    else:
-        return HttpResponse('Eu deveria ser um gráfico')
-
-
+#         graph = fig.to_html(full_html=True, default_height=500, default_width=700)
+#         # graph = fig.show()
+#         return render(request, 'mainapp/fixlater/graph.html', {'graph': graph})
+#     else:
+#         return HttpResponse('Eu deveria ser um gráfico')
 
 
 
 
-#---------------------------------is this a view?!?--LOGICA ALERTA:
-@login_required(login_url='login')
-def iniciaOperacao(request):
-    print("request de iniciaOperacao: ", request)
 
-    #como recebo esses valores??
-    usuario = User.objects.get(id=1)  ## needs to be dinamic!!!!
-    email_in = usuario  #.get('email')  ##PLACEHOLDER
-    papel_in = 'ABEV3.SA' #testando... ## HOW TO GET VALUE FROM DROPDOWN!?!?
-    price_min = request.GET.get('preco_compra')
-    price_max = request.GET.get('preco_venda')
-    periodo_in = request.GET.get('periodo_busca')
-    dias_in = request.GET.get('tempo_operacao')
 
-    print(usuario, email_in, papel_in, price_min, price_max, periodo_in, dias_in)
-    IS_DEBUG = True  # false for real time
-    DIA = 86400  # 1 dia em segundos
+# #---------------------------------is this a view?!?--LOGICA ALERTA:
+# @login_required(login_url='login')
+# def iniciaOperacao(request):
+#     print("request de iniciaOperacao: ", request)
 
-    # formata a busca inserida
-    if IS_DEBUG:
-        periodo = periodo_in  # mantem em segundos para debug
-        dias = dias_in  # mantem em um range aceitavel para debug
-    else:
-        periodo = periodo_in * 60  # formata o input para minutos
-        dias = dias_in * DIA  # formata o input para dias
+#     #como recebo esses valores??
+#     usuario = User.objects.get(id=1)  ## needs to be dinamic!!!!
+#     email_in = usuario  #.get('email')  ##PLACEHOLDER
+#     papel_in = 'ABEV3.SA' #testando... ## HOW TO GET VALUE FROM DROPDOWN!?!?
+#     price_min = request.GET.get('preco_compra')
+#     price_max = request.GET.get('preco_venda')
+#     periodo_in = request.GET.get('periodo_busca')
+#     dias_in = request.GET.get('tempo_operacao')
 
-    ticker = yf.Ticker(papel_in) #formata para yahoo
+#     print(usuario, email_in, papel_in, price_min, price_max, periodo_in, dias_in)
+#     IS_DEBUG = True  # false for real time
+#     DIA = 86400  # 1 dia em segundos
 
-    # cria nova lista de cotacoes
-    cotacoes = []
+#     # formata a busca inserida
+#     if IS_DEBUG:
+#         periodo = periodo_in  # mantem em segundos para debug
+#         dias = dias_in  # mantem em um range aceitavel para debug
+#     else:
+#         periodo = periodo_in * 60  # formata o input para minutos
+#         dias = dias_in * DIA  # formata o input para dias
 
-    i = 0
-    while i != int(dias):
-        #pega preço atual do ticker
-        cotacao = round(ticker.info['regularMarketPrice'], 2)
-        print(cotacao)
-        #insere preço no inicio da tabela
-        cotacoes.insert(0, cotacao)
+#     ticker = yf.Ticker(papel_in) #formata para yahoo
 
-        #PLACEHOLDER: adicionar sistema de email
-        if cotacao >= float(price_max):
-            print("\nPreço de VENDA atingido---> enviado para:", email_in)
-        elif cotacao <= float(price_min):
-            print("\nPreço de COMPRA atingido---> enviado para:", email_in)
-        else:
-            pass
-        sleep(int(periodo))
-        i += 1
-        print(i, dias)
+#     # cria nova lista de cotacoes
+#     cotacoes = []
 
-    ## PLACEHOLDER: adicionar sistema de email
-    print("Enviando para", email_in, ":\n--> Dias de operação com", papel_in, "excedidos, faça uma nova operação.\n")
-    ## PLACEHOLDER: é para gerar uma tabela com esses valores
-    print("Historico de", dias_in, "dia(s) de operação com", papel_in,":\n", cotacoes)
+#     i = 0
+#     while i != int(dias):
+#         #pega preço atual do ticker
+#         cotacao = round(ticker.info['regularMarketPrice'], 2)
+#         print(cotacao)
+#         #insere preço no inicio da tabela
+#         cotacoes.insert(0, cotacao)
 
-    ## I DONT WANT TO RENDER?? RETURN WHAT???
-    return redirect(request.META['HTTP_REFERER'])
+#         #PLACEHOLDER: adicionar sistema de email
+#         if cotacao >= float(price_max):
+#             print("\nPreço de VENDA atingido---> enviado para:", email_in)
+#         elif cotacao <= float(price_min):
+#             print("\nPreço de COMPRA atingido---> enviado para:", email_in)
+#         else:
+#             pass
+#         sleep(int(periodo))
+#         i += 1
+#         print(i, dias)
+
+#     ## PLACEHOLDER: adicionar sistema de email
+#     print("Enviando para", email_in, ":\n--> Dias de operação com", papel_in, "excedidos, faça uma nova operação.\n")
+#     ## PLACEHOLDER: é para gerar uma tabela com esses valores
+#     print("Historico de", dias_in, "dia(s) de operação com", papel_in,":\n", cotacoes)
+
+#     ## I DONT WANT TO RENDER?? RETURN WHAT???
+#     return redirect(request.META['HTTP_REFERER'])

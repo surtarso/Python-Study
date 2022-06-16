@@ -11,4 +11,9 @@ urlpatterns = [
     
     # formulario para alertas
     path('alert', views.alertForm, name="form_alert"),
+
+    # pagina de alertas
+    path('alerts', views.alertsList, name="alerts_list"),
+
+    path('alerts/<str:pk>/', views.alertsView, name="alerts_view"),
 ]

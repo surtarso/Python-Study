@@ -1,6 +1,9 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from main.models import *
+# from threading import Thread
+# import threading
+# from multiprocessing import Process
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from main.models import Pedido
 from .forms import AlertForm
 
 """
@@ -32,10 +35,21 @@ def alertForm(chamado):
             
             #salva o pedido
             pedido.save()
+    
+            ## 1- "pedido must be iterable"
+            # processo = Process(target=Pedido.iniciaAlerta, args=(pedido))
+            # processo.start()
+            ## 2- "pedido must be iterable"
+            # thread = Thread(target=Pedido.iniciaAlerta, args=(pedido.objects))
+            # thread.start()
+            ## 3- "Manager isn't accessible via Pedido instances"
+            # email_thread = threading.Thread(target=Pedido.iniciaAlerta, name="Email Thread", args=pedido.objects)
+            # email_thread.start()
+            ## works - but not async (really bad)
+            #Pedido.iniciaAlerta(pedido)
+            #return HttpResponse("Seu pedido foi enviado com sucesso.")
 
-            Pedido.iniciaOperacao(pedido)
-
-            return HttpResponse("Seu pedido foi enviado com sucesso.")
+            return redirect('alerts_list')
 
     else:  # acabou de entrar na pagina:
         # gera um novo formulario baseado em forms.py
@@ -45,3 +59,20 @@ def alertForm(chamado):
     contexto = {"alert_form":alertform} 
     return render(chamado, 'main/alertform.html', contexto)
 
+\
+
+def alertsList(chamado):
+    alerts = Pedido.objects.all()
+
+    contexto = {"alerts":alerts}
+    return render(chamado, 'main/alerts_list.html', contexto)
+
+
+def alertsView(chamado, pk):
+    print(chamado, pk)
+    pedido = Pedido.objects.get(id=pk)
+    formulario = AlertForm(instance=pedido)
+
+
+    contexto = {'form':formulario}
+    return render(chamado, 'main/alertform.html', contexto)
