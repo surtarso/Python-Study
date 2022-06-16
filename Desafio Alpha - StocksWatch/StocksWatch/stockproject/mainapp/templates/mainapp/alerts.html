@@ -1,7 +1,7 @@
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
-StocksWatch - ALERTS
+StocksWatch - ALERTAS
 {% endblock title %}
 
 {% block body %}
@@ -9,10 +9,10 @@ StocksWatch - ALERTS
 <style>
     .home-container{
         display: grid;
-        grid-template-columns: 1fr 5fr;
+        grid-template-columns: 1fr 3fr 1fr;
         padding: 10px;
     }
-    .mercado_component{
+    .mercado_component, .activity_component{
         background-color: whitesmoke;
         padding: 20px;
         text-align: center;
@@ -43,6 +43,9 @@ StocksWatch - ALERTS
 
     <div class="feed_component d-grid gap-2 d-md-block">
         {% include 'mainapp/alerts_component.html' %}
+    </div>
+    <div class="activity_component">
+        {% include 'mainapp/activity_component.html' %}
     </div>
 
 </div>

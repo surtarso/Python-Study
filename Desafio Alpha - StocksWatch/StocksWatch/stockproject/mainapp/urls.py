@@ -18,7 +18,7 @@ urlpatterns = [
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
 
     #----- FORUM
-    path('forum/', views.forum, name="forum"),
+    path('forum/', views.forum, name="forum"),  # forums "home"
     path('room/<str:pk>/', views.room, name="room"),
     path('create-room/', views.createRoom, name="create-room"),
     path('update-room/<str:pk>/', views.updateRoom, name="update-room"),
@@ -26,8 +26,8 @@ urlpatterns = [
     path('delete-message/<str:pk>/', views.deleteMessage, name="delete-message"),
 
     #----- ALERTS
-    path('alerts/', views.alerts, name="alerts"),
-    path('alert/<str:pk>/', views.alert, name="alert"),
+    path('alerts/', views.alerts, name="alerts"),  # alerts "home"
+    path('alert/<str:pk>/', views.alertView, name="view-alert"),
     path('create-alert/', views.createAlert, name="create-alert"),
     path('update-alert/<str:pk>/', views.updateAlert, name="update-alert"),
     path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),
@@ -35,4 +35,6 @@ urlpatterns = [
     #----- STOCKS (picker/tracker)
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
+
+    path('graph', views.configGraph, name="graph")
 ]

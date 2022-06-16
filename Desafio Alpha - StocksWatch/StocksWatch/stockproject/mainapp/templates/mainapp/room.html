@@ -9,8 +9,12 @@ StocksWatch - SALA
 <style>
     .room-container{
         display: grid;
-        grid-template-columns: 3fr 1fr;
-        padding: 20px;
+        grid-template-columns: 5fr 1fr;
+        padding: 15px;
+    }
+    .participants{
+        background-color: whitesmoke;
+        border-radius: 5px;
     }
 </style>
 
@@ -22,7 +26,7 @@ StocksWatch - SALA
         <p>{{ room.description }}</p>
 
         <div class="comment-wrapper">
-            <h3>Comentários</h3>
+            <h4>Comentários</h4>
             <hr>
             {% for message in room_messages %}
             <div>
@@ -48,9 +52,9 @@ StocksWatch - SALA
 
     </div>
 
-    <div class="container">
-        <h3>Participantes</h3>
-        <hr>
+    <div class="container participants">
+        <h5>Participantes</h5>
+        <br>
 
         {% for user in participants %}
             <div>

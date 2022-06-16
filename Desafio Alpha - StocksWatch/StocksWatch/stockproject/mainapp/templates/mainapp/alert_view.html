@@ -1,0 +1,23 @@
+{% extends 'mainapp/basic.html' %}
+
+{% block title %}
+StocksWatch - ALERTA
+{% endblock title %}
+
+
+{% block body %}
+
+<div class="container bg-light" style="width: 20rem;">
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">          {{ alert.mercado }}</li>
+        <li class="list-group-item">          {{ alert.ativo }}</li>
+        <li class="list-group-item">Compra: R${{ alert.compra }}</li>
+        <li class="list-group-item">Venda:  R${{ alert.venda }}</li>
+        <li class="list-group-item">Busca:    {{ alert.periodo }}min(s)</li>
+        <li class="list-group-item">Duração:  {{ alert.duracao }}dia(s)</li>
+        <li class="list-group-item">Alertar:  {{ alert.email }}</li>
+    </ul>
+</div>
+
+{% endblock body %}
+

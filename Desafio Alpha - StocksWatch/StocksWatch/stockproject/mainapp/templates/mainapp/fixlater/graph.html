@@ -1,4 +1,12 @@
+{% extends 'mainapp/basic.html' %}
+{% load static %}
 
+{% block title %}
+StocksWatch - Graph
+{% endblock title %}
+
+
+{% block body %}
 <div class="container">
     
     {% if graph %}
@@ -8,8 +16,9 @@
     {% else %}
 
         <br><br>
-        <p>Escolha um ativo para ver o histórico.</p>
+        <p>Ocorreu um erro.</p>
 
     {% endif %}
 
 </div>
+{% endblock body %}

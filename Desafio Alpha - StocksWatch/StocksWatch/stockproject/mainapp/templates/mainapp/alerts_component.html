@@ -2,7 +2,6 @@
 <div class="container">
     <h3>Alertas</h3>
     <br>
-    <h5>{{ alerta_count }} alerta(s) disponíveis</h5>
     <a 
         class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-alert' %}">Criar Alerta</a>
@@ -10,26 +9,24 @@
 <hr>
 
 {% for alerta in alerta %}
-<div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
-    
-    <h5>
-        {{alerta.id}} - <a href="{% url 'alert' alerta.id %}">{{alerta.ativo}}</a>
-    </h5>
-
-    <small>{{alerta.mercado.name}}</small>
-    <br><br>
-
     {% if request.user == alerta.host %}
+    <div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
+    <h5>
+        {{alerta.mercado}} - <a href="{% url 'view-alert' alerta.id %}">{{alerta.ativo}}</a>
+        <small>{{alerta.updated}}</small>
+    </h5>
+    
     <a class="btn btn-warning btn-sm" 
         href="{% url 'update-alert' alerta.id %}">Editar</a>
     <a class="btn btn-danger btn-sm" 
         href="{% url 'delete-alert' alerta.id %}">Apagar</a>
-    {% endif %}
+    
 
     <a class="btn btn-secondary btn-sm" 
         href="{% url 'user-profile' alerta.host.id %}">
         @{{alerta.host.username}}
     </a>
     <br><br>
-</div>
+    </div>
+    {% endif %}
 {% endfor %}

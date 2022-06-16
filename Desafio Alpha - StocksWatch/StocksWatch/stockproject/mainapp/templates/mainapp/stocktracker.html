@@ -9,10 +9,8 @@ StocksWatch - TRACKER
 
 
 {% block css %}
-<style>
   .red { color: red; }
   .green { color: green; }
-</style>
 {% endblock css %}
 
 
@@ -49,13 +47,11 @@ StocksWatch - TRACKER
           <script>
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
-            if(change > 0){
+            if(change >= 0){
               document.getElementById("{{key}}_change").className = "green";
-              document.getElementById("{{key}}_change").innerHTML = change;
             }
-            else if (change < 1){
+            if (change < 0){
               document.getElementById("{{key}}_change").className = "red";
-              document.getElementById("{{key}}_change").innerHTML = change;
             }
             document.getElementById("{{key}}_change").innerHTML = change;
           </script>
@@ -72,6 +68,21 @@ StocksWatch - TRACKER
 </table>
 <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-alert' %}">Criar Alerta</a>
-</div>
 
+{% comment %} ----WIP---- {% endcomment %}
+<form class="form-control">
+  {% csrf_token %}
+  <select class="form-select form-select-lg mb-3 gap-2">
+    <option selected>Escolha um ativo:</option>
+    {% for key, value in data.items %}
+      <option name={{key}} type="text" value={{forloop.counter}}>{{ key }}</option>
+    {% endfor %}
+  </select>
+
+  <div class="d-grid gap-2">
+    <a class="btn btn-primary" href="{% url 'graph' %}">Grafico</a>
+  </div>
+</form>
+
+</div>
 {% endblock body %}

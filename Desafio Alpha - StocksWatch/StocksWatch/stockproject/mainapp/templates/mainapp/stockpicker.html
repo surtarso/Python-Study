@@ -3,17 +3,17 @@
 
 
 {% block title %}
-StocksWatch - PICKER
+StocksWatch - Picker
 {% endblock title %}
 
 
 {% block body %}
 <div class="container">
     <h1>Ibovespa</h1>
-    <form action="/stocktracker">
+    <form class="form-control" action="/stocktracker">
         <label for="stockpicker">Selecione o(s) ativo(s)</label>
 
-        <select class="form-select form-select-lg mb-3" multiple aria-label="multiple select example" name="stockpicker">
+        <select class="form-select form-select-lg mb-3" size="20" multiple aria-label="multiple select example" name="stockpicker">
         {% for i in stockpicker %}
         <option value="{{i}}">{{i}}</option>
         {% endfor %}

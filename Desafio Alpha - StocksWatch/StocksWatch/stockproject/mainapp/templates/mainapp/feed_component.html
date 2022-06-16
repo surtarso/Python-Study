@@ -2,9 +2,10 @@
 <div class="container">
     <h3>Salas</h3>
     <br>
+    {% if room_count %}
     <h5>{{ room_count }} sala(s) disponíveis</h5>
-    <a 
-        class="btn btn-primary btn-sm d-grid gap-2" 
+    {% endif %}
+    <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-room' %}">Criar Sala</a>
 </div>
 <hr>
@@ -13,7 +14,8 @@
 <div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
     
     <h5>
-        {{room.id}} - <a href="{% url 'room' room.id %}">{{room.name}}</a>
+        <a href="{% url 'room' room.id %}">{{room.name}}</a> 
+        <small>{{room.updated}}</small>
     </h5>
 
     <small>{{room.topic.name}}</small>
