@@ -481,6 +481,6 @@ def configGraph(request):
 
         graph = fig.to_html(full_html=True, default_height=500, default_width=700)
         # graph = fig.show()
-        return render(request, 'mainapp/fixlater/graph.html', {'graph': graph})
+        return render(request, 'mainapp/graph.html', {'graph': graph})
     else:
         return HttpResponse('Eu deveria ser um gráfico')

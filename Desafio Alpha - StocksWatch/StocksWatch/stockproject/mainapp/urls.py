@@ -35,6 +35,7 @@ urlpatterns = [
     #----- STOCKS (picker/tracker)
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
-
+    
+    # graph(wip)
     path('graph', views.configGraph, name="graph")
 ]
