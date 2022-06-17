@@ -24,7 +24,7 @@ from .forms import RoomForm, AlertForm, SignUpForm
 
 
 
-## -HOME:
+## -------------------------------------------------------HOME:
 def home(request):
     return render(request, 'mainapp/home.html', {})
 
@@ -336,11 +336,12 @@ def deleteAlert(request, pk):
 
 
 
+##--------------------------------START MARKET---------------------------------##
 ## ------------------------------------------------------STOCK PICKER:
 @login_required(login_url='login')
 def stockPicker(request):
     #popula a lista de mercado pelo yahoo-fin
-    # stock_picker = tickers_ibovespa()
+    # stock_picker = tickers_ibovespa()  # <--- modo dinamico online
     stock_picker = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
             'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
             'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
@@ -350,23 +351,22 @@ def stockPicker(request):
             'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
             'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
             'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
-            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']
+            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']  ## <-- modo develp hardcoded
     
     return render(request, 'mainapp/stockpicker.html', {'stockpicker':stock_picker})
 
 
 
 ##------------------------------------------------------STOCK TRACKER:
-#recebe o submit ou do menu ou do searchbar
+#recebe o submit ou do stockpicker ou do searchbar
 def stockTracker(request):
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
-    print("Request recebido em stockTracker:", stockpicker)
-
     #cria um dicionario para os papeis escolhidos
     data = {}
+
     #checa com os papeis do ibovespa (yahoo-fin)
-    # available_stocks = tickers_ibovespa()
+    # available_stocks = tickers_ibovespa()  # <--- modo dinamico online
     available_stocks = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
             'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
             'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
@@ -376,7 +376,7 @@ def stockTracker(request):
             'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
             'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
             'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
-            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']
+            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']  ## <-- modo develop hardcoded
 
     #errorcheck
     for i in stockpicker:
@@ -423,15 +423,12 @@ def stockTracker(request):
 
 
 
-##---------------------------------------------------GRAFICOS:
+##------------------------------------------------------GRAFICOS:
 def configGraph(request):
-    print("REQUEST chegou em configGraph! : ", request)
 
     if request.method == 'GET' and request is not None:
-        
         ticker = request.GET.get('graph')
         data = yf.Ticker(ticker+".SA").history("max")
-        #data = yf.Ticker("ITSA4.SA").history("max")
 
         fig = go.Figure()
 
@@ -463,5 +460,6 @@ def configGraph(request):
         return render(request, 'mainapp/graph.html', {'graph': graph})
     else:
         return HttpResponse('Eu deveria ser um gráfico')
+##----------------------------------END MARKET---------------------------------##
 
-##------------------------- END OF FILE ---------------------------------##
+##------------------- END OF FILE ---------------------##

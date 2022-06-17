@@ -1,32 +1,26 @@
-
 <div class="container">
     <h3>Alertas</h3>
     <br>
-    <a 
-        class="btn btn-primary btn-sm d-grid gap-2" 
-        href="{% url 'create-alert' %}">Criar Alerta</a>
+    <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
 <hr>
 
 {% for alerta in alerta %}
-    {% if request.user == alerta.host %}
-    <div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
+{% if request.user == alerta.host %}
+<div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
     <h5>
         {{alerta.mercado}} - <a href="{% url 'view-alert' alerta.id %}">{{alerta.ativo}}</a>
         <small>{{alerta.updated}}</small>
     </h5>
-    
-    <a class="btn btn-warning btn-sm" 
-        href="{% url 'update-alert' alerta.id %}">Editar</a>
-    <a class="btn btn-danger btn-sm" 
-        href="{% url 'delete-alert' alerta.id %}">Apagar</a>
-    
 
-    <a class="btn btn-secondary btn-sm" 
-        href="{% url 'user-profile' alerta.host.id %}">
+    <a class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
+    <a class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+
+
+    <a class="btn btn-secondary btn-sm" href="{% url 'user-profile' alerta.host.id %}">
         @{{alerta.host.username}}
     </a>
     <br><br>
-    </div>
-    {% endif %}
+</div>
+{% endif %}
 {% endfor %}

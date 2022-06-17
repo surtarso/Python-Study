@@ -6,11 +6,9 @@
     <a href="{% url 'forum' %}">All</a>
 </div>
 
-
 {% for topic in topics %}
 <div>
-    <a
-        style="margin: 3px"
+    <a  style="margin: 3px"
         class="btn btn-secondary btn-sm" 
         href="{% url 'forum' %}?q={{ topic.name }}">{{ topic.name }}</a>
 </div>
