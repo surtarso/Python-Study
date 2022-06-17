@@ -82,6 +82,6 @@ def userProfile(request, pk):
         'rooms':rooms,
         'room_messages':room_messages,
         'topics':topics,
-        'alerta':alerta
+        'alertas':alerta
         }
     return render(request, 'mainapp/users/profile.html', contexto)

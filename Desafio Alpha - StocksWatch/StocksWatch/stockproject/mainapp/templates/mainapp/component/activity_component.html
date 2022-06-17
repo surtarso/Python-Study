@@ -1,6 +1,13 @@
+
+{% if alertas and not room_messages %}
+<h3>Alertas Recentes</h3>
+{% else %}
 <h3>Atividade Recente</h3>
+{% endif %}
 <hr>
-{% comment %} MENSAGENS {% endcomment %}
+
+
+{% comment %} MENSAGENS (atividade recente) {% endcomment %}
 {% for message in room_messages %}
 <div>
     <small>
@@ -21,7 +28,7 @@
 {% endfor %}
 
 
-{% comment %} ALERTAS {% endcomment %}
+{% comment %} ALERTAS (alertas recentes) {% endcomment %}
 {% for alerta in alertas %}
 <div>
     {% if request.user == alerta.host %}
