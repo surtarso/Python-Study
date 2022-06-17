@@ -94,3 +94,9 @@ class Message(models.Model):  # one to many relationship
 
     def __str__(self):
         return self.body[0:50]  # limits message to 50 chars
+
+
+
+class StockDetail(models.Model):
+    stock = models.CharField(max_length=255, unique=True)
+    user = models.ManyToManyField(User)

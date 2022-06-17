@@ -14,11 +14,12 @@ app.conf.update(timezone = 'America/Sao_Paulo')
 app.config_from_object(settings, namespace='CELERY')
 
 app.conf.beat_schedule = {
-    'every-10-seconds' : {
-        'task' : 'mainapp.tasks.update_stock',
-        'schedule' : 10,
-        'args' : (['ITSA4', 'CIEL3'],)
-    },
+    # 'every-10-seconds' : {
+    #     'task' : 'mainapp.tasks.update_stock',
+    #     'schedule' : 10,
+    #     'args' : (['ITSA4', 'CIEL3'],)
+    # },
+    
 }
 
 app.autodiscover_tasks()

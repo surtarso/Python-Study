@@ -14,7 +14,7 @@ import plotly.graph_objs as go
 from django.contrib.auth.decorators import login_required
 #models
 from mainapp.models import Mercado
-
+from asgiref.sync import sync_to_async
 
 
 
@@ -29,10 +29,21 @@ def stockPicker(request):
     return render(request, 'mainapp/stocks/stockpicker.html', {'stockpicker':stock_picker})
 
 
+# @sync_to_async
+# def checkAuthenticated(request):
+#     if not request.user.is_authenticated:
+#         return False
+#     else:
+#         return True
 
 ##------------------------------------------------------STOCK TRACKER:
 #recebe o submit ou do stockpicker ou do searchbar
+@login_required(login_url='login')
 def stockTracker(request):
+    # is_logged = checkAuthenticated(request)
+    # if not is_logged:
+    #     return HttpResponse("Precisa estar logado")
+
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
     #cria um dicionario para os papeis escolhidos
@@ -51,7 +62,6 @@ def stockTracker(request):
     n_threads = len(stockpicker)
     thread_list = []
     que = queue.Queue()
-    start = time()
 
     #adiciona os papeis escolhidos para a tabela (single thread)
     # for i in stockpicker:
@@ -75,13 +85,9 @@ def stockTracker(request):
     while not que.empty():
         result = que.get()
         data.update(result)
-    #time taken for get_quote_table() operations
-    end = time()
-    time_taken = end - start
-    print(time_taken)
-    #prints data and send to the browser
-    print(data)
-    return render(request, 'mainapp/stocks/stocktracker.html', {'data': data})
+
+    contexto = {'data':data, 'room_name':'track'}
+    return render(request, 'mainapp/stocks/stocktracker.html', contexto)
 
 
 
