@@ -8,16 +8,16 @@ urlpatterns = [
     path('favicon.ico', RedirectView.as_view(
         url=staticfiles_storage.url('mainapp/images/favicon.ico'))),
 
-    #----- HOME
+    #----- HOME (views.views_home.py)
     path('', views.home, name="home"),
 
-    #----- USER
+    #----- USER (views.views_user.py)
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
     path('profile/<str:pk>/', views.userProfile, name="user-profile"),
 
-    #----- FORUM
+    #----- FORUM (views.views_forum.py)
     path('forum/', views.forum, name="forum"),  # forums "home"
     path('room/<str:pk>/', views.room, name="room"),
     path('create-room/', views.createRoom, name="create-room"),
@@ -25,7 +25,7 @@ urlpatterns = [
     path('delete-room/<str:pk>/', views.deleteRoom, name="delete-room"),
     path('delete-message/<str:pk>/', views.deleteMessage, name="delete-message"),
 
-    #----- ALERTS
+    #----- ALERTS (views.views_alert.py)
     path('alerts/', views.alerts, name="alerts"),  # alerts "home"
     path('alert/<str:pk>/', views.alertView, name="view-alert"),
     path('create-alert/', views.createAlert, name="create-alert"),
@@ -33,7 +33,7 @@ urlpatterns = [
     path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),
 
     
-    #----- STOCKS (picker/tracker/graph)
+    #----- STOCKS (views.views_stocks.py)
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
     path('graph', views.configGraph, name="graph"),
