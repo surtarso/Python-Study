@@ -32,10 +32,9 @@ urlpatterns = [
     path('update-alert/<str:pk>/', views.updateAlert, name="update-alert"),
     path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),
 
-    #----- STOCKS (picker/tracker)
+    
+    #----- STOCKS (picker/tracker/graph)
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
-    
-    # graph(wip)
-    path('graph', views.configGraph, name="graph")
+    path('graph', views.configGraph, name="graph"),
 ]

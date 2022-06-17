@@ -3,7 +3,7 @@ from django.db.models import Q
 #multithreading
 import queue
 from threading import Thread
-from time import time, sleep
+from time import time
 #error handling
 from django.http import HttpResponse
 from django.contrib import messages
@@ -16,12 +16,10 @@ import plotly.graph_objs as go
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import UserCreationForm
 #models
-from .models import Alerta, Mercado, Message, Room, Topic  #, AlarmIbovespa
+from .models import Alerta, Mercado, Message, Room, Topic
 from .forms import RoomForm, AlertForm, SignUpForm
-#iframe security (graph attempts...)
-from django.views.decorators.clickjacking import xframe_options_exempt
+
 
 
 
@@ -423,36 +421,17 @@ def stockTracker(request):
     print(data)
     return render(request, 'mainapp/stocktracker.html', {'data': data})
 
-##------------------------- END OF FILE ---------------------------------##
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-########-------------------WIP-------------------------########
 ##---------------------------------------------------GRAFICOS:
-@xframe_options_exempt  ## ok to load in iframe
 def configGraph(request):
     print("REQUEST chegou em configGraph! : ", request)
 
-    if request.method == 'GET' and request != None:
+    if request.method == 'GET' and request is not None:
         
         ticker = request.GET.get('graph')
-        print("DEVERIA SER UM TICKER: -->", ticker)
-        # data = yf.Ticker(ticker+".SA").history("max")
-        data = yf.Ticker("ITSA4.SA").history("max")
+        data = yf.Ticker(ticker+".SA").history("max")
+        #data = yf.Ticker("ITSA4.SA").history("max")
 
         fig = go.Figure()
 
@@ -484,3 +463,5 @@ def configGraph(request):
         return render(request, 'mainapp/graph.html', {'graph': graph})
     else:
         return HttpResponse('Eu deveria ser um gráfico')
+
+##------------------------- END OF FILE ---------------------------------##

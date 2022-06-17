@@ -69,22 +69,19 @@ StocksWatch - TRACKER
 <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-alert' %}">Criar Alerta</a>
 
-
-
-
         
-{% comment %} ----WIP---- {% endcomment %}
-<form class="form-control">
-  {% csrf_token %}
-  <select class="form-select form-select-lg mb-3 gap-2">
+{% comment %} ----DROPDOWN MENU---- {% endcomment %}
+
+<form action='graph' class="form-control">
+  <select name="graph" class="form-select form-select-lg mb-3 gap-2">
     <option selected>Escolha um ativo:</option>
     {% for key, value in data.items %}
-      <option name={{key}} type="text" value={{forloop.counter}}>{{ key }}</option>
+      <option name={{key}} type="text" value={{key}}>{{ key }}</option>
     {% endfor %}
   </select>
 
   <div class="d-grid gap-2">
-    <a class="btn btn-primary" href="{% url 'graph' %}">Histórico</a>
+    <button class="btn btn-primary" type="submit">Histórico</button>
   </div>
 </form>
 
