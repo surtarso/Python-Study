@@ -340,18 +340,9 @@ def deleteAlert(request, pk):
 ## ------------------------------------------------------STOCK PICKER:
 @login_required(login_url='login')
 def stockPicker(request):
-    #popula a lista de mercado pelo yahoo-fin
-    # stock_picker = tickers_ibovespa()  # <--- modo dinamico online
-    stock_picker = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
-            'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
-            'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
-            'CVCB3', 'CYRE3', 'ECOR3', 'EGIE3', 'ELET3', 'ELET6', 'EMBR3', 'ENBR3', 
-            'ENGI11', 'EQTL3', 'FLRY3', 'GGBR4', 'GNDI3', 'GOAU4', 'GOLL4', 'HAPV3', 
-            'HGTX3', 'HYPE3', 'IGTA3', 'IRBR3', 'ITSA4', 'ITUB4', 'JBSS3', 'KLBN11', 
-            'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
-            'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
-            'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
-            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']  ## <-- modo develp hardcoded
+
+    mercado = Mercado.objects.get(name="IBOV")
+    stock_picker = mercado.ativo_set.all()
     
     return render(request, 'mainapp/stockpicker.html', {'stockpicker':stock_picker})
 
@@ -364,19 +355,8 @@ def stockTracker(request):
     stockpicker = request.GET.getlist('stockpicker')
     #cria um dicionario para os papeis escolhidos
     data = {}
-
-    #checa com os papeis do ibovespa (yahoo-fin)
-    # available_stocks = tickers_ibovespa()  # <--- modo dinamico online
-    available_stocks = ['ABEV3', 'AZUL4', 'B3SA3', 'BBAS3', 'BBDC3', 'BBDC4', 'BBSE3', 
-            'BEEF3', 'BPAC11', 'BRAP4', 'BRDT3', 'BRFS3', 'BRKM5', 'BRML3', 'BTOW3', 
-            'CCRO3', 'CIEL3', 'CMIG4', 'COGN3', 'CPFE3', 'CRFB3', 'CSAN3', 'CSNA3', 
-            'CVCB3', 'CYRE3', 'ECOR3', 'EGIE3', 'ELET3', 'ELET6', 'EMBR3', 'ENBR3', 
-            'ENGI11', 'EQTL3', 'FLRY3', 'GGBR4', 'GNDI3', 'GOAU4', 'GOLL4', 'HAPV3', 
-            'HGTX3', 'HYPE3', 'IGTA3', 'IRBR3', 'ITSA4', 'ITUB4', 'JBSS3', 'KLBN11', 
-            'LAME4', 'LREN3', 'MGLU3', 'MRFG3', 'MRVE3', 'MULT3', 'NTCO3', 'PCAR3', 
-            'PETR3', 'PETR4', 'QUAL3', 'RADL3', 'RAIL3', 'RENT3', 'SANB11', 'SBSP3', 
-            'SULA11', 'SUZB3', 'TAEE11', 'TIMP3', 'TOTS3', 'UGPA3', 'USIM5', 'VALE3', 
-            'VIVT4', 'VVAR3', 'WEGE3', 'YDUQ3']  ## <-- modo develop hardcoded
+    #checa com os papeis existentes do ibovespa (yahoo-fin)
+    available_stocks = tickers_ibovespa()
 
     #errorcheck
     for i in stockpicker:

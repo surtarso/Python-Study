@@ -1,10 +1,12 @@
 from django.forms import ModelForm
-from .models import Room, Alerta
+from .models import Room, Alerta, Mercado
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
+from yahoo_fin.stock_info import *
 
 
+##------------------------------REGISTER FORM:
 class SignUpForm(UserCreationForm):
     email = forms.EmailField()
 
