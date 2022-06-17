@@ -3,7 +3,8 @@ import os
 #celery
 from celery import Celery
 from django.conf import settings
-from celery.schedules import crontab
+
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stockproject.settings')
 
@@ -19,7 +20,7 @@ app.conf.beat_schedule = {
     #     'schedule' : 10,
     #     'args' : (['ITSA4', 'CIEL3'],)
     # },
-    
+    ### IS THIS WHERE I WILL ADD THE EMAILS???
 }
 
 app.autodiscover_tasks()

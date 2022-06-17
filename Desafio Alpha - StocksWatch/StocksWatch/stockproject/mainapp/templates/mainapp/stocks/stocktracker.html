@@ -84,8 +84,9 @@ StocksWatch - Tracker
     <button class="btn btn-primary" type="submit">Histórico</button>
   </div>
 </form>
-
 </div>
+
+{% comment %}--- WEBSOCKET - JSON - LIVE STOCK ----{% endcomment %}
 {{ room_name|json_script:"room-name" }}
 <script>
   const roomName = JSON.parse(document.getElementById('room-name').textContent)

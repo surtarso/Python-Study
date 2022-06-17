@@ -1,6 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import date
+
+
+
+##---------------------------------------LIVE UPDATE STOCK:
+class StockDetail(models.Model):
+    stock = models.CharField(max_length=255, unique=True)
+    user = models.ManyToManyField(User)
 
 
 ##------------------------------------------------MERCADOS:
@@ -9,6 +15,7 @@ class Mercado(models.Model):
 
     def __str__(self):
         return self.name
+
 
 ##------------------------------------------------ATIVOS:
 class Ativo(models.Model):
@@ -96,7 +103,3 @@ class Message(models.Model):  # one to many relationship
         return self.body[0:50]  # limits message to 50 chars
 
 
-
-class StockDetail(models.Model):
-    stock = models.CharField(max_length=255, unique=True)
-    user = models.ManyToManyField(User)

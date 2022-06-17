@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Room, Alerta, Mercado
+from .models import Room, Alerta
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms

@@ -14,7 +14,7 @@ import plotly.graph_objs as go
 from django.contrib.auth.decorators import login_required
 #models
 from mainapp.models import Mercado
-from asgiref.sync import sync_to_async
+
 
 
 
@@ -26,23 +26,15 @@ def stockPicker(request):
     mercado = Mercado.objects.get(name="IBOV")
     stock_picker = mercado.ativo_set.all()
     
-    return render(request, 'mainapp/stocks/stockpicker.html', {'stockpicker':stock_picker})
+    contexto = {'stockpicker':stock_picker}
+    return render(request, 'mainapp/stocks/stockpicker.html', contexto)
 
 
-# @sync_to_async
-# def checkAuthenticated(request):
-#     if not request.user.is_authenticated:
-#         return False
-#     else:
-#         return True
 
 ##------------------------------------------------------STOCK TRACKER:
 #recebe o submit ou do stockpicker ou do searchbar
 @login_required(login_url='login')
 def stockTracker(request):
-    # is_logged = checkAuthenticated(request)
-    # if not is_logged:
-    #     return HttpResponse("Precisa estar logado")
 
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
@@ -56,7 +48,7 @@ def stockTracker(request):
         if i in available_stocks:
             pass
         else:
-            return HttpResponse("Ocorreu um erro.")
+            return HttpResponse("Ocorreu um erro: Ativo não identificado neste mercado")
     
     #teste multithreading
     n_threads = len(stockpicker)
@@ -123,7 +115,7 @@ def configGraph(request):
             )
         )
 
-        graph = fig.to_html(full_html=True, default_height=500, default_width=700)
+        graph = fig.to_html(full_html=True, default_height=600, default_width=800)
         # graph = fig.show()
         return render(request, 'mainapp/stocks/graph.html', {'graph': graph})
     else:
