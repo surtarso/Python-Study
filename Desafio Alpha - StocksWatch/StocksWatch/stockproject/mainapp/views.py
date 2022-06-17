@@ -248,14 +248,16 @@ def alerts(request):
 
     alerta = Alerta.objects.filter(
         Q(mercado__name__icontains=q) |
-        Q(ativo__icontains=q)
+        Q(ativo__ticker__icontains=q)
         )
 
     mercado = Mercado.objects.all()
     alerta_count = alerta.count()
+    alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
 
     contexto = { # itera em alerts.html
         'alerta': alerta,
+        'alertas': alertas,
         'mercado': mercado,
         'alerta_count':alerta_count,
         }
@@ -285,7 +287,7 @@ def createAlert(request):
     if request.method == 'POST':  #get that data
         form = AlertForm(request.POST)
         if form.is_valid():
-            #create an instance of a room
+            #create an instance of an alert
             alert = form.save(commit=False)
             #a host will be added based on whos logged in
             alert.host = request.user  #set the host
