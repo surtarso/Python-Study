@@ -2,7 +2,6 @@ from django.shortcuts import render
 #multithreading
 import queue
 from threading import Thread
-from time import time
 #error handling
 from django.http import HttpResponse
 #stocks info
