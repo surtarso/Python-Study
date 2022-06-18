@@ -1,4 +1,4 @@
-# [Desafio Alpha:](https://github.com/surtarso/Python-Projects/tree/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch)
+# [Desafio Alpha](https://github.com/surtarso/Python-Projects/tree/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch)
 
   - Obter periodicamente as cotações de alguma fonte pública qualquer e armazená-las, em uma periodicidade configurável para cada túnel, para consulta posterior
   - Expor uma interface web para permitir consultar os preços armazenados, configurar os ativos a serem monitorados e parametrizar os túneis de preço de cada ativo e periodicidade da checagem de cada ativo
