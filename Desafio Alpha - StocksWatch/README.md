@@ -6,6 +6,7 @@
   - Traduzir o conceito para Django.
 ## Projeto:
   - [StocksWatch](https://github.com/surtarso/Python-Projects/tree/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch)
+  <img src="shots/face.png" width=545 height=200>
 
 ## Conceito:
   - [*Stocks_App_Concept.py*](Stocks_App_Concept.py)
