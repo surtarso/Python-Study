@@ -6,7 +6,8 @@ Assim como também o "views.py" foi repartido e separado em [views](views) de ac
 Os formuários foram feitos em ModelForm fazendo assim o uso de classes e suas propriedades para manipulação da DB.
 
 <h5>Admin Panel:</h5>
-<img src="https://raw.githubusercontent.com/surtarso/Python-Projects/main/Desafio%20Alpha%20-%20StocksWatch/shots/admin_alerta.png" width=545 height=410>
-
-<h5>Hierarquia: User ManyToMany Alertas OneToMany Ativos ManyToOne Mercado</h5>
 <img src="https://raw.githubusercontent.com/surtarso/Python-Projects/main/Desafio%20Alpha%20-%20StocksWatch/shots/admin_home.png" width=545 height=410>
+
+
+<h5>Alertas na DB:</h5>
+<img src="https://raw.githubusercontent.com/surtarso/Python-Projects/main/Desafio%20Alpha%20-%20StocksWatch/shots/admin_alerta.png" width=545 height=410>
