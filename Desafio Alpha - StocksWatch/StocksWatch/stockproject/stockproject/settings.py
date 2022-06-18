@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,6 +27,7 @@ SECRET_KEY = 'django-insecure-h!&-fg8y+^*_5npjhdrt&y7(ifp^1vg5a&e49563b&#xde153%
 DEBUG = True
 
 ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tarsogalvao.ddns.net', 'surtarso.ddns.net']
 
 
 # Application definition
@@ -42,7 +44,7 @@ INSTALLED_APPS = [
     'django_celery_results',
     'django_celery_beat',
     'channels',
-    'schedule',
+    'schedule'
 ]
 
 MIDDLEWARE = [
@@ -148,3 +150,19 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# REDIS related settings
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = '6379'
+# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+
+# Deploy settings
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_SECONDS = 5600
+
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+
+# SECURE_SSL_REDIRECT = True
