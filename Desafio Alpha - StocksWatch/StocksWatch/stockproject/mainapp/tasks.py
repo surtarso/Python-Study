@@ -6,25 +6,25 @@ import queue
 from channels.layers import get_channel_layer
 import simplejson as json
 
+from mainapp.models import Alerta
+
 
 @shared_task(bind = True)
 def update_stock(self, stockpicker):
     data = {}
     available_stocks = tickers_ibovespa()
 
-    #errorcheck
+    # remove acoes que n estao sendo mais solicitadas:
     for i in stockpicker:
         if i in available_stocks:
             pass
         else:
             stockpicker.remove(i)
     
-    #teste multithreading
     n_threads = len(stockpicker)
     thread_list = []
     que = queue.Queue()
 
-    #adiciona os papeis escolhidos para a tabela (multi thread)
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
@@ -36,12 +36,12 @@ def update_stock(self, stockpicker):
 
     for thread in thread_list:
         thread.join()
-    #update value
+    
     while not que.empty():
         result = que.get()
         data.update(result)
 
-
+    # manda update das acoes existentes:
     channel_layer = get_channel_layer()
     loop = asyncio.new_event_loop()
 
@@ -52,3 +52,4 @@ def update_stock(self, stockpicker):
     }))
 
     return 'Done.'
+

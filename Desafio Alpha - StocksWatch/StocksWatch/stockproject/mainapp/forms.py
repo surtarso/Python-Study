@@ -28,3 +28,4 @@ class AlertForm(ModelForm):
         model = Alerta
         fields = '__all__'
         exclude = ['host']
+        

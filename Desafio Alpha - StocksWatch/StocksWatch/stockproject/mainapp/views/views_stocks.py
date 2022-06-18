@@ -116,7 +116,8 @@ def configGraph(request):
         )
 
         graph = fig.to_html(full_html=True, default_height=600, default_width=800)
-        # graph = fig.show()
-        return render(request, 'mainapp/stocks/graph.html', {'graph': graph})
+        
+        contexto = {'graph': graph, 'ticker':ticker}
+        return render(request, 'mainapp/stocks/graph.html', contexto)
     else:
-        return HttpResponse('Eu deveria ser um gráfico')
+        return HttpResponse('Ocorreu um erro.')

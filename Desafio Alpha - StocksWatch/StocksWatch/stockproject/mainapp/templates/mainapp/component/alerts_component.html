@@ -9,7 +9,7 @@
 {% if request.user == alerta.host %}
 <div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
     <h5>
-        {{alerta.mercado}} - <a href="{% url 'view-alert' alerta.id %}">{{alerta.ativo}}</a>
+        {{alerta.mercado}} - <a href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
         <small>{{alerta.updated}}</small>
     </h5>
 
