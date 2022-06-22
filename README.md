@@ -1,3 +1,3 @@
 # Python-Projects
-Python studies and projects
+Python and Django studies
 
