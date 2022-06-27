@@ -131,6 +131,7 @@ def showCarteira(request):
 
     carteira = CarteiraAtivo.objects.all()
     
+    #I should multithead this!!!! later...
     for i in carteira:
         if i.user == request.user:  #pega apensas ativos do usuario atual!
             result = get_quote_table(str(i)+'.SA')
