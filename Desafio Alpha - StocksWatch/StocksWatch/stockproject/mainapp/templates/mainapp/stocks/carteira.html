@@ -10,50 +10,73 @@ StocksWatch - Carteira
 
 {% block body %}
 <div class="container">
-<h2>Carteira</h2>
-<table class="table-container">
-<table class="table">
+    <div>
+        <h2>Carteira</h2>
+        <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-carteira' %}">Adicionar</a>
+        <table class="table-container">
+            <table class="table">
 
-    <thead>
-      <tr>
-        <th scope="col">Nota</th>
-        <th scope="col">Ativo</th>
-        <th scope="col">Preço</th>
-        <th scope="col">P.M.</th>
-        <th scope="col">52Wk</th>
-        <th scope="col">Quantidade</th>
-        <th scope="col">Total</th>
-        <th scope="col">Remuneração</th>
-      </tr>
-    </thead>
+                <thead>
+                    <tr>
+                        <th scope="col">Nota</th>
+                        <th scope="col">Ativo</th>
+                        <th scope="col">Preço</th>
+                        <th scope="col">P.M.</th>
+                        <th scope="col">52Wk</th>
+                        <th scope="col">Quantidade</th>
+                        <th scope="col">Total</th>
+                        <th scope="col">Remuneração</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                </thead>
 
-    <tbody>
-        {% for key, value in data.items %}
-        <tr>
-          <th scope="row">{{key.nota}}</th>
-          <td>{{key}}</td>
-          <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>
-          <td id='{{key}}_pm'>{{key.preco_medio}}</td>
-          <td id='{{key}}_fiftytwo'>{{ value|get:'52 Week Range'}}</td>
-          <td id='{{key}}_qnt'>{{key.quantidade}}</td>
+                <tbody>
+                    {% for key, value in data.items %}
+                    <tr>
+                        <th scope="row">{{key.nota}}</th>
+                        <td>{{key}}</td>
+                        <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>
+                        <td id='{{key}}_pm'>{{key.preco_medio}}</td>
+                        <td id='{{key}}_fiftytwo'>{{ value|get:'52 Week Range'}}</td>
+                        <td id='{{key}}_qnt'>{{key.quantidade}}</td>
 
-          <!-- Total -->
-          <td id='{{key}}_total'><script>
-            result = document.getElementById('{{key}}_qnt').innerHTML * document.getElementById('{{key}}_preco').innerHTML;
-            document.getElementById('{{key}}_total').innerHTML = result.toFixed(2);
-          </script></td>
+                        <!-- Total -->
+                        <td id='{{key}}_total'>
+                            <script>
+                                result = document.getElementById('{{key}}_qnt').innerHTML * document.getElementById('{{key}}_preco').innerHTML;
+                                document.getElementById('{{key}}_total').innerHTML = result.toFixed(2);
+                            </script>
+                        </td>
 
-          <!-- Remuneracao -->
-          <td id='{{key}}_rm'><script>
-            result = (
-                document.getElementById('{{key}}_total').innerHTML / 
-                (document.getElementById('{{key}}_qnt').innerHTML * document.getElementById('{{key}}_pm').innerHTML)
-                ) -1
-            document.getElementById('{{key}}_rm').innerHTML = (result*100).toFixed(2) + '%';
-          </script></td>
+                        <!-- Remuneracao -->
+                        <td id='{{key}}_rm'>
+                            <script>
+                                result = (
+                                    document.getElementById('{{key}}_total').innerHTML /
+                                    (document.getElementById('{{key}}_qnt').innerHTML * document.getElementById('{{key}}_pm').innerHTML)
+                                ) - 1
+                                document.getElementById('{{key}}_rm').innerHTML = (result * 100).toFixed(2) + '%';
+                            </script>
+                        </td>
 
-        </tr>
-        {% endfor %}
-    </tbody>
+                        <td>
+                            <!-- manipulacao de ativos/carteira -->
+                            <a class="btn btn-warning btn-sm" 
+                                href="{% url 'update-carteira' key.id %}">Editar</a>
+                            <a class="btn btn-danger btn-sm" 
+                                href="{% url 'delete-carteira' key.id %}">Apagar</a>
+                        </td>
 
+                    </tr>
+                    {% endfor %}
+                </tbody>
+    </div>
+
+    {% comment %} <div>
+        <button>Adicionar Ativo</button>
+        <button>Remover Ativo</button>
+        <button>Editar Ativo</button>
+    </div> {% endcomment %}
+
+</div>
 {% endblock body %}

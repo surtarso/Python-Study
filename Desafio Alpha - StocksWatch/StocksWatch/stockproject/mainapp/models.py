@@ -37,24 +37,16 @@ class Ativo(models.Model):
 ##---------------------------------------CARTEIRA DE ATIVOS:
 class CarteiraAtivo(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
-
     ativo = models.ForeignKey(Ativo, on_delete=models.SET_NULL, null=True)
-    # preco = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     preco_medio = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     quantidade = models.IntegerField(default=0)
-    # tenho = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) #preco * quantidade
-    # remuneracao = models.DecimalField(max_digits=5, decimal_places=2, default=0.00) #(tenho / (quantidade * preco_medio)) -1
     nota = models.IntegerField(default=0)
-
-    # v_investido = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    # v_final = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) # sum(tenho)
-    # rentabilidade = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) # (v_final/v_investido)-1
 
     class Meta:
         ordering = ['nota']
 
     def __str__(self):
-        return self.ativo.ticker
+        return self.ativo.ticker #, self.user  #returns a tuple?!??
 
 
 

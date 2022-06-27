@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 #multithreading
 import queue
 from threading import Thread
@@ -11,6 +11,7 @@ import yfinance as yf   #data for graphs
 import plotly.graph_objs as go
 #log in/ou register
 from django.contrib.auth.decorators import login_required
+from mainapp.forms import CarteiraForm
 #models
 from mainapp.models import Mercado, CarteiraAtivo
 
@@ -137,3 +138,61 @@ def showCarteira(request):
 
     contexto = {'data':data}
     return render(request, 'mainapp/stocks/carteira.html', contexto)
+
+
+
+##-----------------------------------------------------CREATE ATIVO CARTEIRA:
+@login_required(login_url='login')
+def createCarteira(request):
+    #get class reference
+    form = CarteiraForm()
+    #standard form on the POST method
+    if request.method == 'POST':  #get that data
+        form = CarteiraForm(request.POST)
+        if form.is_valid():
+            #create an instance of an alert
+            carteira = form.save(commit=False)
+            #a host will be added based on whos logged in
+            carteira.user = request.user  #set the host
+            carteira.save()  #save it
+            return redirect('carteira') 
+
+    contexto = {'carteira_form':form}
+    return render(request, 'mainapp/stocks/carteira_form.html', contexto)
+
+
+
+##------------------------------------------------------UPDATE ATIVO CARTEIRA:
+@login_required(login_url='login')
+def updateCarteira(request, pk):
+    carteira = CarteiraAtivo.objects.get(id=pk)
+    form = CarteiraForm(instance=carteira)
+
+    #prevents logged in users to alter other users posts
+    if request.user != carteira.user:
+        return HttpResponse("you are not allowed here")
+
+    if request.method == 'POST':
+        form = CarteiraForm(request.POST, instance=carteira)
+        if form.is_valid():
+            form.save()
+            return redirect('carteira')
+
+    contexto = {'carteira_form':form}
+    return render(request, 'mainapp/stocks/carteira_form.html', contexto)
+
+
+##------------------------------------------------------DELETE ATIVO CARTEIRA:
+@login_required(login_url='login')
+def deleteCarteira(request, pk):
+    carteira = CarteiraAtivo.objects.get(id=pk)
+
+    #prevents logged in users to delete other users posts
+    if request.user != carteira.user:
+        return HttpResponse("it does not belong to you")
+
+    if request.method == 'POST':
+        carteira.delete()
+        return redirect('alerts')
+
+    return render(request, 'mainapp/basic_delete.html', { 'obj':carteira })

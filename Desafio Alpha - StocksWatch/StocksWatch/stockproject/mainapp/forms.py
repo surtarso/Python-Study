@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Room, Alerta
+from .models import CarteiraAtivo, Room, Alerta
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
@@ -28,4 +28,10 @@ class AlertForm(ModelForm):
         model = Alerta
         fields = '__all__'
         exclude = ['host']
-        
+
+##--------------------------------FORMULARIO CARTEIRA:
+class CarteiraForm(ModelForm):
+    class Meta:
+        model = CarteiraAtivo
+        fields = '__all__'
+        exclude = ['user']

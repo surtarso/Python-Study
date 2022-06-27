@@ -38,4 +38,7 @@ urlpatterns = [
     path('stocktracker', views.stockTracker, name='stocktracker'),
     path('graph', views.configGraph, name="graph"),
     path('carteira', views.showCarteira, name="carteira"),
+    path('create-carteira/', views.createCarteira, name="create-carteira"),
+    path('update-carteira/<str:pk>/', views.updateCarteira, name="update-carteira"),
+    path('delete-carteira/<str:pk>/', views.deleteCarteira, name="delete-carteira"),
 ]

@@ -1,0 +1,17 @@
+{% extends 'mainapp/basic.html' %}
+
+{% block title %}
+StocksWatch - Carteira
+{% endblock title %}}
+
+{% block body %}
+<div class="container" style="margin-top: 20px">
+    <form class="form-control" method="POST" action="">
+        {% csrf_token %}
+
+        {{carteira_form.as_p}}
+
+        <input type="submit" value="Atualizar" />
+    </form>
+</div>
+{% endblock body %}
