@@ -40,15 +40,20 @@ def stockTracker(request):
     stockpicker = request.GET.getlist('stockpicker')
     #cria um dicionario para os papeis escolhidos
     data = {}
-    #checa com os papeis existentes do ibovespa (yahoo-fin)
-    available_stocks = tickers_ibovespa()
 
-    #errorcheck
-    for i in stockpicker:
-        if i in available_stocks:
-            pass
-        else:
-            return HttpResponse("Ocorreu um erro: Ativo não identificado neste mercado")
+    #checa com os papeis existentes do ibovespa (yahoo-fin)
+    # available_stocks = tickers_ibovespa()  ## tickers ibovespa nao tem small caps!! =((((
+    
+    ### por algum motivo nao funfa!!!  =((
+    # mercado = Mercado.objects.get(name="IBOV")
+    # available_stocks = mercado.ativo_set.all()
+
+    # #errorcheck  # tive que desligar para ter small caps... 
+    # for i in stockpicker:
+    #     if i in available_stocks:
+    #         pass
+    #     else:
+    #         return HttpResponse("Ocorreu um erro: Ativo não identificado neste mercado")
     
     #teste multithreading
     n_threads = len(stockpicker)
@@ -130,12 +135,34 @@ def showCarteira(request):
     data = {}
 
     carteira = CarteiraAtivo.objects.all()
-    
-    #I should multithead this!!!! later...
+    carteira_ativa = []
+
     for i in carteira:
         if i.user == request.user:  #pega apensas ativos do usuario atual!
-            result = get_quote_table(str(i)+'.SA')
-            data.update({i: result})
+            carteira_ativa.append(i)
+            print(carteira_ativa)
+            
+    ## multithreading:
+    n_threads = len(carteira_ativa)  #numero de threads de acordo com o numero de ativos do usuario
+    thread_list = []
+    que = queue.Queue()
+
+    for i in range(n_threads):
+        thread = Thread(
+            target = lambda q,
+            arg1: q.put({carteira_ativa[i]: get_quote_table(str(arg1)+'.SA')}),
+            args = (que, carteira_ativa[i])
+            )
+        thread_list.append(thread)
+        thread_list[i].start()
+
+    for thread in thread_list:
+        thread.join()
+
+    #update value
+    while not que.empty():
+        result = que.get()
+        data.update(result)
 
     contexto = {'data':data}
     return render(request, 'mainapp/stocks/carteira.html', contexto)

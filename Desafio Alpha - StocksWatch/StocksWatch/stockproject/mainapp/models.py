@@ -21,9 +21,9 @@ class Mercado(models.Model):
 ##------------------------------------------------ATIVOS:
 class Ativo(models.Model):
     
-    user = models.ManyToManyField(User)
+    # user = models.ManyToManyField(User)
     mercado = models.ForeignKey(Mercado, on_delete=models.CASCADE)
-    ticker = models.CharField(max_length=30, default="CHOOSE")
+    ticker = models.CharField(max_length=30, default="CHOOSE/ADD")
 
     class Meta:
         # ordena por ordem alfabetica
