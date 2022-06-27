@@ -129,9 +129,11 @@ def showCarteira(request):
     data = {}
 
     carteira = CarteiraAtivo.objects.all()
+    
     for i in carteira:
-        result = get_quote_table(str(i)+'.SA')
-        data.update({i: result})
+        if i.user == request.user:  #pega apensas ativos do usuario atual!
+            result = get_quote_table(str(i)+'.SA')
+            data.update({i: result})
 
     contexto = {'data':data}
     return render(request, 'mainapp/stocks/carteira.html', contexto)
