@@ -12,7 +12,7 @@ import plotly.graph_objs as go
 #log in/ou register
 from django.contrib.auth.decorators import login_required
 #models
-from mainapp.models import Mercado
+from mainapp.models import Mercado, CarteiraAtivo
 
 
 
@@ -120,3 +120,17 @@ def configGraph(request):
         return render(request, 'mainapp/stocks/graph.html', contexto)
     else:
         return HttpResponse('Ocorreu um erro.')
+
+
+@login_required(login_url='login')
+def showCarteira(request):
+
+    data = {}
+
+    carteira = CarteiraAtivo.objects.all()
+    for i in carteira:
+        result = get_quote_table(str(i)+'.SA')
+        data.update({i: result})
+
+    contexto = {'data':data}
+    return render(request, 'mainapp/stocks/carteira.html', contexto)

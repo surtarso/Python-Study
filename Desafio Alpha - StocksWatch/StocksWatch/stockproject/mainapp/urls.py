@@ -37,4 +37,5 @@ urlpatterns = [
     path('stockpicker', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
     path('graph', views.configGraph, name="graph"),
+    path('carteira', views.showCarteira, name="carteira"),
 ]

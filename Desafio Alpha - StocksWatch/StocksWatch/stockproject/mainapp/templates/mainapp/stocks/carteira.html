@@ -1,0 +1,44 @@
+{% extends 'mainapp/basic.html' %}
+{% load static %}
+
+
+{% block title %}
+{% load myfilters %}
+StocksWatch - Carteira
+{% endblock title %}
+
+
+{% block body %}
+<div class="container">
+<h2>Carteira</h2>
+<table class="table-container">
+<table class="table">
+
+    <thead>
+      <tr>
+        <th scope="col">Nota</th>
+        <th scope="col">Ativo</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Quantidade</th>
+        <th scope="col">Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for key, value in data.items %}
+        <tr>
+          <th scope="row">{{key.nota}}</th>
+          <td>{{key}}</td>
+          <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>
+          <td id='{{key}}_qnt'>{{key.quantidade}}</td>
+
+          <td id='{{key}}_total'><script>
+            result = document.getElementById('{{key}}_qnt').innerHTML * document.getElementById('{{key}}_preco').innerHTML;
+            document.getElementById('{{key}}_total').innerHTML = result.toFixed(2);
+          </script></td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+{% endblock body %}
