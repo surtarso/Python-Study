@@ -134,13 +134,12 @@ def configGraph(request):
 def showCarteira(request):
     data = {}
 
-    carteira = CarteiraAtivo.objects.all()
+    carteiras = CarteiraAtivo.objects.all()
     carteira_ativa = []
 
-    for i in carteira:
+    for i in carteiras:
         if i.user == request.user:  #pega apensas ativos do usuario atual!
             carteira_ativa.append(i)
-            print(carteira_ativa)
             
     ## multithreading:
     n_threads = len(carteira_ativa)  #numero de threads de acordo com o numero de ativos do usuario
@@ -178,9 +177,9 @@ def createCarteira(request):
     if request.method == 'POST':  #get that data
         form = CarteiraForm(request.POST)
         if form.is_valid():
-            #create an instance of an alert
+            #create an instance
             carteira = form.save(commit=False)
-            #a host will be added based on whos logged in
+            #a user will be added based on whos logged in
             carteira.user = request.user  #set the host
             carteira.save()  #save it
             return redirect('carteira') 
@@ -196,7 +195,7 @@ def updateCarteira(request, pk):
     carteira = CarteiraAtivo.objects.get(id=pk)
     form = CarteiraForm(instance=carteira)
 
-    #prevents logged in users to alter other users posts
+    #prevents logged in users to alter other users things
     if request.user != carteira.user:
         return HttpResponse("you are not allowed here")
 
@@ -215,7 +214,7 @@ def updateCarteira(request, pk):
 def deleteCarteira(request, pk):
     carteira = CarteiraAtivo.objects.get(id=pk)
 
-    #prevents logged in users to delete other users posts
+    #prevents logged in users to delete other users things
     if request.user != carteira.user:
         return HttpResponse("it does not belong to you")
 
