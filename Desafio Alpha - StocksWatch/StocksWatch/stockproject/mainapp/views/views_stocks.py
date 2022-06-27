@@ -124,7 +124,6 @@ def configGraph(request):
 
 @login_required(login_url='login')
 def showCarteira(request):
-
     data = {}
 
     carteira = CarteiraAtivo.objects.all()

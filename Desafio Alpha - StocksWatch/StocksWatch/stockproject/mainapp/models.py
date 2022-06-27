@@ -39,8 +39,8 @@ class CarteiraAtivo(models.Model):
     user = models.ManyToManyField(User)
 
     ativo = models.ForeignKey(Ativo, on_delete=models.SET_NULL, null=True)
-    preco = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
-    # preco_medio = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    # preco = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    preco_medio = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     quantidade = models.IntegerField(default=0)
     # tenho = models.DecimalField(max_digits=10, decimal_places=2, default=0.00) #preco * quantidade
     # remuneracao = models.DecimalField(max_digits=5, decimal_places=2, default=0.00) #(tenho / (quantidade * preco_medio)) -1
