@@ -36,7 +36,7 @@ class Ativo(models.Model):
 
 ##---------------------------------------CARTEIRA DE ATIVOS:
 class CarteiraAtivo(models.Model):
-    user = models.ManyToManyField(User)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     ativo = models.ForeignKey(Ativo, on_delete=models.SET_NULL, null=True)
     # preco = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)

@@ -122,6 +122,8 @@ def configGraph(request):
         return HttpResponse('Ocorreu um erro.')
 
 
+
+##----------------------------------------------- CARTEIRA ATIVOS:
 @login_required(login_url='login')
 def showCarteira(request):
     data = {}
