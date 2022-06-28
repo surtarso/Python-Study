@@ -140,12 +140,11 @@ def showCarteira(request):
     for i in carteiras:
         if i.user == request.user:  #pega apensas ativos do usuario atual!
             carteira_ativa.append(i)
-            
+    
     ## multithreading:
     n_threads = len(carteira_ativa)  #numero de threads de acordo com o numero de ativos do usuario
     thread_list = []
     que = queue.Queue()
-
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
@@ -220,6 +219,6 @@ def deleteCarteira(request, pk):
 
     if request.method == 'POST':
         carteira.delete()
-        return redirect('alerts')
+        return redirect('carteira')
 
     return render(request, 'mainapp/basic_delete.html', { 'obj':carteira })
