@@ -14,7 +14,9 @@ StocksWatch - Carteira
 
 {% block body %}
 <div class="container">
-    <h2>Carteira</h2>
+    <br>
+    <h3>Carteira de Ações</h3>
+
     <table class="table-container">
         <table class="table">
 
@@ -74,20 +76,21 @@ StocksWatch - Carteira
     </table>
     <!-- adicionar novo ativo na carteira -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-carteira' %}">Adicionar Novo Ativo</a>
-</div>
-
-<div class='container'>   <!-- totais da carteira WIP -->
-    <small>Patrimônio:</small>
-    <small id='totais'></small>
     
-    <script>
-        var sum = 0;
-        {% for key, value in data.items %}
-        var value = document.getElementById('{{key}}_total').innerHTML;
-        sum += parseFloat(value);
-        {% endfor %}
-        document.getElementById('totais').innerHTML = sum;
-    </script>
+    <!-- totais da carteira WIP -->
+    <div style="float:right; padding: 15px;">
+        <big>Patrimônio:</big>
+        <big id='totais'></big>
+        <script>
+            var sum = 0;
+            {% for key, value in data.items %}
+                var value = document.getElementById('{{key}}_total').innerHTML;
+                sum += parseFloat(value);
+            {% endfor %}
+            document.getElementById('totais').innerHTML = sum.toFixed(2);
+        </script>
+    </div>
+
 </div>
 
 {% endblock body %}
