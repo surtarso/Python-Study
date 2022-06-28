@@ -17,9 +17,9 @@
             Mercado
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="/stockpicker">Ibovespa</a></li>
-            {% comment %} <li><a class="dropdown-item" href="#">S&P-500</a></li>
-            <li><a class="dropdown-item" href="#">Cryptomoedas</a></li> {% endcomment %}
+            <li><a class="dropdown-item" href="{% url 'stockpicker' %}">IBOV</a></li>
+            <li><a class="dropdown-item" href="{% url 'stockpicker' %}">IFIX</a></li>
+            {%comment%}<li><a class="dropdown-item" href="#">Cryptomoedas</a></li> {% endcomment %}
           </ul>
         </li>
 
