@@ -93,7 +93,7 @@ def configGraph(request):
 
     if request.method == 'GET' and request is not None:
         ticker = request.GET.get('graph')
-        data = yf.Ticker(ticker+".SA").history("max")
+        data = yf.Ticker(str(ticker)+".SA").history("max")
 
         fig = go.Figure()
 

@@ -29,6 +29,7 @@ StocksWatch - Carteira
                     <th scope="col">Total</th>
                     <th scope="col">Remuneração</th>
                     <th scope="col">Ações</th>
+                    <th scope="col">Histórico</th>
                 </tr>
             </thead>
 
@@ -58,8 +59,13 @@ StocksWatch - Carteira
                         </script>
                     </td>
                     <td>  <!-- manipulacao de ativos da carteira - excluir/editar -->
-                        <a class="btn btn-warning btn-sm" href="{% url 'update-carteira' key.id %}">E</a>
-                        <a class="btn btn-danger btn-sm" href="{% url 'delete-carteira' key.id %}">X</a>
+                        <a class="btn btn-warning btn-sm" href="{% url 'update-carteira' key.id %}">Edit</a>
+                        <a class="btn btn-danger btn-sm" href="{% url 'delete-carteira' key.id %}">Del</a>
+                    </td>
+                    <td>    <!-- historico em graficos -->
+                        <form action='graph'>
+                            <button class="btn btn-primary btn-sm" name='graph' value={{key}} type="submit">Gráfico</button>
+                        </form>
                     </td>
                 </tr>
                 {% endfor %}
@@ -68,6 +74,20 @@ StocksWatch - Carteira
     </table>
     <!-- adicionar novo ativo na carteira -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-carteira' %}">Adicionar Novo Ativo</a>
+</div>
+
+<div class='container'>   <!-- totais da carteira WIP -->
+    <small>Patrimônio:</small>
+    <small id='totais'></small>
+    
+    <script>
+        var sum = 0;
+        {% for key, value in data.items %}
+        var value = document.getElementById('{{key}}_total').innerHTML;
+        sum += parseFloat(value);
+        {% endfor %}
+        document.getElementById('totais').innerHTML = sum;
+    </script>
 </div>
 
 {% endblock body %}
