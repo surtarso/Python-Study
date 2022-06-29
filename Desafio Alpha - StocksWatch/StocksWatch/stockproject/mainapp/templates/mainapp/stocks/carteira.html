@@ -131,13 +131,22 @@ StocksWatch - Carteira
                         totais += parseFloat(total);
                     {% endfor %}
 
-                    // adiciona notas/notas(%) para "quero"
+                    // QUERO E TENHO EM PORCENTAGEM: notas/notas, tenho/total
                     {% for key, value in data.items %}
+                        // QUERO em %:
                         document.getElementById('{{key}}_quero').innerHTML = (
                             (parseFloat(document.getElementById('{{key}}_nota').innerHTML)/notas)*100).toFixed(2)+'%';
-                            
+                        
+                        // TENHO em %:
                         document.getElementById('{{key}}_tenho').innerHTML = (
                             (parseFloat(document.getElementById('{{key}}_total').innerHTML)/totais)*100).toFixed(2)+'%';
+
+                        if (document.getElementById('{{key}}_quero').innerHTML < document.getElementById('{{key}}_tenho').innerHTML){
+                            document.getElementById('{{key}}_tenho').className = "green";
+                        }
+                        if (document.getElementById('{{key}}_quero').innerHTML > document.getElementById('{{key}}_tenho').innerHTML){
+                            document.getElementById('{{key}}_tenho').className = "red";
+                        }
                     {% endfor %}
 
                     // ordem de compra e venda baseado em nota/qnt
@@ -160,28 +169,29 @@ StocksWatch - Carteira
     <!-- adicionar novo ativo na carteira -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-carteira' %}">Adicionar Novo Ativo</a>
     
-    <!-- totais da carteira WIP -->
+    <!-- totais e balanço da carteira WIP -->
     <div style="float:right; padding: 15px;">
         <big>Patrimônio:</big>
-        <big id='totais'></big>
+        <big id='patrimonio'></big>
         <script>
-            var sum = 0;
+            var patrimonio = 0;
             //patrimonio
             {% for key, value in data.items %}
-                var value = document.getElementById('{{key}}_total').innerHTML;
-                sum += parseFloat(value);
+                var valor_por_ativo = document.getElementById('{{key}}_total').innerHTML;
+                patrimonio += parseFloat(valor_por_ativo);
             {% endfor %}
-            document.getElementById('totais').innerHTML = sum.toFixed(2);
+            document.getElementById('patrimonio').innerHTML = patrimonio.toFixed(2);
 
-            // quero e falta em dinhero $$ + volume de compra/venda para balancear baseado em nota.
+            // quero e falta em dinhero $$ + volume para balancear baseado em nota e patrimonio.
             {% for key, value in data.items %}
+                //QUERO EM DINHEIRO: precisa do valor patrimonio para calcular
                 document.getElementById('{{key}}_quero_din').innerHTML = (
-                            sum * (parseFloat(document.getElementById('{{key}}_quero').innerHTML)/100)).toFixed(2);
-
+                            patrimonio * (parseFloat(document.getElementById('{{key}}_quero').innerHTML)/100)).toFixed(2);
+                //FALTA EM DINHEIRO: precisa do valor quero_din para calcular
                 document.getElementById('{{key}}_falta_din').innerHTML = (
                             document.getElementById('{{key}}_quero_din').innerHTML -
                                 document.getElementById('{{key}}_total').innerHTML).toFixed(2);
-
+                //VOLUME DE COMPRA: precisa do valor falta_din para calcular
                 document.getElementById('{{key}}_vol').innerHTML = parseInt(
                             parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) /
                             parseFloat(document.getElementById('{{key}}_preco').innerHTML));
