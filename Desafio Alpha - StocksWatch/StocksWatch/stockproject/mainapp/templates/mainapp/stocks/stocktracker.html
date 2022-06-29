@@ -31,10 +31,11 @@ StocksWatch - Tracker
         <th scope="col">52Wk Range</th>
         <th scope="col">Market Cap</th>
         <th scope="col">Volume</th>
+        <th scope="col">Histórico</th>
       </tr>
     </thead>
 
-    {% comment %}---- FILLING OUT THE TABLES WITH SELECTED STOCKS ----{% endcomment %}
+    <!-- FILLING OUT THE TABLES WITH SELECTED STOCKS -->
     <tbody>
       {% for key, value in data.items %}
       <tr>
@@ -43,17 +44,13 @@ StocksWatch - Tracker
         <td id="{{key}}_price">{{ value|get:"Quote Price"|floatformat:2 }}</td>
         <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:2 }}</td>
         <td id="{{key}}_open">{{ value|get:"Open" }}</td>
-
+        <!-- Intradia -->
         <td id="{{key}}_change">
           <script>
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
-            if(change >= 0){
-              document.getElementById("{{key}}_change").className = "green";
-            }
-            if (change < 0){
-              document.getElementById("{{key}}_change").className = "red";
-            }
+            if(change >= 0){document.getElementById("{{key}}_change").className = "green";}
+            if (change < 0){document.getElementById("{{key}}_change").className = "red";}
             document.getElementById("{{key}}_change").innerHTML = change;
           </script>
         </td>
@@ -61,6 +58,12 @@ StocksWatch - Tracker
         <td id="{{key}}_range">{{ value|get:"52 Week Range" }}</td>
         <td id="{{key}}_cap">{{ value|get:"Market Cap" }}</td>
         <td id="{{key}}_volume">{{ value|get:"Volume" }}</td>
+        <!-- historico em graficos -->
+        <td>    
+          <form action='graph'>
+              <button class="btn btn-primary btn-sm" name='graph' value={{key}} type="submit">Gráfico</button>
+          </form>
+        </td>
       </tr>
       {% endfor %}
     </tbody>
@@ -71,8 +74,8 @@ StocksWatch - Tracker
         href="{% url 'create-alert' %}">Criar Alerta</a>
 <br>
 
-{% comment %} ----DROPDOWN MENU---- {% endcomment %}
-
+<!-- OLD DROPDOWN MENU -->
+<!--
 <form action='graph' class="form-control">
   <select name="graph" class="form-select form-select-lg mb-3 gap-2">
     <option selected>Escolha um ativo:</option>
@@ -85,9 +88,10 @@ StocksWatch - Tracker
     <button class="btn btn-primary" type="submit">Histórico</button>
   </div>
 </form>
+-->
 </div>
 
-{% comment %}--- WEBSOCKET - JSON - LIVE STOCK ----{% endcomment %}
+<!-- WEBSOCKET - JSON - LIVE STOCK -->
 {{ room_name|json_script:"room-name" }}
 <script>
   const roomName = JSON.parse(document.getElementById('room-name').textContent)

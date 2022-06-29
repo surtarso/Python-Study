@@ -34,7 +34,7 @@ urlpatterns = [
 
     
     #----- STOCKS (views.views_stocks.py)
-    path('stockpicker', views.stockPicker, name='stockpicker'),
+    path('stockpicker/<str:pk>', views.stockPicker, name='stockpicker'),
     path('stocktracker', views.stockTracker, name='stocktracker'),
     path('graph', views.configGraph, name="graph"),
     path('carteira', views.showCarteira, name="carteira"),

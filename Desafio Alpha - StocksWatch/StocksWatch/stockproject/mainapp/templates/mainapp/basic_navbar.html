@@ -17,9 +17,8 @@
             Mercado
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="{% url 'stockpicker' %}">IBOV</a></li>
-            <li><a class="dropdown-item" href="{% url 'stockpicker' %}">IFIX</a></li>
-            {%comment%}<li><a class="dropdown-item" href="#">Cryptomoedas</a></li> {% endcomment %}
+            <li><a class="dropdown-item" href="{% url 'stockpicker' 'IBOV' %}">IBOV</a></li>
+            <li><a class="dropdown-item" href="{% url 'stockpicker' 'IFIX' %}">IFIX</a></li>
           </ul>
         </li>
 
@@ -48,7 +47,7 @@
 
       </ul>
 
-      {% comment %} NAV SEARCH BAR {% endcomment %}
+      <!-- NAV SEARCH BAR -->
       <form class="d-flex" role="search" action="/stocktracker">
         <input onkeyup="this.value = this.value.toUpperCase();" class="form-control me-2" type="search"
           placeholder="B3SA3" aria-label="Search" name="stockpicker">

@@ -21,13 +21,12 @@ from mainapp.models import Mercado, CarteiraAtivo
 
 ## ------------------------------------------------------STOCK PICKER:
 @login_required(login_url='login')
-def stockPicker(request):
-    print("request foi:", request.GET)
+def stockPicker(request, pk):
 
-    mercado = Mercado.objects.get(name="IBOV")  ##want this dynamic! IFIX etc.
+    mercado = Mercado.objects.get(name=pk)
     stock_picker = mercado.ativo_set.all()
     
-    contexto = {'stockpicker':stock_picker}
+    contexto = {'stockpicker':stock_picker, 'mercado':pk}
     return render(request, 'mainapp/stocks/stockpicker.html', contexto)
 
 
