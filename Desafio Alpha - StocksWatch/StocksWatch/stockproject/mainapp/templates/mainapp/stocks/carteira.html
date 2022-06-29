@@ -15,7 +15,7 @@ StocksWatch - Carteira
 {% block body %}
 <div class="container">
     <br>
-    <h3>Carteira de Ações</h3>
+    <h3>Carteira</h3>
 
     <table class="table-container">
         <table class="table">
@@ -26,11 +26,13 @@ StocksWatch - Carteira
                     <th scope="col">Ativo</th>
                     <th scope="col">Preço</th>
                     <th scope="col">P.M.</th>
-                    <th scope="col">Quantidade</th>
+                    <th scope="col">Qnt</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Fechamento</th>
+                    <th scope="col">Quero</th>
+                    <th scope="col">Tenho</th>
+                    <th scope="col">Close</th>
                     <th scope="col">Intradia</th>
-                    <th scope="col">52Wk</th>
+                    <th scope="col">52Week</th>
                     <th scope="col">Remuneração</th>
                     <th scope="col">Ações</th>
                     <th scope="col">Histórico</th>
@@ -40,7 +42,7 @@ StocksWatch - Carteira
             <tbody>
                 {% for key, value in data.items %}
                 <tr>
-                    <th scope="row">{{key.nota}}</th>  <!-- Nota -->
+                    <th id='{{key}}_nota'scope="row">{{key.nota}}</th>  <!-- Nota -->
                     <td>{{key}}</td>  <!-- ativo/ticker -->
                     <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>  <!-- preco online -->
                     <td id='{{key}}_pm'>{{key.preco_medio}}</td>  <!-- preco medio -->
@@ -51,6 +53,8 @@ StocksWatch - Carteira
                             document.getElementById('{{key}}_total').innerHTML = result.toFixed(2);
                         </script>
                     </td>
+                    <td id='{{key}}_quero'></td>  <!--  QUERO  (nota/sum(notas)%)  -->
+                    <td id='{{key}}_tenho'></td>  <!--  TENHO  (total/???)  -->
                     <td id='{{key}}_fechamento'>{{ value|get:'Previous Close'|floatformat:2 }}</td> <!-- fechamento -->
                     <td id="{{key}}_change"> <!-- intradia -->
                         <script>
@@ -82,6 +86,22 @@ StocksWatch - Carteira
                     </td>
                 </tr>
                 {% endfor %}
+                <!-- soma todas as notas -->
+                <script>
+                    var notas = 0;
+                    var totais = 0;
+                    {% for key, value in data.items %}
+                        var nota = document.getElementById('{{key}}_nota').innerHTML;
+                        var total = document.getElementById('{{key}}_total').innerHTML;
+                        notas += parseFloat(nota);
+                        totais += parseFloat(total);
+                    {% endfor %}
+                    // adiciona notas/notas(%) para "quero"
+                    {% for key, value in data.items %}
+                        document.getElementById('{{key}}_quero').innerHTML = ((parseFloat(document.getElementById('{{key}}_nota').innerHTML)/notas)*100).toFixed(2)+'%';
+                        document.getElementById('{{key}}_tenho').innerHTML = ((parseFloat(document.getElementById('{{key}}_total').innerHTML)/totais)*100).toFixed(2)+'%';
+                    {% endfor %}
+                </script>
             </tbody>
         </table>
     </table>
