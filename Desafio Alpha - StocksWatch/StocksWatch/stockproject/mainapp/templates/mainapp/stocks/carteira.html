@@ -20,7 +20,7 @@ StocksWatch - Carteira
     <table class="table-container">
         <table class="table">
 
-            <thead>
+            <thead>  <!-- dados da tabela -->
                 <tr>
                     <th scope="col">Nota</th>
                     <th scope="col">Ativo</th>
@@ -28,11 +28,12 @@ StocksWatch - Carteira
                     <th scope="col">P.M.</th>
                     <th scope="col">Qnt</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Quero</th>
-                    <th scope="col">Tenho</th>
-
+                    <th scope="col">Quero%</th>
+                    <th scope="col">Tenho%</th>
+                    <th scope="col">Quero$</th>
+                    <th scope="col">Falta$</th>
                     <th scope="col">Ordem</th>
-
+                    <th scope="col">Vol</th>
                     <th scope="col">Close</th>
                     <th scope="col">Intradia</th>
                     <th scope="col">52Week</th>
@@ -42,10 +43,10 @@ StocksWatch - Carteira
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody>  <!-- preenchendo a tabela -->
                 {% for key, value in data.items %}
                 <tr>
-                    <th id='{{key}}_nota'scope="row">{{key.nota}}</th>  <!-- Nota -->
+                    <th id='{{key}}_nota'scope="row">{{key.nota}}</th>  <!-- Nota/peso -->
                     <td>{{key}}</td>  <!-- ativo/ticker -->
                     <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>  <!-- preco online -->
                     <td id='{{key}}_pm'>{{key.preco_medio}}</td>  <!-- preco medio -->
@@ -56,9 +57,15 @@ StocksWatch - Carteira
                             document.getElementById('{{key}}_total').innerHTML = result.toFixed(2);
                         </script>
                     </td>
-                    <td id='{{key}}_quero'></td>  <!--  QUERO  (nota/sum(notas)%)  -->
-                    <td id='{{key}}_tenho'></td>  <!--  TENHO  (total/totais)  -->
+                    <td id='{{key}}_quero'></td>  <!--  QUERO % (nota/sum(notas)%)  -->
+                    <td id='{{key}}_tenho'></td>  <!--  TENHO % (total/totais)  -->
+
+                    <td id='{{key}}_quero_din'></td>  <!--  QUERO $ patrimonio * quero%  -->
+                    <td id='{{key}}_falta_din'></td>  <!--  FALTA $ quero_din - total -->
+
                     <td id='{{key}}_ordem'></td>  <!--  ORDEM (comprar/vender)  -->
+                    <td id='{{key}}_vol'></td>  <!--  VOLUME para comprar/vender = falta / preco-->
+
                     <td id='{{key}}_fechamento'>{{ value|get:'Previous Close'|floatformat:2 }}</td> <!-- fechamento -->
                     <td id="{{key}}_change"> <!-- intradia -->
                         <script>
@@ -80,8 +87,8 @@ StocksWatch - Carteira
                         </script>
                     </td>
                     <td>  <!-- manipulacao de ativos da carteira - excluir/editar -->
-                        <a class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" href="{% url 'update-carteira' key.id %}">Editar</a>
-                        <a class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" href="{% url 'delete-carteira' key.id %}">Apagar</a>
+                        <a class="btn btn-warning btn-sm" style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" href="{% url 'update-carteira' key.id %}">E</a>
+                        <a class="btn btn-danger btn-sm" style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" href="{% url 'delete-carteira' key.id %}">X</a>
                     </td>
                     <td>    <!-- historico em graficos -->
                         <form action='graph'>
@@ -100,11 +107,13 @@ StocksWatch - Carteira
                         notas += parseFloat(nota);
                         totais += parseFloat(total);
                     {% endfor %}
+
                     // adiciona notas/notas(%) para "quero"
                     {% for key, value in data.items %}
                         document.getElementById('{{key}}_quero').innerHTML = ((parseFloat(document.getElementById('{{key}}_nota').innerHTML)/notas)*100).toFixed(2)+'%';
                         document.getElementById('{{key}}_tenho').innerHTML = ((parseFloat(document.getElementById('{{key}}_total').innerHTML)/totais)*100).toFixed(2)+'%';
                     {% endfor %}
+
                     // ordem de compra e venda baseado em nota/qnt
                     {% for key, value in data.items %}
                     var quero = document.getElementById('{{key}}_quero').innerHTML;
@@ -114,8 +123,8 @@ StocksWatch - Carteira
                         document.getElementById('{{key}}_ordem').innerHTML = 'Comprar';
                     }
                     if ( parseFloat(quero) <= parseFloat(tenho) ){
-                        document.getElementById('{{key}}_ordem').innerHTML = 'Vender';
                         document.getElementById('{{key}}_ordem').className = "red";
+                        document.getElementById('{{key}}_ordem').innerHTML = 'Vender';
                     }
                     {% endfor %}
                 </script>
@@ -131,11 +140,19 @@ StocksWatch - Carteira
         <big id='totais'></big>
         <script>
             var sum = 0;
+            //patrimonio
             {% for key, value in data.items %}
                 var value = document.getElementById('{{key}}_total').innerHTML;
                 sum += parseFloat(value);
             {% endfor %}
             document.getElementById('totais').innerHTML = sum.toFixed(2);
+
+            // quero e falta em dinhero $$ + volume de compra/venda para balancear baseado em nota.
+            {% for key, value in data.items %}
+                document.getElementById('{{key}}_quero_din').innerHTML = (sum * (parseFloat(document.getElementById('{{key}}_quero').innerHTML)/100)).toFixed(2);
+                document.getElementById('{{key}}_falta_din').innerHTML = (document.getElementById('{{key}}_quero_din').innerHTML - document.getElementById('{{key}}_total').innerHTML).toFixed(2);
+                document.getElementById('{{key}}_vol').innerHTML = parseInt(parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) / parseFloat(document.getElementById('{{key}}_preco').innerHTML));
+            {% endfor %}
         </script>
     </div>
 
