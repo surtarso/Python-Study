@@ -12,10 +12,10 @@
         {% if request.user.is_authenticated %}
 
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Mercado
-          </a>
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
+            role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">Mercado</a>
+
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="{% url 'stockpicker' 'IBOV' %}">IBOV</a></li>
             <li><a class="dropdown-item" href="{% url 'stockpicker' 'IFIX' %}">IFIX</a></li>

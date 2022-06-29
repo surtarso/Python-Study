@@ -40,22 +40,8 @@ def stockTracker(request):
     stockpicker = request.GET.getlist('stockpicker')
     #cria um dicionario para os papeis escolhidos
     data = {}
-
-    #checa com os papeis existentes do ibovespa (yahoo-fin)
-    # available_stocks = tickers_ibovespa()  ## tickers ibovespa nao tem small caps!! =((((
     
-    ### por algum motivo nao funfa!!!  =((
-    # mercado = Mercado.objects.get(name="IBOV")
-    # available_stocks = mercado.ativo_set.all()
-
-    # #errorcheck  # tive que desligar para ter small caps... 
-    # for i in stockpicker:
-    #     if i in available_stocks:
-    #         pass
-    #     else:
-    #         return HttpResponse("Ocorreu um erro: Ativo não identificado neste mercado")
-    
-    #teste multithreading
+    #multithreading
     n_threads = len(stockpicker)
     thread_list = []
     que = queue.Queue()
