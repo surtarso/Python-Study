@@ -10,6 +10,7 @@ StocksWatch - Carteira
 {% block css %}
   .red { color: red; }
   .green { color: green; }
+  .orange { color: orange; }
 {% endblock css %}
 
 {% block body %}
@@ -164,8 +165,8 @@ StocksWatch - Carteira
                             document.getElementById('{{key}}_ordem').innerHTML = 'Comprar';
                         }
                         if ( parseFloat(quero) <= parseFloat(tenho) ){
-                            document.getElementById('{{key}}_ordem').className = "red";
-                            document.getElementById('{{key}}_ordem').innerHTML = 'Vender';
+                            document.getElementById('{{key}}_ordem').className = "orange";
+                            document.getElementById('{{key}}_ordem').innerHTML = 'Aguardar';
                         }
                     {% endfor %}
                 </script>
