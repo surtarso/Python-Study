@@ -10,6 +10,8 @@
 <img src="../shots/4-cotacao.png" width=545 height=410>
 <h5>Gráfico interativo com histórico completo:</h5>
 <img src="../shots/5-grafico.png" width=545 height=410>
+<h5>Carteira com balanceamento:</h5>
+<img src="../shots/carteira.png" width=545 height=410>
 <h5>Pagina pessoal de alertas:</h5>
 <img src="../shots/6-alertas.png" width=545 height=410>
 <h5>Forum comunitário:</h5>
