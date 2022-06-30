@@ -36,7 +36,9 @@ StocksWatch Profile
 <div class="profile-container">
 
     <div class="topics_component">
-        {% include 'mainapp/component/topics_component.html' %}
+        {% if request.user == user %}
+            {% include 'mainapp/component/topics_component.html' %}
+        {% endif %}
     </div>
 
     <div class="feed_component d-grid gap-2 d-md-block">
@@ -48,7 +50,9 @@ StocksWatch Profile
     </div>
 
     <div class="activity_component">
-        {% include 'mainapp/component/activity_component.html' %}
+        {% if request.user == user %}
+            {% include 'mainapp/component/activity_component.html' %}
+        {% endif %}
     </div>
 
 </div>

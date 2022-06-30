@@ -42,8 +42,7 @@ def alertView(request, pk):
     if request.method == 'POST': 
         return redirect('view-alert', pk=alert.id)
 
-    contexto = {
-        'alert':alert}
+    contexto = {'alert':alert}
     return render(request, 'mainapp/stocks/alert_view.html', contexto)
 
 

@@ -1,4 +1,4 @@
-
+{% if request.user == user %}
 <div class="container">
     <h3>Salas</h3>
     <br>
@@ -10,7 +10,9 @@
     <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-room' %}">Criar Sala</a>
 </div>
-<hr>
+<br>
+{% endif %}
+
 
 <!-- salas -->
 <div class="container">
