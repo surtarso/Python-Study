@@ -106,7 +106,7 @@ def configGraph(request):
             )
         )
 
-        graph = fig.to_html(full_html=True, default_height=600, default_width=800)
+        graph = fig.to_html(full_html=True, default_height=600, default_width=810)
         
         contexto = {'graph': graph, 'ticker':ticker}
         return render(request, 'mainapp/stocks/graph.html', contexto)
