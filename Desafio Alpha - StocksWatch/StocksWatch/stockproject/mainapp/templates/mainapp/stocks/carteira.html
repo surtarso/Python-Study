@@ -11,10 +11,11 @@ StocksWatch - Carteira
   .red { color: red; }
   .green { color: green; }
   .orange { color: orange; }
+  .brown { color: brown; }
 {% endblock css %}
 
 {% block body %}
-<div class="container">
+<div class="container-xxl">
     <br>
     <h3>Carteira</h3>
 
@@ -38,7 +39,7 @@ StocksWatch - Carteira
                     <th scope="col">Close</th>
                     <th scope="col">Intradia</th>
                     <th scope="col">52Week</th>
-                    <th scope="col">Remuneração</th>
+                    <th scope="col">R.M.</th>
                     <th scope="col">Ações</th>
                     <th scope="col">Histórico</th>
                 </tr>
@@ -48,9 +49,12 @@ StocksWatch - Carteira
                 {% for key, value in data.items %}
                 <tr>
                     <th id='{{key}}_nota'scope="row">{{key.nota}}</th>  <!-- Nota/peso -->
-                    <td>{{key}}</td>  <!-- ativo/ticker -->
+                    <td id='{{key}}_ativo'>{{key}}</td>  <!-- ativo/ticker -->
+                    
                     <td id='{{key}}_preco'>{{ value|get:'Quote Price'|floatformat:2 }}</td>  <!-- preco online -->
-                    <td id='{{key}}_pm'>{{key.preco_medio}}</td>  <!-- preco medio -->
+                    
+                    <td id='{{key}}_pm'>{{key.preco_medio}}</td>  <!-- preco medio --> 
+                    
                     <td id='{{key}}_qnt'>{{key.quantidade}}</td>  <!-- qnt de papeis na carteira -->
 
                     <td id='{{key}}_total'>  <!-- Total do ativo na carteira = Quantidade * preco de mercado -->
@@ -91,8 +95,7 @@ StocksWatch - Carteira
 
                     <td id='{{key}}_rm'>  <!-- Remuneracao do ativo de acordo com preco medio -->
                         <script>
-                            result = (
-                                document.getElementById('{{key}}_total').innerHTML /
+                            result = (document.getElementById('{{key}}_total').innerHTML /
                                     (document.getElementById('{{key}}_qnt').innerHTML *
                                         document.getElementById('{{key}}_pm').innerHTML)
                                 ) - 1;
@@ -139,13 +142,11 @@ StocksWatch - Carteira
                     // QUERO E TENHO EM PORCENTAGEM: notas/notas, tenho/total
                     {% for key, value in data.items %}
                         // QUERO em %:
-                        document.getElementById('{{key}}_quero').innerHTML = (
-                            (parseFloat(document.getElementById('{{key}}_nota').innerHTML) / notas) * 100
+                        document.getElementById('{{key}}_quero').innerHTML = ((parseFloat(document.getElementById('{{key}}_nota').innerHTML) / notas) * 100
                             ).toFixed(2) + '%';
                         
                         // TENHO em %:
-                        document.getElementById('{{key}}_tenho').innerHTML = (
-                            (parseFloat(document.getElementById('{{key}}_total').innerHTML) / totais) * 100
+                        document.getElementById('{{key}}_tenho').innerHTML = ((parseFloat(document.getElementById('{{key}}_total').innerHTML) / totais) * 100
                             ).toFixed(2) + '%';
 
                         if (document.getElementById('{{key}}_quero').innerHTML < document.getElementById('{{key}}_tenho').innerHTML){
@@ -158,15 +159,31 @@ StocksWatch - Carteira
 
                     // ordem de compra e venda baseado em nota/qnt
                     {% for key, value in data.items %}
-                        var quero = document.getElementById('{{key}}_quero').innerHTML;
-                        var tenho = document.getElementById('{{key}}_tenho').innerHTML;
-                        if ( parseFloat(quero) > parseFloat(tenho) ){
+                        var quero = parseFloat(document.getElementById('{{key}}_quero').innerHTML);
+                        var tenho = parseFloat(document.getElementById('{{key}}_tenho').innerHTML);
+                        if ( quero > tenho ){
                             document.getElementById('{{key}}_ordem').className = "green";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Comprar';
                         }
-                        if ( parseFloat(quero) <= parseFloat(tenho) ){
+                        if ( quero <= tenho ){
                             document.getElementById('{{key}}_ordem').className = "orange";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Aguardar';
+                        }
+                    {% endfor %}
+                    
+                    // cor do preco medio/total em relacao ao preco atual
+                    {% for key, value in data.items %}
+                        var pm = parseFloat(document.getElementById('{{key}}_pm').innerHTML);
+                        var preco = parseFloat(document.getElementById('{{key}}_preco').innerHTML);
+                        
+                        if ( pm <= preco ){  // preco medio maior que preco atual
+                            document.getElementById('{{key}}_pm').className = "green";
+                            document.getElementById('{{key}}_total').className = "green";
+                        }   
+                        else {  // preco medio menor que preco atual
+                            document.getElementById('{{key}}_pm').className = "red";
+                            document.getElementById('{{key}}_total').className = "red";
+                            document.getElementById('{{key}}_ativo').className = "brown";
                         }
                     {% endfor %}
                 </script>
@@ -192,19 +209,22 @@ StocksWatch - Carteira
             // quero e falta em dinhero $$ + volume para balancear baseado em nota e patrimonio.
             {% for key, value in data.items %}
                 //QUERO EM DINHEIRO: precisa do valor patrimonio para calcular
-                document.getElementById('{{key}}_quero_din').innerHTML = (
-                            patrimonio * (parseFloat(document.getElementById('{{key}}_quero').innerHTML) / 100)
+                document.getElementById('{{key}}_quero_din').innerHTML = (patrimonio * (parseFloat(document.getElementById('{{key}}_quero').innerHTML) / 100)
                             ).toFixed(2);
                 //FALTA EM DINHEIRO: precisa do valor quero_din para calcular
-                document.getElementById('{{key}}_falta_din').innerHTML = (
-                            document.getElementById('{{key}}_quero_din').innerHTML -
-                            document.getElementById('{{key}}_total').innerHTML
+                document.getElementById('{{key}}_falta_din').innerHTML = (document.getElementById('{{key}}_quero_din').innerHTML - document.getElementById('{{key}}_total').innerHTML
                             ).toFixed(2);
                 //VOLUME DE COMPRA: precisa do valor falta_din para calcular
                 document.getElementById('{{key}}_vol').innerHTML = parseInt(
                             parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) /
                             parseFloat(document.getElementById('{{key}}_preco').innerHTML)
                             );
+                if(parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) >= 0){
+                    document.getElementById('{{key}}_falta_din').className = "green";
+                }
+                else{
+                    document.getElementById('{{key}}_falta_din').className = "red";
+                }
             {% endfor %}
         </script>
     </div>

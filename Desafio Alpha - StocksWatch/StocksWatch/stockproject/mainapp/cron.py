@@ -1,9 +1,10 @@
 import queue
 from threading import Thread
 from time import sleep
-from mainapp.models import Alerta
+from .models import Alerta
 import yfinance as yf
 from django.core.mail import send_mail
+
 
 
 

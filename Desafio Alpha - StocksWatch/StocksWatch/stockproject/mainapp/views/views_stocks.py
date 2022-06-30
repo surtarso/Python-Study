@@ -119,23 +119,23 @@ def configGraph(request):
 @login_required(login_url='login')
 def showCarteira(request):
     data = {}
-
     carteiras = CarteiraAtivo.objects.all()
-    carteira_ativa = []
+    carteira_usuario = []
 
-    for i in carteiras:
-        if i.user == request.user:  #pega apensas ativos do usuario atual!
-            carteira_ativa.append(i)
+    # pega apensas ativos do usuario atual!
+    for ativo in carteiras:
+        if ativo.user == request.user:
+            carteira_usuario.append(ativo)
     
-    ## multithreading:
-    n_threads = len(carteira_ativa)  #numero de threads de acordo com o numero de ativos do usuario
+    # numero de threads de acordo com o numero de ativos do usuario
+    n_threads = len(carteira_usuario)  
     thread_list = []
     que = queue.Queue()
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
-            arg1: q.put({carteira_ativa[i]: get_quote_table(str(arg1)+'.SA')}),
-            args = (que, carteira_ativa[i])
+            arg1: q.put({carteira_usuario[i]: get_quote_table(str(arg1)+'.SA')}),
+            args = (que, carteira_usuario[i])
             )
         thread_list.append(thread)
         thread_list[i].start()
