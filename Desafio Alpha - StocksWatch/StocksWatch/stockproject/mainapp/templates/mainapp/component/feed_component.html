@@ -16,7 +16,7 @@
 
 <!-- salas -->
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for room in rooms %}
         <div class="col">
             <div class="card" style="background-color: whitesmoke;">
@@ -40,11 +40,13 @@
                                 href="{% url 'delete-room' room.id %}">Apagar</a>
                         {% endif %}
                         <!-- link para o profile do usuario dono da sala -->
+                        {% if request.user != room.host %}
                         <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
                             class="btn btn-secondary btn-sm" 
                             href="{% url 'user-profile' room.host.id %}">
                             @{{room.host.username}}
                         </a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
