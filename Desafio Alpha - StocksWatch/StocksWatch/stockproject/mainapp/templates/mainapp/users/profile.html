@@ -13,6 +13,7 @@ StocksWatch Profile
         grid-template-columns: 1fr 3fr 1fr;
         padding: 5px;
     }
+    .profile_title,
     .feed_component,
     .topics_component,
     .activity_component{
@@ -22,15 +23,12 @@ StocksWatch Profile
         position: relative;
     }
     .profile_title{
-        text-align: center;
-        align-items: center;
-        position: relative;
         background-color: whitesmoke;
     }
 </style>
 
 <div class="profile_title">
-    <h1 class="text-capitalize">{{user.username}}'s Profile</h1>
+    <h2 class="text-capitalize">{{user.username}}'s Profile</h2>
 </div>
 
 <div class="profile-container">
