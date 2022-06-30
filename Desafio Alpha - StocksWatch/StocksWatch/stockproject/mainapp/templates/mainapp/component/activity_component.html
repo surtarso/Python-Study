@@ -11,7 +11,8 @@
 <div class="container">
     {% for message in room_messages %}
     <div class="col">
-        <div class="card">
+        <div style="background-color: whitesmoke;" class="card">
+            
             <small class="text-muted">({{ message.created|timesince }} ago)</small>
 
             <a  style="margin: 3px;"
@@ -40,13 +41,20 @@
     {% for alerta in alertas %}
     {% if request.user == alerta.host %}
     <div class="col">
-        <div class="card">
+        <div style="background-color: whitesmoke;" class="card">
+
             <a style="margin: 3px;" class="btn btn-primary btn-sm" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
             <small>{{ alerta.mercado }}</small>
             <small>{{ alerta.created|timesince }} ago</small>
             <small>{{ alerta.created }}</small>
-            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" class="btn btn-warning btn-sm" class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
-            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+
+            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
+                class="btn btn-warning btn-sm" 
+                href="{% url 'update-alert' alerta.id %}">Editar</a>
+
+            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
+                class="btn btn-danger btn-sm" 
+                href="{% url 'delete-alert' alerta.id %}">Apagar</a>
         </div>
     </div>
     <br>
