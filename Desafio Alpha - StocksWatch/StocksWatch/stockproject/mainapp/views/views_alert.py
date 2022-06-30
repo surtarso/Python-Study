@@ -21,14 +21,12 @@ def alerts(request):
         )
 
     mercado = Mercado.objects.all()
-    alerta_count = alerta.count()
     alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
 
     contexto = { # itera em alerts.html
         'alerta': alerta,
         'alertas': alertas,
         'mercado': mercado,
-        'alerta_count':alerta_count,
         }
 
     return render(request, 'mainapp/stocks/alerts.html', contexto)
