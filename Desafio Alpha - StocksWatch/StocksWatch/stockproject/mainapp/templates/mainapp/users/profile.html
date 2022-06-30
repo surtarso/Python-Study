@@ -40,7 +40,9 @@ StocksWatch Profile
     </div>
 
     <div class="feed_component d-grid gap-2 d-md-block">
-        {% include 'mainapp/component/alerts_component.html' %}
+        {% if request.user == user %}
+            {% include 'mainapp/component/alerts_component.html' %}
+        {% endif %}
         <br>
         {% include 'mainapp/component/feed_component.html' %}   
     </div>

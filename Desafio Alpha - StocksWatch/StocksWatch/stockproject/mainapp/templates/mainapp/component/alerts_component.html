@@ -1,24 +1,32 @@
 <div class="container">
     <h3>Alertas</h3>
     <br><br>
+    <!-- criar um novo alerta -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
 <br>
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for alerta in alertas %}
+        <!-- mostra apenas alertas do usuario logado -->
         {% if request.user == alerta.host %}
         <div class="col">
             <div class="card" style="background-color: whitesmoke;">
                 <div class="card-body">
-                    
+                    <!-- nome do alerta (ticker) com link para visualizacao-->
                     <a class="btn btn-primary card-title" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+                    <!-- mercado dono do ativo do alerta -->
                     <p class="card-text">{{alerta.mercado}}</p>
+                    <!--  tempo desde a criacao/update do alerta -->
                     <small>{{alerta.updated}}</small>
 
                     <div class="card-footer">
-                        <a style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
-                        <a style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+                        <!-- botao para EDITAR alerta -->
+                        <a  style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
+                            class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
+                        <!-- botao para APAGAR alerta -->
+                        <a  style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
+                            class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
                     </div>
                 </div>
             </div>

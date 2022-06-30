@@ -1,4 +1,4 @@
-
+<!-- esconde mensagens na magina de alertas e vice versa -->
 {% if alertas and not room_messages %}
 <h3>Alertas Recentes</h3>
 {% else %}
@@ -12,19 +12,25 @@
     {% for message in room_messages %}
     <div class="col">
         <div style="background-color: whitesmoke;" class="card">
-            
+            <!-- tempo desde a mensagem -->
             <small class="text-muted">({{ message.created|timesince }} ago)</small>
 
+            <!-- sala da mensagem enviada -->
             <a  style="margin: 3px;"
                 class="btn btn-primary btn-sm"
                 href="{% url 'user-profile' message.user.id %}">{{ message.room }}</a>
 
+            <!-- mensagem enviada -->
             <small class="text-muted">"{{ message }}"</small>
 
+            <!-- esconde link para profile para dono da mensagem -->
+            {% if request.user != message.user %}
             <a  style="--bs-btn-font-size: .75rem; margin: 3px;"
                 class="btn btn-secondary btn-sm" 
                 href="{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>
+            {% endif %}
 
+            <!-- adiciona botao de apagar para dono da mensagem -->
             {% if request.user == message.user %}
                 <a  style="margin: 3px;"
                     class="btn btn-danger btn-sm" 
@@ -39,19 +45,23 @@
 <!-- ALERTAS (alertas recentes) -->
 <div class="container">
     {% for alerta in alertas %}
+    <!-- mostra apenas alertas do usuario logado -->
     {% if request.user == alerta.host %}
     <div class="col">
         <div style="background-color: whitesmoke;" class="card">
-
+            <!-- nome do alerta (ticker) -->
             <a style="margin: 3px;" class="btn btn-primary btn-sm" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+            <!-- mercado dono do alerta -->
             <small>{{ alerta.mercado }}</small>
+            <!-- tempo desde a criacao -->
             <small>{{ alerta.created|timesince }} ago</small>
+            <!-- data da criacao -->
             <small>{{ alerta.created }}</small>
-
+            <!-- botao editar alerta -->
             <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
                 class="btn btn-warning btn-sm" 
                 href="{% url 'update-alert' alerta.id %}">Editar</a>
-
+            <!-- botao apagar alerta -->
             <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
                 class="btn btn-danger btn-sm" 
                 href="{% url 'delete-alert' alerta.id %}">Apagar</a>
