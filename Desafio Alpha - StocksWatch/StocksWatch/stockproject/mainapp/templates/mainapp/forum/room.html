@@ -12,56 +12,64 @@ StocksWatch - Sala
         grid-template-columns: 5fr 1fr;
         padding: 15px;
     }
-    .participants{
-        background-color: whitesmoke;
-        border-radius: 5px;
-    }
 </style>
 
 <div class="room-container">
     <div class="container">
+        <!-- nome da sala -->
+        <h1>{{ room.name }}</h1>
+        <!-- "descricao" do quarto -->
+        <p style="background-color: whitesmoke;">{{ room.description }}</p>
 
-        <h1>{{room.name}}</h1>
-
-        <p>{{ room.description }}</p>
-
+        <!-- area de comentarios -->
         <div class="comment-wrapper">
-            <h4>Comentários</h4>
-            <hr>
+            <big>Comentários</big>
+            
+            <div class="card">
             {% for message in room_messages %}
-            <div>
-                {% if request.user == message.user %}
-                <a href="{% url 'delete-message' message.id %}">Delete</a>
-                {% endif %}
-
-                <small>@{{ message.user }} ({{ message.created|timesince }} ago)</small>
-                - {{ message.body }}
-                <hr>
-            </div>
+                <ul class="card-body list-group list-group-flush">
+                    <li class="list-group-item">
+                        <!-- usuario e tempo desde criacao da mensagem -->
+                        <small  style="color: #1a1ba1a;"
+                                class="card-title">@{{ message.user }} ({{ message.created|timesince }} ago)</small>
+                        <!-- DELETE apenas para dono da mensagem -->
+                        {% if request.user == message.user %}
+                            <a  style="--bs-btn-font-size: .55rem; margin: 3px;"
+                                class="btn btn-danger btn-sm"
+                                href="{% url 'delete-message' message.id %}">Delete</a>
+                        {% endif %}
+                        <!-- corpo da mensagem -->
+                        <p class="card-text">{{ message.body }}</p>
+                    </li>
+                </ul>
             {% endfor %}
+            </div>
         </div>
 
+        <!-- caixa de mensagens -->
         {% if request.user.is_authenticated %}
-        <div class="comment-form">
-            <form method="POST" action="">
+        <div class="input-group input-group-sm mb-3">
+            <form class="input-group-text" method="POST" action="">
                 {% csrf_token %}
-                <input type="text" name="body" placeholder="mensagem..." />
+                <input class="form-control" type="text" name="body" placeholder="mensagem..." />
             </form>
         </div>
         {% endif %}
 
     </div>
 
-    <div class="container participants">
+    <!-- participantes -->
+    <div class="container">
+        
         <h5>Participantes</h5>
         <br>
-
-        {% for user in participants %}
-            <div>
-                <p>@{{ user.username }}</p>
-            </div>
-        {% endfor %}
+        <div class="card">
+            {% for user in participants %}
+                <ul class="list-group list-group-flush">
+                    <li style="background-color: whitesmoke;" class="list-group-item">@{{ user.username }}</li>
+                </ul>
+            {% endfor %}
+        </div>
     </div>
-
 </div>
 {% endblock body %}
