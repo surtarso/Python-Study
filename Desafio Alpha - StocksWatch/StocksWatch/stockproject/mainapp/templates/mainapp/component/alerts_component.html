@@ -1,26 +1,29 @@
 <div class="container">
     <h3>Alertas</h3>
-    <br>
+    <br><br>
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
-<hr>
+<br>
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for alerta in alertas %}
+        {% if request.user == alerta.host %}
+        <div class="col">
+            <div class="card" style="background-color: whitesmoke;">
+                <div class="card-body">
+                    
+                    <a class="btn btn-primary card-title" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+                    <p class="card-text">{{alerta.mercado}}</p>
+                    <small>{{alerta.updated}}</small>
 
-{% for alerta in alertas %}
-{% if request.user == alerta.host %}
-<div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
-    <h5>
-        {{alerta.mercado}} - <a href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
-        <small>{{alerta.updated}}</small>
-    </h5>
-
-    <a class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
-    <a class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
-
-
-    <a class="btn btn-secondary btn-sm" href="{% url 'user-profile' alerta.host.id %}">
-        @{{alerta.host.username}}
-    </a>
-    <br><br>
+                    <div class="card-footer">
+                        <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
+                        <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
 </div>
-{% endif %}
-{% endfor %}

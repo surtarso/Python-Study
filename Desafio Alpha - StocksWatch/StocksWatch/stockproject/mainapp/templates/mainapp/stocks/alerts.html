@@ -10,31 +10,15 @@ StocksWatch - Alertas
     .home-container {
         display: grid;
         grid-template-columns: 1fr 3fr 1fr;
-        padding: 10px;
+        padding: 5px;
     }
-
+    .alert_component,
     .mercado_component,
     .activity_component {
-        background-color: whitesmoke;
-        padding: 20px;
+        padding: 10px;
         text-align: center;
-        display: flexbox;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
         position: relative;
-        border-radius: 4px;
-    }
-
-    .feed_component {
-        padding: 20px;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        position: relative;
-        border-radius: 4px;
     }
 </style>
 
@@ -44,7 +28,7 @@ StocksWatch - Alertas
         {% include 'mainapp/component/mercado_component.html' %}
     </div>
 
-    <div class="feed_component d-grid gap-2 d-md-block">
+    <div class="alert_component">
         {% include 'mainapp/component/alerts_component.html' %}
     </div>
     <div class="activity_component">

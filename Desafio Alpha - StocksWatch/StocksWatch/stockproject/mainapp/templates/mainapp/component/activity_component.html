@@ -4,48 +4,52 @@
 {% else %}
 <h3>Atividade Recente</h3>
 {% endif %}
-<hr>
+<br>
 
 
-{% comment %} MENSAGENS (atividade recente) {% endcomment %}
-{% for message in room_messages %}
-<div>
-    <small>
-        <a class="btn btn-secondary btn-sm" href="{% url 'user-profile' message.user.id %}">
-            @{{ message.user }}</a> ({{ message.created|timesince }} ago)
-    </small>
+<!-- MENSAGENS (atividade recente) -->
+<div class="container">
+    {% for message in room_messages %}
+    <div class="col">
+        <div class="card">
+            <small class="text-muted">({{ message.created|timesince }} ago)</small>
 
-    <small>respondeu em "{{ message.room }}"</small>
+            <a  style="margin: 3px;"
+                class="btn btn-primary btn-sm"
+                href="{% url 'user-profile' message.user.id %}">{{ message.room }}</a>
 
-    <p>{{ message }}</p>
+            <small class="text-muted">"{{ message }}"</small>
 
-    {% if request.user == message.user %}
-    <a class="btn btn-danger btn-sm" href="{% url 'delete-message' message.id %}">Apagar</a>
-    {% endif %}
-    <hr>
+            <a  style="--bs-btn-font-size: .75rem; margin: 3px;"
+                class="btn btn-secondary btn-sm" 
+                href="{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>
 
+            {% if request.user == message.user %}
+                <a  style="margin: 3px;"
+                    class="btn btn-danger btn-sm" 
+                    href="{% url 'delete-message' message.id %}">Apagar</a>
+            {% endif %}
+        </div>
+    </div>
+    <br>
+    {% endfor %}
 </div>
-{% endfor %}
 
-
-{% comment %} ALERTAS (alertas recentes) {% endcomment %}
-{% for alerta in alertas %}
-<div>
+<!-- ALERTAS (alertas recentes) -->
+<div class="container">
+    {% for alerta in alertas %}
     {% if request.user == alerta.host %}
-    <small>
-        <a class="btn btn-secondary btn-sm" href="{% url 'user-profile' alerta.id %}">
-            @{{ alerta.host }}</a> ({{ alerta.created|timesince }} ago)
-    </small>
-
-    <small>{{ alerta.mercado }}</small>
-    <p>{{ alerta }}</p>
-    <small>{{ alerta.created }}</small>
-
-    
-    <a class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
-    
-    <hr>
+    <div class="col">
+        <div class="card">
+            <a style="margin: 3px;" class="btn btn-primary btn-sm" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+            <small>{{ alerta.mercado }}</small>
+            <small>{{ alerta.created|timesince }} ago</small>
+            <small>{{ alerta.created }}</small>
+            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" class="btn btn-warning btn-sm" class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
+            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" class="btn btn-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+        </div>
+    </div>
+    <br>
     {% endif %}
-
+    {% endfor %}
 </div>
-{% endfor %}

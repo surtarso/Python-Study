@@ -10,28 +10,38 @@
 </div>
 <hr>
 
-{% for room in rooms %}
-<div style="background-color: whitesmoke; margin: 5px; border-radius: 4px">
-    
-    <h5>
-        <a href="{% url 'room' room.id %}">{{room.name}}</a> 
-        <small>{{room.updated}}</small>
-    </h5>
 
-    <small>{{room.topic.name}}</small>
-    <br><br>
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% for room in rooms %}
+        <div class="col">
+            <div class="card" style="background-color: whitesmoke;">
+                <div class="card-body">
+                    
+                    <a class="btn btn-primary d-grip gap-2 card-title" href="{% url 'room' room.id %}">{{room.name}}</a> 
+                    
+                    <p class="card-text">{{room.topic.name}}</p>
+                    <small>{{room.updated}}</small>
+                    
+                    <div class="card-footer">
+                        {% if request.user == room.host %}
+                            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
+                                class="btn btn-warning btn-sm" 
+                                href="{% url 'update-room' room.id %}">Editar</a>
+                            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
+                                class="btn btn-danger btn-sm" 
+                                href="{% url 'delete-room' room.id %}">Apagar</a>
+                        {% endif %}
 
-    {% if request.user == room.host %}
-    <a class="btn btn-warning btn-sm" 
-        href="{% url 'update-room' room.id %}">Editar</a>
-    <a class="btn btn-danger btn-sm" 
-        href="{% url 'delete-room' room.id %}">Apagar</a>
-    {% endif %}
-
-    <a class="btn btn-secondary btn-sm" 
-        href="{% url 'user-profile' room.host.id %}">
-        @{{room.host.username}}
-    </a>
-    <br><br>
+                        <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
+                            class="btn btn-secondary btn-sm" 
+                            href="{% url 'user-profile' room.host.id %}">
+                            @{{room.host.username}}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
 </div>
-{% endfor %}
