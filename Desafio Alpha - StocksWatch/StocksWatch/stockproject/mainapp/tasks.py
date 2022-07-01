@@ -65,7 +65,7 @@ def update_stock(self, stockpicker):
 
 
 
-##-------------------------------------------------------[BROKEN]--E-MAILS:
+##---------------------------------------------[NO SMTP CONF YET]--E-MAILS:
 
 ## ------------->  str    str    float  float     int     int
 ## novo_alerta = [email, ativo, compra, venda, periodo, duracao]
