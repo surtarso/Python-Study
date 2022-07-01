@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 #models
 from mainapp.models import Alerta, Mercado
 from mainapp.forms import AlertForm
+from mainapp.tasks import pegaAlertas
 
 
 
@@ -47,19 +48,23 @@ def alertView(request, pk):
 ##-----------------------------------------------------CREATE ALERT:
 @login_required(login_url='login')
 def createAlert(request):
-    #get class reference
+    # get class reference
     form = AlertForm()
-    #standard form on the POST method
-    if request.method == 'POST':  #get that data
+    # form on the POST method
+    if request.method == 'POST':  # get that data
         form = AlertForm(request.POST)
         if form.is_valid():
-            #create an instance of an alert
+            # create an instance of an alert
             alert = form.save(commit=False)
-            #a host will be added based on whos logged in
+            # a host will be added based on whos logged in
             alert.host = request.user  #set the host
             alert.save()  #save it
+
+            ## add call for email task
+            pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
 
+    
     contexto = {'alert_form':form}
     return render(request, 'mainapp/stocks/alert_form.html', contexto)
 
