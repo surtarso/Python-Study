@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import EmailInput, ModelForm, NumberInput, PasswordInput, TextInput, Textarea
 from .models import CarteiraAtivo, Room, Alerta
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -8,11 +8,40 @@ from yahoo_fin.stock_info import *
 
 ##------------------------------REGISTER FORM:
 class SignUpForm(UserCreationForm):
-    email = forms.EmailField()
+    
+    password1 = forms.CharField(
+        label='Senha',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'style': 'max-width: 300px;'
+            })
+    )
+
+    password2 = forms.CharField(
+        label='Confirmar Senha',
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'style': 'max-width: 300px;'
+            })
+    )
 
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2')
+        labels = {
+            'username': 'Nome',
+            'email': 'E-Mail'
+        }   
+        widgets ={
+            'username': TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;'
+                }),
+            'email': EmailInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;'
+                })
+        }
 
 
 ##-------------------------------ROOM CREATE MESSAGE:
@@ -25,6 +54,18 @@ class RoomForm(ModelForm):
             'topic': 'Assunto',
             'name': 'Título',
             'description': 'Conteudo'
+        }
+        widgets = {
+            'name': TextInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'Adicione um título'
+                }),
+            'description': Textarea(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'O que está pensando?'
+                }),
         }
 
 ##--------------------------------FORMULARIO ALERTA:
@@ -41,6 +82,29 @@ class AlertForm(ModelForm):
             'periodo': 'Minutos entre buscas',
             'duracao': 'Dias de operação'
         }
+        widgets = {
+            'email': EmailInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 300px;',
+                'placeholder': 'adicione@seu.email'
+            }),
+            'compra': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            }),
+            'venda': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            }),
+            'periodo': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            }),
+            'duracao': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            })
+        }
 
 ##--------------------------------FORMULARIO CARTEIRA:
 class CarteiraForm(ModelForm):
@@ -53,4 +117,18 @@ class CarteiraForm(ModelForm):
             'preco_medio': 'Preço Médio',
             'quantidade': 'Total de Papeis',
             'nota': 'Peso na Carteira'
+        }
+        widgets = {
+            'preco_medio': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            }),
+            'quantidade': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            }),
+            'nota': NumberInput(attrs={
+                'class': "form-control",
+                'style': 'max-width: 150px;'
+            })
         }
