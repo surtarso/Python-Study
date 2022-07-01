@@ -21,6 +21,11 @@ class RoomForm(ModelForm):
         model = Room
         fields = '__all__'
         exclude = ['host', 'participants']
+        labels = {
+            'topic': 'Assunto',
+            'name': 'Título',
+            'description': 'Conteudo'
+        }
 
 ##--------------------------------FORMULARIO ALERTA:
 class AlertForm(ModelForm):
@@ -28,6 +33,14 @@ class AlertForm(ModelForm):
         model = Alerta
         fields = '__all__'
         exclude = ['host']
+        labels = {
+            'email': 'E-Mail para Alerta',
+            'ativo': 'Ticker',
+            'compra': 'Preço de Compra',
+            'venda': 'Preço de Venda',
+            'periodo': 'Minutos entre buscas',
+            'duracao': 'Dias de operação'
+        }
 
 ##--------------------------------FORMULARIO CARTEIRA:
 class CarteiraForm(ModelForm):
@@ -35,3 +48,9 @@ class CarteiraForm(ModelForm):
         model = CarteiraAtivo
         fields = '__all__'
         exclude = ['user']
+        labels = {
+            'ativo': 'Ticker',
+            'preco_medio': 'Preço Médio',
+            'quantidade': 'Total de Papeis',
+            'nota': 'Peso na Carteira'
+        }
