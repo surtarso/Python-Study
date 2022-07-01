@@ -80,7 +80,7 @@ def checaPreco(novo_alerta):
     ticker = yf.Ticker(novo_alerta[1]+".SA") #ativo
 
     i=0
-    while i < novo_alerta[5]: #duracao
+    while i < (novo_alerta[5]*86400): #duracao em dias
         print('duracao: {}'.format(novo_alerta[5]))
 
         cotacao = round(ticker.info['regularMarketPrice'], 2)
@@ -98,8 +98,9 @@ def checaPreco(novo_alerta):
 
         else:
             pass
+        
         print('dormindo: {} - {}seg(s)'.format(ticker.ticker, novo_alerta[4]))
-        sleep(novo_alerta[4]) #periodo
+        sleep(novo_alerta[4]*60) #periodo em minutos
         novo_alerta[5] -= 1
 
     print('fim de operacao com {}'.format(ticker.ticker))

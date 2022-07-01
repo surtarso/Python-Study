@@ -56,7 +56,7 @@ def stockTracker(request):
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
-            arg1: q.put({stockpicker[i]: get_quote_table(arg1+'.SA')}),
+            arg1: q.put({stockpicker[i]: get_quote_table(str(arg1)+'.SA')}),
             args = (que, stockpicker[i])
             )
         thread_list.append(thread)
