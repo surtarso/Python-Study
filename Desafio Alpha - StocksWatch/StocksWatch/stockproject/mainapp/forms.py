@@ -63,7 +63,7 @@ class RoomForm(ModelForm):
                 }),
             'description': Textarea(attrs={
                 'class': "form-control",
-                'style': 'max-width: 300px;',
+                'style': 'max-width: 600px;',
                 'placeholder': 'O que está pensando?'
                 }),
         }
