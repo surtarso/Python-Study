@@ -84,6 +84,8 @@ def updateAlert(request, pk):
         form = AlertForm(request.POST, instance=alert)
         if form.is_valid():
             form.save()
+            ## add call for email task
+            pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')
 
     contexto = {'alert_form':form}

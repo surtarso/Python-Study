@@ -1,4 +1,5 @@
 import asyncio
+from sys import hash_info
 from celery import shared_task
 from threading import Thread
 import queue
@@ -71,7 +72,7 @@ def update_stock(self, stockpicker):
 ## novo_alerta = [email, ativo, compra, venda, periodo, duracao]
 ## ------------->   0      1      2       3       4        5 
 def checaPreco(novo_alerta):
-    print('recebi alerta: ', novo_alerta)
+    print('recebi alerta: {}'.format(novo_alerta))
     msg_venda = ("{} - preço de VENDA R${} foi atingido.").format(novo_alerta[1], novo_alerta[3]) #ticker, venda
     msg_compra = ("{} - preço de COMPRA R${} foi atingido.").format(novo_alerta[1], novo_alerta[2]) #ticker, compra
     msg_fim = ('Sua operação com {} terminou!').format(novo_alerta[1]) #ticker
@@ -80,8 +81,10 @@ def checaPreco(novo_alerta):
 
     i=0
     while i < novo_alerta[5]: #duracao
+        print('duracao: {}'.format(novo_alerta[5]))
 
         cotacao = round(ticker.info['regularMarketPrice'], 2)
+        print('peguei cotacao: {} - R$ {}'.format(ticker.ticker, cotacao))
         
         if cotacao <= float(novo_alerta[2]): #compra
             # send email compra
@@ -95,12 +98,16 @@ def checaPreco(novo_alerta):
 
         else:
             pass
-        
+        print('dormindo: {} - {}seg(s)'.format(ticker.ticker, novo_alerta[4]))
         sleep(novo_alerta[4]) #periodo
-    
+        novo_alerta[5] -= 1
+
+    print('fim de operacao com {}'.format(ticker.ticker))
     send_mail('StockWatch Alerta!', msg_fim,'admin@stockwatch.com',
                             [novo_alerta[0]], fail_silently=True,) #email
-    return 'mails done'
+    
+    # data = {'ticker': ticker.info}
+    # return data
 
 
 
@@ -116,14 +123,16 @@ def pegaAlertas(self):
 
     # itera de 1 em 1
     for i in alertas:
-        email = i.email
-        ativo = i.ativo.ticker
-        compra = i.compra
-        venda = i.venda
-        periodo = i.periodo
-        duracao = i.duracao
+        email = str(i.email)
+        ativo = str(i.ativo.ticker)
+        compra = float(i.compra)
+        venda = float(i.venda)
+        periodo = int(i.periodo)
+        duracao = int(i.duracao)
 
         novo_alerta = [email, ativo, compra, venda, periodo, duracao]
+
+        ## todo: add exception for tasks that already exist
         todos_os_alertas.append(novo_alerta)
     
     # numero de threads = numero de alertas disponiveis
@@ -155,4 +164,4 @@ def pegaAlertas(self):
         #pega o proximo da fila
         que.get()
 
-    return 'done?'
+    return 'No mail tasks left'
