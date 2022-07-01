@@ -142,11 +142,12 @@ def pegaAlertas(self):
     # fila
     que = queue.Queue()
 
+
     # itera com o numero de alertas disponiveis
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
-            arg1: q.put({todos_os_alertas[i]: checaPreco(arg1)}),
+            arg1: q.put([todos_os_alertas[i], checaPreco(arg1)]),
             args = (que, todos_os_alertas[i])
             )
         # adiciona resposta do item a lista de threads
