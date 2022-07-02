@@ -23,14 +23,15 @@ class TestLoggedInUserURLs(TestCase):
     def test_user_exists(self):
         user_count = User.objects.all().count()
         self.assertNotEqual(user_count, 0)
-        
+
     def test_user_password(self):
         self.assertTrue(self.user_a.check_password(self.user_a_password))
 
     def test_login_redirect_url(self):
         login_page = '/login/'
         login_redirect = '/forum/'
-        data = {'username': self.user_a.get_username(), 'password': self.user_a_password}
+        data = {'username': self.user_a.get_username(),
+                'password': self.user_a_password}
         #go to login page and post data
         response = self.client.post(login_page, data, follow=True)
         status_code = response.status_code
@@ -50,7 +51,7 @@ class TestLoggedInUserURLs(TestCase):
         self.client.login(username='test', password = self.user_a_password)
         self.assertTrue(self.user_a.is_authenticated)
 
-        urls = ['/forum/', '/graph', '/alerts/']
+        urls = ['/stocktracker', '/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
             response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
@@ -69,7 +70,7 @@ class TestLoggedOutUserURLs(TestCase):
     def test_invalid_urls_for_logged_out_users(self):
         login_page = '/login/'
         urls = ['/stockpicker/IBOV', '/stockpicker/IFIX',
-                '/forum/', '/graph', '/alerts/']
+        '/stocktracker', '/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
             #test 'must be logged in':
             response = self.client.post(url)
