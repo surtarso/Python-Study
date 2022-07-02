@@ -4,26 +4,25 @@
 StocksWatch - Forum
 {% endblock title %}
 
+{% block css %}
+.home-container{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    padding: 5px;
+}
+.feed_component,
+.topics_component,
+.activity_component{
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+}
+{% endblock css %}
+
+
 {% block body %}
-
-<style>
-    .home-container{
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        padding: 5px;
-    }
-    .feed_component,
-    .topics_component,
-    .activity_component{
-        padding: 10px;
-        text-align: center;
-        align-items: center;
-        position: relative;
-    }
-</style>
-
 <div class="home-container">
-
     <div class="topics_component">
         {% include 'mainapp/component/topics_component.html' %}
     </div>
@@ -35,7 +34,5 @@ StocksWatch - Forum
     <div class="activity_component">
         {% include 'mainapp/component/activity_component.html' %}
     </div>
-
 </div>
-
 {% endblock body %}

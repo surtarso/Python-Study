@@ -4,29 +4,27 @@
 StocksWatch Profile
 {% endblock title %}
 
+{% block css %}
+.profile-container{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    padding: 5px;
+}
+.profile_title,
+.feed_component,
+.topics_component,
+.activity_component{
+    padding: 5px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+}
+.profile_title{
+    background-color: whitesmoke;
+}
+{% endblock css %}
 
 {% block body %}
-
-<style>
-    .profile-container{
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        padding: 5px;
-    }
-    .profile_title,
-    .feed_component,
-    .topics_component,
-    .activity_component{
-        padding: 5px;
-        text-align: center;
-        align-items: center;
-        position: relative;
-    }
-    .profile_title{
-        background-color: whitesmoke;
-    }
-</style>
-
 <div class="profile_title">
     <h2 class="text-capitalize">{{user.username}}'s Profile</h2>
 </div>
@@ -52,7 +50,5 @@ StocksWatch Profile
             {% include 'mainapp/component/activity_component.html' %}
         {% endif %}
     </div>
-
 </div>
-
 {% endblock body %}

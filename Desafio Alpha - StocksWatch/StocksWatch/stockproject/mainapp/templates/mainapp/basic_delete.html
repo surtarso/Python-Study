@@ -1,13 +1,10 @@
 {% extends 'mainapp/basic.html' %}
 
-
 {% block title %}
 StocksWatch - DELETE
 {% endblock title %}
 
-
 {% block body %}
-
     <form class="container" method="POST" action="">
         {% csrf_token %}
         <p style="margin-top: 20px">
@@ -17,5 +14,4 @@ StocksWatch - DELETE
         <a class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">voltar</a>
         <input class="btn btn-danger" type="submit" value="Confirmar" />
     </form>
-
 {% endblock body %}

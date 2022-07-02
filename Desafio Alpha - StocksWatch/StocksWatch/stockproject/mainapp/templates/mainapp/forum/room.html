@@ -4,21 +4,20 @@
 StocksWatch - Sala
 {% endblock title %}
 
+{% block css %}
+.room-container{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    padding: 5px;
+}
+.message{
+    background-color: whitesmoke;
+    padding: 5px;
+    border-radius: 4px;
+}
+{% endblock css %}
+
 {% block body %}
-
-<style>
-    .room-container{
-        display: grid;
-        grid-template-columns: 5fr 1fr;
-        padding: 5px;
-    }
-    .message{
-        background-color: whitesmoke;
-        padding: 5px;
-        border-radius: 4px;
-    }
-</style>
-
 <div class="room-container">
     <div class="container">
         <!-- titulo do post -->

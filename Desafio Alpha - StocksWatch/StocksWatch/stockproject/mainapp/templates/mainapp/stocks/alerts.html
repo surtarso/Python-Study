@@ -4,26 +4,24 @@
 StocksWatch - Alertas
 {% endblock title %}
 
+{% block css %}
+.home-container {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    padding: 5px;
+}
+.alert_component,
+.mercado_component,
+.activity_component {
+    padding: 10px;
+    text-align: center;
+    align-items: center;
+    position: relative;
+}
+{% endblock css %}
+
 {% block body %}
-
-<style>
-    .home-container {
-        display: grid;
-        grid-template-columns: 1fr 4fr 1fr;
-        padding: 5px;
-    }
-    .alert_component,
-    .mercado_component,
-    .activity_component {
-        padding: 10px;
-        text-align: center;
-        align-items: center;
-        position: relative;
-    }
-</style>
-
 <div class="home-container">
-
     <div class="mercado_component">
         {% include 'mainapp/component/mercado_component.html' %}
     </div>
@@ -34,7 +32,5 @@ StocksWatch - Alertas
     <div class="activity_component">
         {% include 'mainapp/component/activity_component.html' %}
     </div>
-
 </div>
-
 {% endblock body %}

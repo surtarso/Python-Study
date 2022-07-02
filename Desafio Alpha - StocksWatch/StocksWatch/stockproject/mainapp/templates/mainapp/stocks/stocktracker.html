@@ -85,22 +85,6 @@ StocksWatch - Tracker
 <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-alert' %}">Criar Alerta</a>
 <br>
-
-<!-- OLD DROPDOWN MENU -->
-<!--
-<form action='graph' class="form-control">
-  <select name="graph" class="form-select form-select-lg mb-3 gap-2">
-    <option selected>Escolha um ativo:</option>
-    {% for key, value in data.items %}
-      <option name={{key}} type="text" value={{key}}>{{ key }}</option>
-    {% endfor %}
-  </select>
-
-  <div class="d-grid gap-2">
-    <button class="btn btn-primary" type="submit">Histórico</button>
-  </div>
-</form>
--->
 </div>
 
 <!-- WEBSOCKET - JSON - LIVE STOCK -->
