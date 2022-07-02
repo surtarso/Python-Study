@@ -75,6 +75,7 @@ def stockTracker(request):
 
 
 ##------------------------------------------------------GRAFICOS:
+@login_required(login_url='login')
 def configGraph(request):
 
     if request.method == 'GET' and request is not None:
