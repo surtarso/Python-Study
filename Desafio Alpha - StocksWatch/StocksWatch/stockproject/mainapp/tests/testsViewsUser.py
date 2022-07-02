@@ -10,8 +10,8 @@ from django.urls import reverse
 #         self.assertEqual(1,1)
 
 User = get_user_model()
-class TestUserLogin(TestCase):
-    
+class TestLoggedInUserURLs(TestCase):
+    #set up user
     def setUp(self):
         user_a_password = 'baddybald123'
         user_a = User(username='test', email='test@invalid.com')
@@ -23,7 +23,7 @@ class TestUserLogin(TestCase):
     def test_user_exists(self):
         user_count = User.objects.all().count()
         self.assertNotEqual(user_count, 0)
-
+        
     def test_user_password(self):
         self.assertTrue(self.user_a.check_password(self.user_a_password))
 
@@ -38,16 +38,6 @@ class TestUserLogin(TestCase):
         #test redirect from login to forums:
         self.assertEqual(redirect_path, login_redirect)
         self.assertEqual(status_code, 200)
-
-class TestLoggedInUserURLs(TestCase):
-
-    def setUp(self):
-        user_a_password = 'baddybald123'
-        user_a = User(username='test', email='test@invalid.com')
-        user_a.set_password(user_a_password)
-        user_a.save()
-        self.user_a_password = user_a_password
-        self.user_a = user_a
 
     def test_logged_in_normal_user_access_admin_panel(self):
         self.client.login(username='test', password = self.user_a_password)
