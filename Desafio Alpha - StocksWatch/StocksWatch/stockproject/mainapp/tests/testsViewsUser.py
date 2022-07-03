@@ -52,10 +52,18 @@ class TestLoggedInUserURLs(TestCase):
         self.client.login(username='test', password = self.user_a_password)
         self.assertTrue(self.user_a.is_authenticated)
 
-        urls = ['/stocktracker', '/forum/', '/graph', '/alerts/', '/carteira']
+        urls = ['/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
             response = self.client.post(url)
             self.assertEqual(response.status_code, 200)
+
+        #test redirect from empty ticker list on stocktracker
+        response = self.client.post('/stocktracker')
+        self.assertEqual(response.status_code, 302)
+        response = self.client.post('/stocktracker', follow=True)
+        redirect_path = response.request.get('PATH_INFO')
+        self.assertEqual(redirect_path, '/')
+        self.assertEqual(response.status_code, 200)
 
         response = self.client.get(reverse('user-profile', args=[self.user_a.pk]))
         self.assertEqual(response.status_code, 200)
@@ -79,8 +87,8 @@ class TestLoggedOutUserURLs(TestCase):
             #test redirect to login page:
             response = self.client.post(url, follow=True)
             redirect_path = response.request.get('PATH_INFO')
-            self.assertEqual(response.status_code, 200)
             self.assertEqual(redirect_path, login_page)
+            self.assertEqual(response.status_code, 200)
 
     def test_logged_out_user_access_admin_panel(self):
         response = self.client.post('/admin/')

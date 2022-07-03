@@ -1,10 +1,10 @@
 from django.shortcuts import redirect, render
-from django.core.exceptions import ObjectDoesNotExist
 #multithreading
 import queue
 from threading import Thread
 #error handling
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 #stocks info
 from yahoo_fin.stock_info import *  #data for tables
 import yfinance as yf   #data for graphs
@@ -96,7 +96,8 @@ def configGraph(request):
         data = yf.Ticker(str(ticker)+".SA").history("max")
 
         if data.empty:
-            return HttpResponse('invalid ticker or empty data frame')
+            # return HttpResponse('invalid ticker or empty data frame')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
         fig = go.Figure()
 
