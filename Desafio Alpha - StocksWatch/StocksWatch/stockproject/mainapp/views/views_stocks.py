@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.core.exceptions import ObjectDoesNotExist
 #multithreading
 import queue
 from threading import Thread
@@ -23,7 +24,12 @@ from mainapp.models import Mercado, CarteiraAtivo
 @login_required(login_url='login')
 def stockPicker(request, pk):
 
-    mercado = Mercado.objects.get(name=pk)
+    try:
+        mercado = Mercado.objects.get(name=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse('no valid market chosen')
+        return redirect('/')
+    
     stock_picker = mercado.ativo_set.all()
     
     contexto = {'stockpicker':stock_picker, 'mercado':pk}
@@ -38,9 +44,11 @@ def stockTracker(request):
 
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
-    
+
     #redireciona para home se entrar em stockpicker sem parametros (tickers)
-    if stockpicker == []: return redirect('/')
+    if stockpicker == []:
+        # return HttpResponse('ticker list is empty')
+        return redirect('/')
     
     #cria um dicionario para os papeis escolhidos
     data = {}
@@ -82,9 +90,13 @@ def stockTracker(request):
 @login_required(login_url='login')
 def configGraph(request):
 
-    if request.method == 'GET' and request is not None:
+    if request.method == 'GET':
+
         ticker = request.GET.get('graph')
         data = yf.Ticker(str(ticker)+".SA").history("max")
+
+        if data.empty:
+            return HttpResponse('invalid ticker or empty data frame')
 
         fig = go.Figure()
 
@@ -116,7 +128,7 @@ def configGraph(request):
         contexto = {'graph': graph, 'ticker':ticker}
         return render(request, 'mainapp/stocks/graph.html', contexto)
     else:
-        return HttpResponse('Ocorreu um erro.')
+        return HttpResponse('bad request')
 
 
 
