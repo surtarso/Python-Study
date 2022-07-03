@@ -32,8 +32,9 @@ def stockPicker(request, pk):
     
     stock_picker = mercado.ativo_set.all()
     
-    contexto = {'stockpicker':stock_picker, 'mercado':pk}
-    return render(request, 'mainapp/stocks/stockpicker.html', contexto)
+    target = 'mainapp/stocks/stockpicker.html'
+    context = {'stockpicker':stock_picker, 'mercado':pk}
+    return render(request, target, context)
 
 
 
@@ -95,9 +96,9 @@ def stockTracker(request):
         result = que.get()
         data.update(result)
 
-
-    contexto = {'data':data, 'room_name':'track'}
-    return render(request, 'mainapp/stocks/stocktracker.html', contexto)
+    target = 'mainapp/stocks/stocktracker.html'
+    context = {'data':data, 'room_name':'track'}
+    return render(request, target, context)
 
 
 ##------------------------------------------------------GRAFICOS:
@@ -140,8 +141,9 @@ def configGraph(request):
 
         graph = fig.to_html(full_html=True, default_height=600, default_width=810)
         
-        contexto = {'graph': graph, 'ticker':ticker}
-        return render(request, 'mainapp/stocks/graph.html', contexto)
+        target = 'mainapp/stocks/graph.html'
+        context = {'graph': graph, 'ticker':ticker}
+        return render(request, target, context)
     else:
         return HttpResponse('bad request')
 
@@ -180,8 +182,9 @@ def showCarteira(request):
         result = que.get()
         data.update(result)
 
-    contexto = {'data':data}
-    return render(request, 'mainapp/stocks/carteira.html', contexto)
+    target = 'mainapp/stocks/carteira.html'
+    context = {'data':data}
+    return render(request, target, context)
 
 
 
@@ -201,8 +204,9 @@ def createCarteira(request):
             carteira.save()  #save it
             return redirect('carteira') 
 
-    contexto = {'carteira_form':form}
-    return render(request, 'mainapp/stocks/carteira_form.html', contexto)
+    target = 'mainapp/stocks/carteira_form.html'
+    context = {'carteira_form':form}
+    return render(request, target, context)
 
 
 
@@ -222,8 +226,9 @@ def updateCarteira(request, pk):
             form.save()
             return redirect('carteira')
 
-    contexto = {'carteira_form':form}
-    return render(request, 'mainapp/stocks/carteira_form.html', contexto)
+    target = 'mainapp/stocks/carteira_form.html'
+    context = {'carteira_form':form}
+    return render(request, target, context)
 
 
 ##------------------------------------------------------DELETE ATIVO CARTEIRA:
@@ -239,4 +244,6 @@ def deleteCarteira(request, pk):
         carteira.delete()
         return redirect('carteira')
 
-    return render(request, 'mainapp/basic_delete.html', { 'obj':carteira })
+    target = 'mainapp/basic_delete.html'
+    context = {'obj':carteira}
+    return render(request, target, context)
