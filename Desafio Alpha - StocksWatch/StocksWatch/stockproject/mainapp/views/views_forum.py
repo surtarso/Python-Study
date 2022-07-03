@@ -39,7 +39,7 @@ def forum(request):
     return render(request, 'mainapp/forum/forum.html', contexto)
 
 
-##---------------------------------------------------------ROOM:
+##-----------------------------------------------------VIEW ROOM:
 @login_required(login_url='login')
 def room(request, pk):
     try:
@@ -142,6 +142,7 @@ def deleteMessage(request, pk):
     try:
         message = Message.objects.get(id=pk)
     except ObjectDoesNotExist:
+        # return HttpResponse('this message does not exist')
         return redirect('forum')
     
     #prevents logged in users to delete other users messages
