@@ -38,6 +38,10 @@ def stockTracker(request):
 
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     stockpicker = request.GET.getlist('stockpicker')
+    
+    #redireciona para home se entrar em stockpicker sem parametros (tickers)
+    if stockpicker == []: return redirect('/')
+    
     #cria um dicionario para os papeis escolhidos
     data = {}
     

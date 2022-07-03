@@ -56,16 +56,20 @@ class StockConsumer(AsyncWebsocketConsumer):
 
         # parse query
         query_params = parse_qs(self.scope["query_string"].decode())
-        print(query_params)
-        stockpicker = query_params['stockpicker']
         
-        #add celery beat
-        await self.addToCeleryBeat(stockpicker)
+        # avoid KeyError for empty params:
+        if query_params != {}:
 
-        # add user to stockdetail
-        await self.addToStockDetail(stockpicker)
+            #get parameters
+            stockpicker = query_params['stockpicker']
+        
+            #add celery beat
+            await self.addToCeleryBeat(stockpicker)
 
-        await self.accept()
+            # add user to stockdetail
+            await self.addToStockDetail(stockpicker)
+
+            await self.accept()
 
 
     @sync_to_async
