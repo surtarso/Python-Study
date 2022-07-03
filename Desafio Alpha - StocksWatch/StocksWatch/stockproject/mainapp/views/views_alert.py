@@ -25,13 +25,13 @@ def alerts(request):
     mercado = Mercado.objects.all()
     alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
 
-    contexto = { # itera em alerts_component.html
+    target = 'mainapp/stocks/alerts.html'
+    context = { # itera em alerts_component.html
         'alerta': alerta,
         'alertas': alertas,
         'mercado': mercado,
         }
-
-    return render(request, 'mainapp/stocks/alerts.html', contexto)
+    return render(request, target, context)
 
 
 ##------------------------------------------------------ALERT VIEW:
@@ -49,9 +49,10 @@ def alertView(request, pk):
 
     if request.method == 'POST':    
         return redirect('view-alert', pk=alert.id)
-        
-    contexto = {'alert':alert}
-    return render(request, 'mainapp/stocks/alert_view.html', contexto)
+    
+    target = 'mainapp/stocks/alert_view.html'
+    context = {'alert':alert}
+    return render(request, target, context)
 
 
 ##-----------------------------------------------------CREATE ALERT:
@@ -73,9 +74,9 @@ def createAlert(request):
             pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
 
-    
-    contexto = {'alert_form':form}
-    return render(request, 'mainapp/stocks/alert_form.html', contexto)
+    target = 'mainapp/stocks/alert_form.html'
+    context = {'alert_form':form}
+    return render(request, target, context)
 
 
 
@@ -103,8 +104,9 @@ def updateAlert(request, pk):
             pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')
 
-    contexto = {'alert_form':form}
-    return render(request, 'mainapp/stocks/alert_form.html', contexto)
+    target = 'mainapp/stocks/alert_form.html'
+    context = {'alert_form':form}
+    return render(request, target, context)
 
 
 
@@ -125,5 +127,7 @@ def deleteAlert(request, pk):
     if request.method == 'POST':
         alert.delete()
         return redirect('alerts')
-
-    return render(request, 'mainapp/basic_delete.html', { 'obj':alert })
+    
+    target = 'mainapp/basic_delete.html'
+    context = {'obj':alert}
+    return render(request, target, context)
