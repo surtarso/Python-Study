@@ -43,8 +43,9 @@ def loginPage(request):
             #send error message
             messages.error(request, "user or pass does not exist")
 
-    contexto = {'page':page}
-    return render(request, 'mainapp/users/login_register.html', contexto)
+    target = 'mainapp/users/login_register.html'
+    context = {'page':page}
+    return render(request, target, context)
 
 
 ##-------------------------------------------------------LOGOUT:
@@ -68,8 +69,9 @@ def registerPage(request):
         else:
             messages.error(request, "registration error")
 
-    contexto = {'form': form}
-    return render(request, 'mainapp/users/login_register.html', contexto)
+    target = 'mainapp/users/login_register.html'
+    context = {'form': form}
+    return render(request, target, context)
 
 
 ##----------------------------------------------------USER PROFILE:
@@ -85,12 +87,14 @@ def userProfile(request, pk):
     rooms = user.room_set.all()  # modelname_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
-    alerta = Alerta.objects.all()
-    contexto = {
+    alertas = Alerta.objects.all()
+
+    target = 'mainapp/users/profile.html'
+    context = {
         'user':user,
         'rooms':rooms,
         'room_messages':room_messages,
         'topics':topics,
-        'alertas':alerta
+        'alertas':alertas
         }
-    return render(request, 'mainapp/users/profile.html', contexto)
+    return render(request, target, context)
