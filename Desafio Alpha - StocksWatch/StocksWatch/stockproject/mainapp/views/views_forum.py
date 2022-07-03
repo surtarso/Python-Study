@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.db.models import Q
 #error handling
@@ -41,7 +42,12 @@ def forum(request):
 ##---------------------------------------------------------ROOM:
 @login_required(login_url='login')
 def room(request, pk):
-    room = Room.objects.get(id=pk)
+    try:
+        room = Room.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse('this room does not exist')
+        return redirect('forum')
+    
     room_messages = room.message_set.all()
     participants = room.participants.all()
 
@@ -87,7 +93,12 @@ def createRoom(request):
 ##------------------------------------------------------UPDATE ROOM:
 @login_required(login_url='login')
 def updateRoom(request, pk):
-    room = Room.objects.get(id=pk)
+    try:
+        room = Room.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse('this room does not exist')
+        return redirect('forum')
+    
     form = RoomForm(instance=room)
 
     #prevents logged in users to alter other users posts
@@ -98,7 +109,7 @@ def updateRoom(request, pk):
         form = RoomForm(request.POST, instance=room)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('forum')
 
     contexto = {'form':form}
     return render(request, 'mainapp/forum/room_form.html', contexto)
@@ -107,7 +118,11 @@ def updateRoom(request, pk):
 ##------------------------------------------------------DELETE ROOM:
 @login_required(login_url='login')
 def deleteRoom(request, pk):
-    room = Room.objects.get(id=pk)
+    try:
+        room = Room.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse('this room does not exist')
+        return redirect('forum')
 
     #prevents logged in users to delete other users posts
     if request.user != room.host:
@@ -115,7 +130,7 @@ def deleteRoom(request, pk):
 
     if request.method == 'POST':
         room.delete()
-        return redirect('home')
+        return redirect('forum')
 
     return render(request, 'mainapp/basic_delete.html', { 'obj':room })
 
@@ -124,14 +139,17 @@ def deleteRoom(request, pk):
 ##----------------------------------------------------DELETE MESSAGES:
 @login_required(login_url='login')
 def deleteMessage(request, pk):
-    message = Message.objects.get(id=pk)
-
+    try:
+        message = Message.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return redirect('forum')
+    
     #prevents logged in users to delete other users messages
     if request.user != message.user:
         return HttpResponse("it does not belong to you")
 
     if request.method == 'POST':
         message.delete()
-        return redirect('home')
+        return redirect('forum')
 
     return render(request, 'mainapp/basic_delete.html', { 'obj':message })
