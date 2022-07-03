@@ -85,6 +85,7 @@ def updateAlert(request, pk):
     try:
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
+        # return HttpResponse('this alert does not exist')
         return redirect('alerts')
     
     form = AlertForm(instance=alert)
@@ -113,6 +114,7 @@ def deleteAlert(request, pk):
     try:
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
+        # return HttpResponse('this alert does not exist')
         return redirect('alerts')
     
     #prevents logged in users to delete other users posts
