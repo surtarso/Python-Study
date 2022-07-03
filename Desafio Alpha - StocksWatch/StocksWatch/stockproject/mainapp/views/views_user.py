@@ -1,5 +1,5 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib import messages
 #log in/ou register
@@ -68,7 +68,8 @@ def registerPage(request):
         else:
             messages.error(request, "registration error")
 
-    return render(request, 'mainapp/users/login_register.html', {'form': form})
+    contexto = {'form': form}
+    return render(request, 'mainapp/users/login_register.html', contexto)
 
 
 ##----------------------------------------------------USER PROFILE:
@@ -78,7 +79,8 @@ def userProfile(request, pk):
         user = User.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this profile does not exist')
-        return redirect('/')
+        # return redirect('/')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
     
     rooms = user.room_set.all()  # modelname_set.all()
     room_messages = user.message_set.all()
