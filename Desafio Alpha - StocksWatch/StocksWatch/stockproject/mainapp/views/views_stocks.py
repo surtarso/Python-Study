@@ -14,7 +14,7 @@ import plotly.graph_objs as go
 from django.contrib.auth.decorators import login_required
 from mainapp.forms import CarteiraForm
 #models
-from mainapp.models import Mercado, CarteiraAtivo
+from mainapp.models import Ativo, Mercado, CarteiraAtivo
 
 
 
@@ -41,49 +41,63 @@ def stockPicker(request, pk):
 #recebe o submit ou do stockpicker ou do searchbar
 @login_required(login_url='login')
 def stockTracker(request):
-
-    #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
-    stockpicker = request.GET.getlist('stockpicker')
-
-    #redireciona para home se entrar em stockpicker sem parametros (tickers)
-    if stockpicker == []:
-        # return HttpResponse('ticker list is empty')
-        return redirect('/')
     
-    #cria um dicionario para os papeis escolhidos
-    data = {}
+    #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
+    if request is not None:
+        stockpicker = request.GET.getlist('stockpicker')
+
+    #filter valid tickers
+    valid_tickers = []
+    mercados = Mercado.objects.all()
+    # iterate trhu ALL tickers available in DB
+    for mercado in mercados:
+        ativos = mercado.ativo_set.all()
+        for ativo in ativos:
+            if str(ativo) in stockpicker:
+                valid_tickers.append(str(ativo))
+    
+    #se entrar em stockpicker sem tickers validos
+    if valid_tickers == []:
+        return HttpResponse('ticker not found or list is empty')
+        # return redirect('/')
     
     #multithreading
-    n_threads = len(stockpicker)
+    n_threads = len(valid_tickers)
     thread_list = []
     que = queue.Queue()
 
+    #cria um dicionario para os papeis escolhidos
+    data = {}
+
     #adiciona os papeis escolhidos para a tabela (single thread)
-    # for i in stockpicker:
+    # for i in valid_tickers:
     #     #scrape yahoo data
     #     result = get_quote_table(i+'.SA')  ##.SA needed for B3!!
     #     data.update({i: result})
 
     #adiciona os papeis escolhidos para a tabela (multi thread)
     for i in range(n_threads):
+        
         thread = Thread(
             target = lambda q,
-            arg1: q.put({stockpicker[i]: get_quote_table(str(arg1)+'.SA')}),
-            args = (que, stockpicker[i])
+            arg1: q.put({valid_tickers[i]: get_quote_table(str(arg1)+'.SA')}),
+            args = (que, valid_tickers[i])
             )
+
         thread_list.append(thread)
         thread_list[i].start()
 
     for thread in thread_list:
         thread.join()
+        
     #update value
-    while not que.empty():
+    while not que.empty():   
         result = que.get()
         data.update(result)
 
+
     contexto = {'data':data, 'room_name':'track'}
     return render(request, 'mainapp/stocks/stocktracker.html', contexto)
-
 
 
 ##------------------------------------------------------GRAFICOS:
