@@ -14,7 +14,7 @@ import plotly.graph_objs as go
 from django.contrib.auth.decorators import login_required
 from mainapp.forms import CarteiraForm
 #models
-from mainapp.models import Ativo, Mercado, CarteiraAtivo
+from mainapp.models import Mercado, CarteiraAtivo
 
 
 

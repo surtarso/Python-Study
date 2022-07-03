@@ -1,4 +1,3 @@
-from django.http import QueryDict
 from django.test import TestCase
 from mainapp.models import Mercado
 
