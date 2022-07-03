@@ -25,7 +25,8 @@ class TestLoggedInUserURLs(TestCase):
         self.assertNotEqual(user_count, 0)
 
     def test_user_password(self):
-        self.assertTrue(self.user_a.check_password(self.user_a_password))
+        user_a = User.objects.get(username='test')
+        self.assertTrue(user_a.check_password(self.user_a_password))
 
     def test_login_redirect_url(self):
         login_page = '/login/'
@@ -69,8 +70,8 @@ class TestLoggedOutUserURLs(TestCase):
 
     def test_invalid_urls_for_logged_out_users(self):
         login_page = '/login/'
-        urls = ['/stockpicker/IBOV', '/stockpicker/IFIX',
-        '/stocktracker', '/forum/', '/graph', '/alerts/', '/carteira']
+        urls = ['/stockpicker/IBOV', '/stockpicker/IFIX', '/stocktracker',
+                '/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
             #test 'must be logged in':
             response = self.client.post(url)
