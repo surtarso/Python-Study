@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.db.models import Q
 #error handling
@@ -24,7 +25,7 @@ def alerts(request):
     mercado = Mercado.objects.all()
     alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
 
-    contexto = { # itera em alerts.html
+    contexto = { # itera em alerts_component.html
         'alerta': alerta,
         'alertas': alertas,
         'mercado': mercado,
@@ -36,11 +37,19 @@ def alerts(request):
 ##------------------------------------------------------ALERT VIEW:
 @login_required(login_url='login')
 def alertView(request, pk):
-    alert = Alerta.objects.get(id=pk)
+    try:
+        alert = Alerta.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse("this alert does not exist")
+        return redirect('alerts')
+    
+    if request.user != alert.host:
+        # return HttpResponse("you are not supposed to see this")
+        return redirect('alerts')
 
-    if request.method == 'POST': 
+    if request.method == 'POST':    
         return redirect('view-alert', pk=alert.id)
-
+        
     contexto = {'alert':alert}
     return render(request, 'mainapp/stocks/alert_view.html', contexto)
 
@@ -73,12 +82,17 @@ def createAlert(request):
 ##------------------------------------------------------UPDATE ALERT:
 @login_required(login_url='login')
 def updateAlert(request, pk):
-    alert = Alerta.objects.get(id=pk)
+    try:
+        alert = Alerta.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return redirect('alerts')
+    
     form = AlertForm(instance=alert)
 
     #prevents logged in users to alter other users posts
     if request.user != alert.host:
-        return HttpResponse("you are not allowed here")
+        # return HttpResponse("you are not allowed here")
+        return redirect('alerts')
 
     if request.method == 'POST':
         form = AlertForm(request.POST, instance=alert)
@@ -96,11 +110,15 @@ def updateAlert(request, pk):
 ##------------------------------------------------------DELETE ALERT:
 @login_required(login_url='login')
 def deleteAlert(request, pk):
-    alert = Alerta.objects.get(id=pk)
-
+    try:
+        alert = Alerta.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return redirect('alerts')
+    
     #prevents logged in users to delete other users posts
     if request.user != alert.host:
-        return HttpResponse("it does not belong to you")
+        # return HttpResponse("it does not belong to you")
+        return redirect('alerts')
 
     if request.method == 'POST':
         alert.delete()
