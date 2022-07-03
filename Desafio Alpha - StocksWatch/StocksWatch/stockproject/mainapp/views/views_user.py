@@ -1,3 +1,5 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 #log in/ou register
@@ -48,7 +50,7 @@ def loginPage(request):
 ##-------------------------------------------------------LOGOUT:
 def logoutUser(request):
     logout(request)
-    return redirect('home')
+    return redirect('/')
 
 
 ##------------------------------------------------------REGISTER:
@@ -72,7 +74,12 @@ def registerPage(request):
 ##----------------------------------------------------USER PROFILE:
 @login_required(login_url='login')
 def userProfile(request, pk):
-    user = User.objects.get(id=pk)
+    try:
+        user = User.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        # return HttpResponse('this profile does not exist')
+        return redirect('/')
+    
     rooms = user.room_set.all()  # modelname_set.all()
     room_messages = user.message_set.all()
     topics = Topic.objects.all()

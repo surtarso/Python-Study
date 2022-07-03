@@ -65,6 +65,7 @@ class TestLoggedInUserURLs(TestCase):
         self.assertEqual(redirect_path, '/')
         self.assertEqual(response.status_code, 200)
 
+        #test profile with ID
         response = self.client.get(reverse('user-profile', args=[self.user_a.pk]))
         self.assertEqual(response.status_code, 200)
 
