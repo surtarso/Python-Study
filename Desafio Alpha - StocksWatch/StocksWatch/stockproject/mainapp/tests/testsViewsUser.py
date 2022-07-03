@@ -52,18 +52,11 @@ class TestLoggedInUserURLs(TestCase):
         self.client.login(username='test', password = self.user_a_password)
         self.assertTrue(self.user_a.is_authenticated)
 
-        urls = ['/forum/', '/graph', '/alerts/', '/carteira']
+        urls = ['/stockpicker/IBOV', '/stockpicker/IFIX', '/stocktracker',
+                '/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
-            response = self.client.post(url)
+            response = self.client.post(url, follow=True)
             self.assertEqual(response.status_code, 200)
-
-        #test redirect from empty ticker list on stocktracker
-        response = self.client.post('/stocktracker')
-        self.assertEqual(response.status_code, 302)
-        response = self.client.post('/stocktracker', follow=True)
-        redirect_path = response.request.get('PATH_INFO')
-        self.assertEqual(redirect_path, '/')
-        self.assertEqual(response.status_code, 200)
 
         #test profile with ID
         response = self.client.get(reverse('user-profile', args=[self.user_a.pk]))

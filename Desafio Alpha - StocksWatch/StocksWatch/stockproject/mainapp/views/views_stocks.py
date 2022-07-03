@@ -49,9 +49,9 @@ def stockTracker(request):
     #filter valid tickers
     valid_tickers = []
     mercados = Mercado.objects.all()
-    # iterate trhu ALL tickers available in DB
     for mercado in mercados:
         ativos = mercado.ativo_set.all()
+        # iterate trhu ALL tickers available in DB
         for ativo in ativos:
             if str(ativo) in stockpicker:
                 valid_tickers.append(str(ativo))
@@ -66,7 +66,7 @@ def stockTracker(request):
     thread_list = []
     que = queue.Queue()
 
-    #cria um dicionario para os papeis escolhidos
+    #cria um dicionario para o resultado dos papeis escolhidos
     data = {}
 
     #adiciona os papeis escolhidos para a tabela (single thread)
