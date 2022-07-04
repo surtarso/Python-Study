@@ -13,6 +13,12 @@ from mainapp.forms import RoomForm
 ##--------------------------------------------------------FORUM:
 @login_required(login_url='login')
 def forum(request):
+    """
+    View onde o usuario acessa as salas de bate papo existentes
+    Returns:
+        template: forum.html
+        context: rooms, topics, room_count, messages
+    """
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     rooms = Room.objects.filter(
@@ -39,6 +45,14 @@ def forum(request):
 ##-----------------------------------------------------VIEW ROOM:
 @login_required(login_url='login')
 def room(request, pk):
+    """
+    View para visualizar uma sala especifica
+    Args:
+        pk: room ID
+    Returns:
+        template: room.html
+        context: room, messages, participants
+    """
     try:
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
@@ -70,6 +84,12 @@ def room(request, pk):
 ##-----------------------------------------------------CREATE ROOM:
 @login_required(login_url='login')
 def createRoom(request):
+    """
+    View responsavel pela criacao de novas salas de bate papo
+    Returns:
+        template: room_form.html
+        context: formulario de criacao de sala
+    """
     #get class reference
     form = RoomForm()
     #standard form on the POST method
@@ -91,6 +111,14 @@ def createRoom(request):
 ##------------------------------------------------------UPDATE ROOM:
 @login_required(login_url='login')
 def updateRoom(request, pk):
+    """
+    View para atualizacao de sala de bate papo
+    Args:
+        pk: room ID
+    Returns:
+        template: room_form.html
+        context: formulario pré preenchido da sala
+    """
     try:
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
@@ -117,6 +145,14 @@ def updateRoom(request, pk):
 ##------------------------------------------------------DELETE ROOM:
 @login_required(login_url='login')
 def deleteRoom(request, pk):
+    """
+    View responsavel por apagar salas de bate papo
+    Args:
+        pk: room ID
+    Returns:
+        template: basic_delete.html
+        context: sala a ser deletada
+    """
     try:
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
@@ -140,6 +176,14 @@ def deleteRoom(request, pk):
 ##----------------------------------------------------DELETE MESSAGES:
 @login_required(login_url='login')
 def deleteMessage(request, pk):
+    """
+    View responsavel por deletar mensagens contidas em salas de bate papo
+    Args:
+        pk: ID da mensagem
+    Returns:
+        template: basic_delete.html
+        context: mensagem a ser apagada.
+    """
     try:
         message = Message.objects.get(id=pk)
     except ObjectDoesNotExist:
