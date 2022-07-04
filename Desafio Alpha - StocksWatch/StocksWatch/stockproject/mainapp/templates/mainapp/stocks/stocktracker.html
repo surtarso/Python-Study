@@ -1,3 +1,9 @@
+<!--
+  stocktracker.html é a pagina onde os ativos selecionados em stockpicker sao exibidos.
+  Todas as informacoes dessa pagina vem da API de escolha (yahoo no momento) e sao exibidas
+  em forma de tabela. As cotacoes sao automaticamente atualizadas a cada 10 segundos.
+-->
+
 {% extends 'mainapp/basic.html' %}
 {% load static %}
 
@@ -15,7 +21,9 @@ StocksWatch - Tracker
   .brown { color: brown; }
 {% endblock css %}
 
-
+<!--
+  Estes sao os indices exibidos na tabela, que sao buscados online.
+-->
 {% block body %}
 <div class="container table-responsive">
 <h3>Ativo(s) selecionado(s)</h3>
@@ -37,25 +45,28 @@ StocksWatch - Tracker
       </tr>
     </thead>
 
-    <!-- FILLING OUT THE TABLES WITH SELECTED STOCKS -->
+<!--
+  Inicia a operacao de preencher os dados da tabela iterando pelos ativos selecionados em stockpicker.
+-->
     <tbody>
       {% for key, value in data.items %}
       <tr>
-        <th scope="row">{{forloop.counter}}</th>
-        <td id="{{key}}_ticker">{{key}}</td>
-        <td id="{{key}}_price">{{ value|get:"Quote Price"|floatformat:2 }}</td>
-        <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:2 }}</td>
-        <td id="{{key}}_open">{{ value|get:"Open" }}</td>
+        <th scope="row">{{forloop.counter}}</th> <!-- "ID" -->
+        <td id="{{key}}_ticker">{{key}}</td>  <!-- ativo/ticker -->
+        <td id="{{key}}_price">{{ value|get:"Quote Price"|floatformat:2 }}</td>  <!-- preco atual -->
+        <td id="{{key}}_prevprice">{{ value|get:"Previous Close"|floatformat:2 }}</td>  <!-- preco anterior/fechamento -->
+        <td id="{{key}}_open">{{ value|get:"Open" }}</td> <!-- preco de abertura -->
         <!-- Intradia -->
-        <td id="{{key}}_change">
+        <td id="{{key}}_change">  <!-- intradia -->
           <script>
+            //calcula intradia -> preco - fechamento
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
-            if(change >= 0){
+            if(change >= 0){ //positivo
               document.getElementById("{{key}}_change").className = "green";
               document.getElementById("{{key}}_price").className = "darkgreen";
             }
-            if (change < 0){
+            if (change < 0){ //negativo
               document.getElementById("{{key}}_change").className = "red";
               document.getElementById("{{key}}_price").className = "brown";
             }
@@ -63,10 +74,11 @@ StocksWatch - Tracker
           </script>
         </td>
 
-        <td id="{{key}}_range">{{ value|get:"52 Week Range" }}</td>
-        <td id="{{key}}_cap">{{ value|get:"Market Cap" }}</td>
-        <td id="{{key}}_volume">{{ value|get:"Volume" }}</td>
-        <!-- historico em graficos -->
+        <td id="{{key}}_range">{{ value|get:"52 Week Range" }}</td>  <!-- 52 week range -->
+        <td id="{{key}}_cap">{{ value|get:"Market Cap" }}</td> <!-- market cap -->
+        <td id="{{key}}_volume">{{ value|get:"Volume" }}</td>  <!-- volume de transacoes -->
+
+        <!-- botao para historico em graficos -->
         <td>    
           <form action='graph'>
               <button style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
@@ -82,11 +94,16 @@ StocksWatch - Tracker
 
 </table>
 </table>
+<!-- botao para criar alertas -->
 <a class="btn btn-primary btn-sm d-grid gap-2" 
         href="{% url 'create-alert' %}">Criar Alerta</a>
 <br>
 </div>
 
+<!--
+  Script responsavel pela comunicacao com celery para atualizacao em tempo real (a cada 10 segs)
+  das informacoes dos ativos. 
+-->
 <!-- WEBSOCKET - JSON - LIVE STOCK -->
 {{ room_name|json_script:"room-name" }}
 <script>
@@ -124,6 +141,11 @@ StocksWatch - Tracker
     }
   }
 </script>
+
+<!--
+    Adiciona JQUERY DATATABLES para a tabela acima para utilizacao 
+    de filtros por indice e ordenacao da tabela
+-->
 <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="

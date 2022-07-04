@@ -1,3 +1,9 @@
+<!--
+    carteira.html é a pagina CARTEIRA, onde o usuario adiciona ativos para acompanhar o
+    desempenho do mercado. Usando o peso/nota o usuario pode tambem balancear seu patrimonio
+    com dicas apresentadas pela tabela.
+-->
+
 {% extends 'mainapp/basic.html' %}
 {% load static %}
 
@@ -14,6 +20,9 @@ StocksWatch - Carteira
   .brown { color: brown; }
 {% endblock css %}
 
+<!--
+    Formatação da tabela da carteira do usuario em indices
+-->
 {% block body %}
 <div class="container-xxl" style="font-size: 12px;">
     <br>
@@ -43,7 +52,10 @@ StocksWatch - Carteira
                     <th scope="col">Histórico</th>
                 </tr>
             </thead>
-
+<!--
+    Preenche os dados da carteira com cotacao online e expressoes que balanceam 
+    a carteira de acordo com variaveis como nota/peso e patrimonio
+-->
             <tbody>  <!-- preenchendo dados na tabela -->
                 {% for key, value in data.items %}
                 <tr>
@@ -78,11 +90,12 @@ StocksWatch - Carteira
 
                     <td id="{{key}}_change"> <!-- intradia -->
                         <script>
+                        // calcula intradia de acordo com preco - fechamento
                           var change = document.getElementById("{{key}}_preco").innerHTML - 
                                         document.getElementById("{{key}}_fechamento").innerHTML;
 
                           change = Number((change).toFixed(4));
-
+                        // muda a cor de intradia de acordo com positivo ou negativo
                           if(change >= 0){document.getElementById("{{key}}_change").className = "green";}
                           if (change < 0){document.getElementById("{{key}}_change").className = "red";}
 
@@ -94,11 +107,12 @@ StocksWatch - Carteira
 
                     <td id='{{key}}_rm'>  <!-- Remuneracao do ativo de acordo com preco medio -->
                         <script>
+                            //calcula remuneracao -> total do ativo na carteira / quantidade de papeis * preco medio
                             result = (document.getElementById('{{key}}_total').innerHTML /
                                     (document.getElementById('{{key}}_qnt').innerHTML *
                                         document.getElementById('{{key}}_pm').innerHTML)
                                 ) - 1;
-
+                             // muda a cor de remuneracao do ativo de acordo com positivo ou negativo
                             if (result >= 0){document.getElementById("{{key}}_rm").className = "green";}    
                             if (result < 0){document.getElementById("{{key}}_rm").className = "red";}
 
@@ -106,7 +120,7 @@ StocksWatch - Carteira
                         </script>
                     </td>
 
-                    <td>  <!-- manipulacao de ativos da carteira - editar/excluir -->
+                    <td>  <!-- botoes de manipulacao de ativos da carteira - editar/excluir -->
                         <a class="btn btn-warning btn-sm"
                             style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
                             href="{% url 'update-carteira' key.id %}">E</a>
@@ -116,7 +130,7 @@ StocksWatch - Carteira
                             href="{% url 'delete-carteira' key.id %}">X</a>
                     </td>
 
-                    <td>    <!-- historico em graficos -->
+                    <td>    <!-- botao para historico em graficos -->
                         <form action='graph'>
                             <button class="btn btn-primary btn-sm"
                                     style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
@@ -128,9 +142,14 @@ StocksWatch - Carteira
                 </tr>
                 {% endfor %}
                 
+<!--
+    Calcula as espressoes necessarias para calculos de balanceamento de carteira apos os dados da tabela
+    serem inseridos em sua totalidade para assim poder calcular totais e patrimonio e as outras expressoes
+    que dependem desses valores.
+-->
                 <!-- manipulacao dos dados de balanceamento -->
                 <script>
-                    // soma todas as notas
+                    // soma todas as notas/peso dos ativos e o total de todos os ativos na carteira
                     var notas = 0;
                     var totais = 0;
                     {% for key, value in data.items %}
@@ -162,11 +181,11 @@ StocksWatch - Carteira
                     {% for key, value in data.items %}
                         var quero = parseFloat(document.getElementById('{{key}}_quero').innerHTML);
                         var tenho = parseFloat(document.getElementById('{{key}}_tenho').innerHTML);
-                        if ( quero > tenho ){
+                        if ( quero > tenho ){ //quero mais do que tenho
                             document.getElementById('{{key}}_ordem').className = "green";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Comprar';
                         }
-                        if ( quero < tenho ){
+                        if ( quero < tenho ){ //tenho mais do que quero
                             document.getElementById('{{key}}_ordem').className = "orange";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Aguardar';
                         }
@@ -191,9 +210,15 @@ StocksWatch - Carteira
             </tbody>
         </table>
     </table>
-    <!-- adicionar novo ativo na carteira -->
+    <!-- botao para adicionar um novo ativo na carteira -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-carteira' %}">Adicionar Novo Ativo</a>
     
+<!--
+    Area abaixo da tabela que indica o patrimonio total do usuario.
+    Este numero é usado para calcular algumas expressoes usadas para o 
+    balanceamento da carteira, como a quantidade de dinheiro que falta em
+    cada ativo e o nomero de papeis necessarios para compra ou venda.
+-->
     <!-- totais e balanço da carteira WIP -->
     <div style="float:right; padding: 15px;">
         <big>Patrimônio:</big>
@@ -230,6 +255,11 @@ StocksWatch - Carteira
         </script>
     </div>
 </div>
+
+<!--
+    Adiciona JQUERY DATATABLES para a tabela acima para utilizacao 
+    de filtros por indice e ordenacao da tabela
+-->
 <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
