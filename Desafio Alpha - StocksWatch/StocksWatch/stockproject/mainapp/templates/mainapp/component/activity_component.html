@@ -1,4 +1,10 @@
-<!-- esconde mensagens na magina de alertas e vice versa -->
+<!--
+    activity_component.html é usado como um componente nas paginas FORUM, ALERTAS e PROFILE
+    como uma forma de demonstrar a atividade recente referente ao usuário (alerta e profile)
+    e atividade geral da pagina em FORUM (posts de outros usuarios)
+-->
+
+<!-- esconde titulo de mensagens na pagina de alertas e vice versa -->
 {% if alerta and not room_messages %}
 <h3>Recentes</h3>
 {% else %}
@@ -6,7 +12,10 @@
 {% endif %}
 <br>
 
-
+<!--
+    Pega todas as mensagens existentes na database e mostra para o usuario.
+    Sendo suas proprias mensagens com opcoe de apagar e a de outros usuarios, visualizar.
+-->
 <!-- MENSAGENS (atividade recente) -->
 <div class="container">
     {% for message in room_messages %}
@@ -42,6 +51,11 @@
     {% endfor %}
 </div>
 
+
+<!--
+    Pega todas alertas existentes na database e mostra para o usuario apenas
+    os alertas de sua autoria, com opções de editar e apagar tal alerta.
+-->
 <!-- ALERTAS (alertas recentes) -->
 <div class="container">
     {% for alerta in alertas %}

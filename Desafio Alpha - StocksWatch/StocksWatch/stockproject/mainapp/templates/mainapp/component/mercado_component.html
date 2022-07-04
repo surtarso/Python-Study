@@ -1,12 +1,23 @@
+<!--
+    mercado_component.html é um componente para a pagina ALERTAS,
+    que lista as opcoes de mercado disponiveis para alertas e filtra
+    os alertas de tal mercado ao clicar
+-->
+
 <h3>Mercados</h3>
 <br>
 
+<!-- "Todos" os alertas é um link para pagina pessoal de alertas-->
 <div>
     <a  style="margin: 3px"
         class="btn btn-secondary btn-sm d-grid gap-2"
         href="{% url 'alerts' %}">Todos</a>
 </div>
 
+<!--
+    itera pela lista de mercados disponiveis para alerta e apresenta em uma lista
+    clicavel que leva o usuario para a pagina ALERTAS com um filtro de tal mercado aplicado.
+-->
 {% for mercado in mercado %}
 <div>
     <a  style="margin: 3px"

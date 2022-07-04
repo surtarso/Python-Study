@@ -1,11 +1,22 @@
+<!--
+    alerts_component.html é a coluna central da pagina ALERTAS, que lista os alertas existentes
+    do usuario logado. Também é um componente da pagina PROFILE quando acessada pelo proprio usuario ativo.
+-->
+
+<!-- titulo do componente -->
 <div class="container">
     <h3>Alertas</h3>
     <br>
-    <!-- criar um novo alerta -->
+    <!-- botao para criar um novo alerta -->
     <a class="btn btn-primary btn-sm d-grid gap-2" href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
 
 <br>
+
+<!--
+    Itera por todos os alertas, separando apenas os alertas do usuario logado (privacidade)
+    e os exibe em "cards" na pagina ALERTAS e na pagina PROFILE quando acessada pelo proprio usuario ativo.
+-->
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for alerta in alertas %}

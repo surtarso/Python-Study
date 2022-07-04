@@ -1,3 +1,9 @@
+<!--
+    feed_component.html lista todas as salas de bate-papo disponiveis e o numero de salas na pagina FORUM.
+    Quando inserido na pagina PROFILE, mostra apenas as salas de tal usuario (proprio ou outros)
+    Adiciona um botão para criação de novas salas.
+-->
+
 {% if request.user == user %}
 <div class="container">
     <h3>Salas</h3>
@@ -13,6 +19,11 @@
 <br>
 {% endif %}
 
+<!--
+    Itera por todas as SALAS disponiveis na database e as exibe na pagina FORUM para qualquer usuario.
+    Adiciona botoes para editar e apagar salas para o dono das salas.
+    Adiciona o nome do dono da sala para as salas de outros usuarios.
+-->
 <!-- salas -->
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4">
