@@ -80,7 +80,7 @@ def stockTracker(request):
     for i in range(n_threads):
         
         thread = Thread(
-            template = lambda q,
+            target = lambda q,
             arg1: q.put({valid_tickers[i]: get_quote_table(str(arg1)+'.SA')}),
             args = (que, valid_tickers[i])
             )

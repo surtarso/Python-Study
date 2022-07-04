@@ -20,7 +20,7 @@ StocksWatch - Carteira
     <h3>Carteira</h3>
 
     <table class="table-responsive">
-        <table class="table table-hover">
+        <table id="tabela" class="table table-hover">
             <thead class="table-light">  
                 <tr>  <!-- titulos da tabela -->
                     <th scope="col">Nota</th>
@@ -228,5 +228,14 @@ StocksWatch - Carteira
         </script>
     </div>
 </div>
-
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous">
+</script>
+<script>
+    $(document).ready( function () {
+        $('#tabela').DataTable();
+    } );
+</script>
 {% endblock body %}
