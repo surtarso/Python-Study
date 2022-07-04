@@ -1,3 +1,7 @@
+<!--
+  basic.html é o template usado por todas as outras paginas para 
+  injetar seu conteudo no bloco TITLE, CSS e BODY
+-->
 <!doctype html>
 <html lang="en">
 {% load static %}
@@ -16,6 +20,7 @@
   </head>
 
   <body>
+    <!-- inclui a NAVBAR em todas as paginas que derivam desta -->
     {% include 'mainapp/basic_navbar.html' %}
 
     {% block body %}

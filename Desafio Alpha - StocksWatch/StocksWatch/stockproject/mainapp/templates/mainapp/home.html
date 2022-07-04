@@ -1,3 +1,6 @@
+<!--
+  home.html é a landing page contendo informacoes sobre o conteudo do site
+-->
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
@@ -5,37 +8,45 @@ StocksWatch - Home
 {% endblock title %}
 
 {% block body %}
+<!-- block acordeon com as informacoes do site -->
 <div class="container">
+  <!-- titulo principal da pagina -->
     <div class="container">
       <h1>Stocks Watch</h1>
     </div>
 <div class="accordion accordion-flush" id="accordionFlushExample">
+    <!-- primeiro botao do acordeon -->
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
           Stocks Watch
         </button>
       </h2>
+      <!-- texto do primeiro botao -->
       <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">StocksWatch é uma ferramenta para te auxiliar no mercado acionário. Inclui ferramentas para balancear sua carteira e gerar alertas para preços de ativos.</div>
       </div>
     </div>
+    <!-- segundo botao do acordeon -->
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingTwo">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
           Forum
         </button>
       </h2>
+      <!-- texto do segundo botao -->
       <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">Converse com outros investidores ou compartilhe estratégias de investimento.</div>
       </div>
     </div>
+    <!-- terceiro botao do acordeon -->
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
           Mercado
         </button>
       </h2>
+      <!-- texto do terceiro botao -->
       <div id="flush-collapseThree" class="accordion-collapse collapse" aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">Escolha um mercado para pesquisar cotações em tempo real e também ver históricos em gráficos interativos!</div>
       </div>

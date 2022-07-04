@@ -1,3 +1,8 @@
+<!--
+    basic_delete.html é a pagina para apagar itens da database.
+    É usada para apagar mensagens, salas, ativos da carteira e alertas.
+-->
+
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
@@ -7,10 +12,11 @@ StocksWatch - DELETE
 {% block body %}
     <form class="container" method="POST" action="">
         {% csrf_token %}
+        <!-- cita objeto a ser apagado -->
         <p style="margin-top: 20px">
             Realmente APAGAR "{{ obj }}"?
         </p>
-        
+        <!-- bota para confirmar o delete -->
         <a class="btn btn-primary" href="{{ request.META.HTTP_REFERER }}">voltar</a>
         <input class="btn btn-danger" type="submit" value="Confirmar" />
     </form>

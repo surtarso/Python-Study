@@ -1,5 +1,12 @@
+<!--
+  basic_navbar.html é a NavBar padrão que acompanha o usuario por todas as paginas do site.
+  Contem os menus para acesso ao site para usuarios logados, alem de uma caixa de procura para cotacoes
+  Para usuarios nao logados possui apenas um botao para logar/registrar.
+-->
+
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
+    <!-- titulo da pagina no navbar com link para home -->
     <a href="/" class="navbar-brand">StocksWatch</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,44 +15,54 @@
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- apenas para usuarios logados -->
         {% if request.user.is_authenticated %}
+        <!-- dropdown de mercados -->
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
               role="button" data-bs-toggle="dropdown"
               aria-expanded="false">Mercado</a>
-
+            <!-- opcoes do dropdown de mercados -->
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'stockpicker' 'IBOV' %}">IBOV</a></li>
               <li><a class="dropdown-item" href="{% url 'stockpicker' 'IFIX' %}">IFIX</a></li>
             </ul>
           </li>
-
+          <!-- link para FORUM -->
           <li class="nav-item">
             <a class="nav-link" aria-current="page" href="/forum">Forum</a>
           </li>
+          <!-- link para ALERTAS -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'alerts' %}">Alertas</a>
           </li>
+          <!-- link para PROFILE -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'user-profile' request.user.id %}">Profile</a>
           </li>
+          <!-- link para CARTEIRA -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'carteira' %}">Carteira</a>
           </li>
-
+          <!-- link para SAIR (deslogar da conta) para usuarios logados -->
           <li class="nav-link text-capitalize">Olá, {{ request.user }}!</li>
           <a class="nav-link" href="{% url 'logout' %}">Sair</a>
         {% else %}
+          <!-- link para ENTRAR (logar na conta) para usuarios deslogados-->
           <a class="nav-link" href="{% url 'login' %}">Entrar</a>
         {% endif %}
       </ul>
 
       <!-- NAV SEARCH BAR -->
+      {% if request.user.is_authenticated %}
       <form class="d-flex" role="search" action="/stocktracker">
+        <!-- caixa de busca -->
         <input onkeyup="this.value = this.value.toUpperCase();" class="form-control me-2" type="search"
           placeholder="B3SA3" aria-label="Search" name="stockpicker">
+          <!-- botao de busca -->
         <button class="btn btn-outline-success" type="submit">Procurar</button>
       </form>
+      {% endif %}
     </div>
   </div>
 </nav>
