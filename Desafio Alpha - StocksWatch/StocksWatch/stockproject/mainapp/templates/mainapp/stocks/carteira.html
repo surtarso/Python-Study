@@ -127,8 +127,10 @@ StocksWatch - Carteira
                     </td>
                 </tr>
                 {% endfor %}
-                <!-- soma todas as notas -->
+                
+                <!-- manipulacao dos dados de balanceamento -->
                 <script>
+                    // soma todas as notas
                     var notas = 0;
                     var totais = 0;
                     {% for key, value in data.items %}
@@ -138,14 +140,14 @@ StocksWatch - Carteira
                         totais += parseFloat(total);
                     {% endfor %}
 
-                    // QUERO E TENHO EM PORCENTAGEM: notas/notas, tenho/total
+                    // QUERO E TENHO EM PORCENTAGEM: notas/notas, tenho/total * rebarba
                     {% for key, value in data.items %}
                         // QUERO em %:
                         document.getElementById('{{key}}_quero').innerHTML = ((parseFloat(document.getElementById('{{key}}_nota').innerHTML) / notas) * 100
                             ).toFixed(2) + '%';
                         
-                        // TENHO em %:
-                        document.getElementById('{{key}}_tenho').innerHTML = ((parseFloat(document.getElementById('{{key}}_total').innerHTML) / totais) * 100
+                        // TENHO em %: Baseado em 40% a mais de patrimonio na carteira para recomendacao dar certo
+                        document.getElementById('{{key}}_tenho').innerHTML = ((parseFloat(document.getElementById('{{key}}_total').innerHTML) / totais) * 40
                             ).toFixed(2) + '%';
 
                         if (document.getElementById('{{key}}_quero').innerHTML < document.getElementById('{{key}}_tenho').innerHTML){
@@ -156,7 +158,7 @@ StocksWatch - Carteira
                         }
                     {% endfor %}
 
-                    // ordem de compra e venda baseado em nota/qnt
+                    // ordem de compra e venda baseado em quero% tenho%
                     {% for key, value in data.items %}
                         var quero = parseFloat(document.getElementById('{{key}}_quero').innerHTML);
                         var tenho = parseFloat(document.getElementById('{{key}}_tenho').innerHTML);
@@ -164,7 +166,7 @@ StocksWatch - Carteira
                             document.getElementById('{{key}}_ordem').className = "green";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Comprar';
                         }
-                        if ( quero <= tenho ){
+                        if ( quero < tenho ){
                             document.getElementById('{{key}}_ordem').className = "orange";
                             document.getElementById('{{key}}_ordem').innerHTML = 'Aguardar';
                         }
@@ -207,8 +209,8 @@ StocksWatch - Carteira
 
             // quero e falta em dinhero $$ + volume para balancear baseado em nota e patrimonio.
             {% for key, value in data.items %}
-                //QUERO EM DINHEIRO: precisa do valor patrimonio para calcular
-                document.getElementById('{{key}}_quero_din').innerHTML = (patrimonio * (parseFloat(document.getElementById('{{key}}_quero').innerHTML) / 100)
+                //QUERO EM DINHEIRO: precisa do valor patrimonio para calcular - 40% a mais para balanceamento funcionar
+                document.getElementById('{{key}}_quero_din').innerHTML = (patrimonio * (parseFloat(document.getElementById('{{key}}_quero').innerHTML) / 40)
                             ).toFixed(2);
                 //FALTA EM DINHEIRO: precisa do valor quero_din para calcular
                 document.getElementById('{{key}}_falta_din').innerHTML = (document.getElementById('{{key}}_quero_din').innerHTML - document.getElementById('{{key}}_total').innerHTML
@@ -218,7 +220,7 @@ StocksWatch - Carteira
                             parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) /
                             parseFloat(document.getElementById('{{key}}_preco').innerHTML)
                             );
-                if(parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) >= 0){
+                if(parseFloat(document.getElementById('{{key}}_falta_din').innerHTML) > 0){
                     document.getElementById('{{key}}_falta_din').className = "green";
                 }
                 else{

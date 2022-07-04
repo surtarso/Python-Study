@@ -21,14 +21,16 @@ StocksWatch - Alertas
 {% endblock css %}
 
 {% block body %}
+<!-- left bar -->
 <div class="home-container">
     <div class="mercado_component">
         {% include 'mainapp/component/mercado_component.html' %}
     </div>
-
+<!-- center -->
     <div class="alert_component">
         {% include 'mainapp/component/alerts_component.html' %}
     </div>
+<!-- right bar -->
     <div class="activity_component">
         {% include 'mainapp/component/activity_component.html' %}
     </div>
