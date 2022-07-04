@@ -4,6 +4,12 @@ import os
 from celery import Celery
 from django.conf import settings
 
+##------------------------------------------------------------
+## configura o celery para descobrir tasks, configura timezone
+## e configura o celery-beat
+##------------------------------------------------------------
+
+
 # "stockproject" = nome do projeto atual.
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stockproject.settings')
 

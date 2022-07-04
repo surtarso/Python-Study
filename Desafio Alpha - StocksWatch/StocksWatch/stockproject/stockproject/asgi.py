@@ -6,6 +6,11 @@ from mainapp.routing import websocket_urlpatterns
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'stockproject.settings')
 
+##--------------------------------------------------------------
+## configuracao ASGI assincrona websocket para atualizacao de
+## cotacao em tempo real
+##--------------------------------------------------------------
+
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": AuthMiddlewareStack(
