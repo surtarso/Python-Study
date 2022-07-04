@@ -18,6 +18,18 @@ from .models import Alerta
 # funcoes associadas ao celery:
 @shared_task(bind = True)
 def update_stock(self, stockpicker):
+    """
+    Pega os ativos selecionados em stockpicker e busca suas
+    cotacoes para exibir em stocktracker. Adiciona os ativos para o 
+    celery para atualizacao em tempo real e para multiplos usuarios
+    caso mais de um usuario precise da cotacao do mesmo ativo.
+
+    Args:
+        stockpicker (List): escolha de ativos feita em stockpicker
+
+    Returns:
+        String: done.
+    """
     data = {}
     available_stocks = tickers_ibovespa()
 
@@ -65,6 +77,13 @@ def update_stock(self, stockpicker):
 
 ##--------------------------------[NO SMTP CONF YET]--------E-MAILS:
 def iniciaOperacao(novo_alerta):
+    """
+    Pega um novo alerta e comeca a operacao de checar a cotacao e mandar
+    email para o usuario caso o preco atinja um valor desejado.
+
+    Args:
+        novo_alerta (List): itens de um alerta: email, ativo, precos, duracoes.
+    """
     print('recebi alerta: {}'.format(novo_alerta))
 
     email_to = novo_alerta[0]
@@ -107,6 +126,12 @@ def iniciaOperacao(novo_alerta):
 
 @shared_task(bind = True)
 def pegaAlertas(self):
+    """
+    É acionado quando um usuario cria um novo alerta ou altera
+    um alerta existente. Não recebe nenhum argumento nem retorna nada.
+    Separa todos os alertas da DB em threads e chama a busca de preço
+    individualmente.
+    """
     print('pegaAlertas: fui acionado')
     # lista com cada alerta individual
     novo_alerta = []
