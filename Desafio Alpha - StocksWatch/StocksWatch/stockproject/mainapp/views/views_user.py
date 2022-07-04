@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 #models
-from mainapp.models import Alerta, Topic
+from mainapp.models import Alerta, Mercado, Topic
 from mainapp.forms import SignUpForm
 
 
@@ -88,6 +88,7 @@ def userProfile(request, pk):
     room_messages = user.message_set.all()
     topics = Topic.objects.all()
     alertas = Alerta.objects.all()
+    mercado = Mercado.objects.all()
 
     template = 'mainapp/users/profile.html'
     context = {
@@ -95,6 +96,7 @@ def userProfile(request, pk):
         'rooms':rooms,
         'room_messages':room_messages,
         'topics':topics,
-        'alertas':alertas
+        'alertas':alertas,
+        'mercado':mercado
         }
     return render(request, template, context)
