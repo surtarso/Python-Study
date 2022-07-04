@@ -1,9 +1,19 @@
+<!--
+    login_register.html é a pagina usada pelo LOGIN e REGISTER.
+    Exibe para o usuario as caixas de texto necessarias para logar em sua conta
+    ou para registrar um novo usuario
+-->
+
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
 StocksWatch - Login
 {% endblock title %}
 
+
+<!--
+    Exibe campos de LOGIN para usuario nao logado
+-->
 {% block body %}
 {% if page == 'login' %}
     <br>
@@ -17,7 +27,6 @@ StocksWatch - Login
             <label>Senha:</label>
             <input type="password" name="password" placeholder="Enter password"/>
 
-
             <input type="submit" value="Entrar" />
         </form>
         <br>
@@ -25,13 +34,14 @@ StocksWatch - Login
         <a class="btn btn-primary" href="{% url 'register' %}">Registrar</a>
     
 {% else %}
-    
+<!--
+    Exibe campos de REGISTER para usuario nao logado
+-->
         <form class="container form-control" 
                 style="padding: 20px; margin-top: 20px" method="POST" action="">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Register" />
-
         </form>
 
         <div class="container form-control" style="padding: 20px">
