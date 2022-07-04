@@ -1,3 +1,9 @@
+<!--
+    room.html é a pagina onde o usuario visualiza o conteudo de uma sala especifica
+    tendo a oportunidade de deixar uma mensagem ou apagar mensagens antigas, alem de
+    visualizar as mensagens de outros usuarios que participam de tal sala.
+-->
+
 {% extends 'mainapp/basic.html' %}
 
 {% block title %}
@@ -17,6 +23,10 @@ StocksWatch - Sala
 }
 {% endblock css %}
 
+<!--
+    Itera por todas as mensagens que existem dentro de uma sala particular e 
+    as exibe para o usuario, com a opcao de deletar suas proprias mensagens.
+-->
 {% block body %}
 <div class="room-container">
     <div class="container">
@@ -63,6 +73,9 @@ StocksWatch - Sala
 
     </div>
 
+<!--
+    Itera por todos os participantes de tal sala e exibe o nome do autor de tais mensagens
+-->
     <!-- participantes -->
     <div class="container">
         
