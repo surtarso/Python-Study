@@ -2,12 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
-# Create your tests here.
 
-# class TrySomethingTest(TestCase):
-#     def test_something(self):
-#         self.assertTrue(1==1)
-#         self.assertEqual(1,1)
 
 User = get_user_model()
 class TestLoggedInUserURLs(TestCase):
@@ -39,14 +34,17 @@ class TestLoggedInUserURLs(TestCase):
         redirect_path = response.request.get('PATH_INFO')
         #test redirect from login to forums:
         self.assertEqual(redirect_path, login_redirect)
+        self.assertTemplateUsed('mainapp/forum/forum.html')
         self.assertEqual(status_code, 200)
 
     def test_logged_in_normal_user_access_admin_panel(self):
         self.client.login(username='test', password = self.user_a_password)
         self.assertTrue(self.user_a.is_authenticated)
         response = self.client.post('/admin/')
-        #test normal user unable to enter admin panel:
+        #test normal user redirected from admin panel:
         self.assertEqual(response.status_code, 302)
+        response = self.client.post('/admin/', follow=True)
+        self.assertEqual(response.status_code, 200)
 
     def test_valid_urls_for_logged_in_users(self):
         self.client.login(username='test', password = self.user_a_password)
@@ -65,9 +63,10 @@ class TestLoggedInUserURLs(TestCase):
 class TestLoggedOutUserURLs(TestCase):
     
     def test_valid_urls_for_logged_out_users(self):
-        urls = ['/', '/login/', '/register/']
+        urls = ['/login/', '/register/']
         for url in urls:
             response = self.client.post(url)
+            self.assertTemplateUsed('mainapp/users/login_register.html')
             self.assertEqual(response.status_code, 200)
 
     def test_invalid_urls_for_logged_out_users(self):
@@ -75,15 +74,18 @@ class TestLoggedOutUserURLs(TestCase):
         urls = ['/stockpicker/IBOV', '/stockpicker/IFIX', '/stocktracker',
                 '/forum/', '/graph', '/alerts/', '/carteira']
         for url in urls:
-            #test 'must be logged in':
+            #test if being redirected (must be logged in):
             response = self.client.post(url)
             self.assertEqual(response.status_code, 302)
             #test redirect to login page:
             response = self.client.post(url, follow=True)
             redirect_path = response.request.get('PATH_INFO')
             self.assertEqual(redirect_path, login_page)
+            self.assertTemplateUsed('mainapp/users/login_register.html')
             self.assertEqual(response.status_code, 200)
 
     def test_logged_out_user_access_admin_panel(self):
         response = self.client.post('/admin/')
         self.assertEqual(response.status_code, 302)
+        response = self.client.post('/admin/', follow=True)
+        self.assertEqual(response.status_code, 200)

@@ -63,61 +63,54 @@ def update_stock(self, stockpicker):
 ##----------------------------------------------------------------
 
 
-
-
-
-##---------------------------------------------[NO SMTP CONF YET]--E-MAILS:
-
-## ------------->  str    str    float  float     int     int
-## novo_alerta = [email, ativo, compra, venda, periodo, duracao]
-## ------------->   0      1      2       3       4        5 
-def checaPreco(novo_alerta):
+##--------------------------------[NO SMTP CONF YET]--------E-MAILS:
+def iniciaOperacao(novo_alerta):
     print('recebi alerta: {}'.format(novo_alerta))
-    msg_venda = ("{} - preço de VENDA R${} foi atingido.").format(novo_alerta[1], novo_alerta[3]) #ticker, venda
-    msg_compra = ("{} - preço de COMPRA R${} foi atingido.").format(novo_alerta[1], novo_alerta[2]) #ticker, compra
-    msg_fim = ('Sua operação com {} terminou!').format(novo_alerta[1]) #ticker
 
-    ticker = yf.Ticker(novo_alerta[1]+".SA") #ativo
+    email_to = novo_alerta[0]
+    ativo = yf.Ticker(novo_alerta[1]+".SA")
+    preco_compra = float(novo_alerta[2])
+    preco_venda = float(novo_alerta[3])
+    periodo = int(novo_alerta[4]) * 60  #periodo em minutos
+    duracao = int(novo_alerta[5]) * 86400  #duracao em dias
 
-    i=0
-    while i < (novo_alerta[5]*86400): #duracao em dias
-        print('duracao: {}'.format(novo_alerta[5]))
+    msg_venda = ("{} - preço de VENDA R${} foi atingido.").format(ativo, preco_venda)
+    msg_compra = ("{} - preço de COMPRA R${} foi atingido.").format(ativo, preco_compra)
+    msg_fim = ('Sua operação com {} terminou!').format(ativo)
 
-        cotacao = round(ticker.info['regularMarketPrice'], 2)
-        print('peguei cotacao: {} - R$ {}'.format(ticker.ticker, cotacao))
+    i = 0
+    while i < duracao: 
+        print('faltam {} dias para o fim desta operacao'.format(duracao/86400))
+
+        cotacao = round(ativo.info['regularMarketPrice'], 2)
+        print('peguei cotacao: {} - R$ {}'.format(ativo.ticker, cotacao))
         
-        if cotacao <= float(novo_alerta[2]): #compra
-            # send email compra
+        if cotacao <= preco_compra:
             send_mail('StockWatch Alerta!', msg_compra,'admin@stockwatch.com',
-                            [novo_alerta[0]], fail_silently=True,) #email
+                            [email_to], fail_silently=True,)
 
-        elif cotacao >= float(novo_alerta[3]): #venda
-            # send email venda
+        elif cotacao >= preco_venda:
             send_mail('StockWatch Alerta!', msg_venda,'admin@stockwatch.com',
-                            [novo_alerta[0]], fail_silently=True,) #email
-
+                            [email_to], fail_silently=True,)
         else:
             pass
         
-        print('dormindo: {} - {}seg(s)'.format(ticker.ticker, novo_alerta[4]))
-        sleep(novo_alerta[4]*60) #periodo em minutos
-        novo_alerta[5] -= 1
+        print('dormindo: {} - {}min'.format(ativo.ticker, periodo/60))
+        sleep(periodo) 
+        duracao -= periodo
 
-    print('fim de operacao com {}'.format(ticker.ticker))
+    print('fim de operacao com {}'.format(ativo.ticker))
     send_mail('StockWatch Alerta!', msg_fim,'admin@stockwatch.com',
-                            [novo_alerta[0]], fail_silently=True,) #email
-    
-    # data = {'ticker': ticker.info}
-    # return data
+                            [email_to], fail_silently=True,) #email
 
-
+## TODO: add exception for tasks that already exist
 
 @shared_task(bind = True)
 def pegaAlertas(self):
     print('pegaAlertas: fui acionado')
     # lista com cada alerta individual
     novo_alerta = []
-    # lista com todos os alertas individuais
+    # lista com todos os alertas individuais acima
     todos_os_alertas = []
     # todos os alertas da database:
     alertas = Alerta.objects.all()
@@ -132,10 +125,8 @@ def pegaAlertas(self):
         duracao = int(i.duracao)
 
         novo_alerta = [email, ativo, compra, venda, periodo, duracao]
-
-        ## todo: add exception for tasks that already exist
         todos_os_alertas.append(novo_alerta)
-    
+
     # numero de threads = numero de alertas disponiveis
     n_threads = len(todos_os_alertas)
     # lista com as threads
@@ -143,12 +134,11 @@ def pegaAlertas(self):
     # fila
     que = queue.Queue()
 
-
     # itera com o numero de alertas disponiveis
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
-            arg1: q.put([todos_os_alertas[i], checaPreco(arg1)]),
+            arg1: q.put([todos_os_alertas[i], iniciaOperacao(arg1)]),
             args = (que, todos_os_alertas[i])
             )
         # adiciona resposta do item a lista de threads
