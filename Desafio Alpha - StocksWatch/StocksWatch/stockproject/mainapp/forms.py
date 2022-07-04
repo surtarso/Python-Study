@@ -8,6 +8,9 @@ from yahoo_fin.stock_info import *
 
 ##------------------------------REGISTER FORM:
 class SignUpForm(UserCreationForm):
+    """
+    Formulario para criacao de novo usuario
+    """
     
     password1 = forms.CharField(
         label='Senha',
@@ -46,6 +49,10 @@ class SignUpForm(UserCreationForm):
 
 ##-------------------------------ROOM CREATE MESSAGE:
 class RoomForm(ModelForm):
+    """
+    Formulario para criacao/edicao de uma sala de bate papo
+
+    """
     class Meta:
         model = Room
         fields = '__all__'
@@ -70,6 +77,9 @@ class RoomForm(ModelForm):
 
 ##--------------------------------FORMULARIO ALERTA:
 class AlertForm(ModelForm):
+    """
+    Formulario para criacao/edicao de um alerta de precos
+    """
     class Meta:
         model = Alerta
         fields = '__all__'
@@ -108,6 +118,10 @@ class AlertForm(ModelForm):
 
 ##--------------------------------FORMULARIO CARTEIRA:
 class CarteiraForm(ModelForm):
+    """
+    Formulario para adicao/edicao de um novo ativo na
+    carteira de balanceamento do usuario
+    """
     class Meta:
         model = CarteiraAtivo
         fields = '__all__'
