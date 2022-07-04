@@ -7,17 +7,27 @@ StocksWatch - Alerta
 
 {% block body %}
 
-<div class="container bg-light" style="width: 20rem;">
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">          {{ alert.mercado }}</li>
-        <li class="list-group-item">          {{ alert.ativo }}</li>
-        <li class="list-group-item">Compra: R${{ alert.compra }}</li>
-        <li class="list-group-item">Venda:  R${{ alert.venda }}</li>
-        <li class="list-group-item">Busca:    {{ alert.periodo }}min(s)</li>
-        <li class="list-group-item">Duração:  {{ alert.duracao }}dia(s)</li>
-        <li class="list-group-item">Alertar:  {{ alert.email }}</li>
-    </ul>
-</div>
+<!-- I want this to be a MODAL -->
+    <div class="container bg-light" style="width: 20rem;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <ul class="list-group list-group-flush">
+                    <div class="modal-header">
+                        <li class="list-group-item">{{ alert.mercado }} - {{ alert.ativo }}</li>
+                        <a href="{% url 'alerts' %}" style="color: gray;" class="close" data-dismiss="modal">X</a>
+                    </div>
+                    <div class="modal-body">
+                        <li class="list-group-item">Compra: R${{ alert.compra }}</li>
+                        <li class="list-group-item">Venda:  R${{ alert.venda }}</li>
+                        <li class="list-group-item">Busca:    {{ alert.periodo }}min(s)</li>
+                        <li class="list-group-item">Duração:  {{ alert.duracao }}dia(s)</li>
+                        <li class="list-group-item">Alertar:  {{ alert.email }}</li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock body %}
 
