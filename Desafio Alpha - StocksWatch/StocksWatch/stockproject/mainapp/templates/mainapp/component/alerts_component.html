@@ -14,8 +14,8 @@
         <div class="col">
             <div class="card" style="background-color: whitesmoke;">
                 <div class="card-body">
-                    <!-- nome do alerta (ticker) com link para visualizacao-->
-                    <a class="btn btn-primary card-title" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+                    <!-- nome do alerta (ticker) com link para visualizacao - WANT MODAL!!!-->
+                    <a type="button" data-toggle="modal" class="btn btn-primary card-title" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
                     <!-- mercado dono do ativo do alerta -->
                     <p class="card-text">{{alerta.mercado}}</p>
                     <!--  tempo desde a criacao/update do alerta -->
