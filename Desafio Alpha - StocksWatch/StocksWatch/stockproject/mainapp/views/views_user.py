@@ -11,11 +11,19 @@ from mainapp.models import Alerta, Mercado, Topic
 from mainapp.forms import SignUpForm
 
 
-
 ## --------------------------------------------------------LOGIN:
 def loginPage(request):
+    """
+    Autentica o login de usuarios e redireciona usuarios
+    logados para a pagina de forums.
+    Args:
+        request (POST): username + password
+    Returns:
+        template: login_register.html
+    """
+    
     page = 'login'
-    # redirect logged in users to home page
+    # redireciona usuarios logados para a pagina FORUM
     if request.user.is_authenticated:
         return redirect('forum')
 
@@ -50,12 +58,26 @@ def loginPage(request):
 
 ##-------------------------------------------------------LOGOUT:
 def logoutUser(request):
+    """
+    Desloga usuarios.
+    Returns:
+        redirect: home.html
+    """
     logout(request)
     return redirect('/')
 
 
 ##------------------------------------------------------REGISTER:
 def registerPage(request):
+    """
+    Registra um novo usuario e redireciona para FORUM
+    após estar logado
+    Args:
+        request (POST): username, password, email
+    Returns:
+        template: login_register.html
+    """
+    
     form = SignUpForm()
 
     if request.method == 'POST':
@@ -77,6 +99,15 @@ def registerPage(request):
 ##----------------------------------------------------USER PROFILE:
 @login_required(login_url='login')
 def userProfile(request, pk):
+    """
+    Mostra a pagina de profile contendo itens criados pelo usuario
+    Args:
+        pk: user ID
+    Returns:
+        template: profile.html
+        context: user, rooms, messages, topics, alertas, mercados
+    """
+    
     try:
         user = User.objects.get(id=pk)
     except ObjectDoesNotExist:
