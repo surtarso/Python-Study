@@ -15,6 +15,12 @@ from mainapp.tasks import pegaAlertas
 ##------------------------------------------------------ALERT LIST:
 @login_required(login_url='login')
 def alerts(request):
+    """
+    View responsavel por listar os alertas disponiveis e ja criados
+    Returns:
+        template: alerts.html
+        context: lista de alertas para feed e de mercados para busca
+    """
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
     mercado = Mercado.objects.all()
@@ -31,6 +37,14 @@ def alerts(request):
 ##------------------------------------------------------ALERT VIEW:
 @login_required(login_url='login')
 def alertView(request, pk):
+    """
+    View que mostra detalhes de um alerta especifico
+    Args:
+        pk: ID do alerta
+    Returns:
+        template: alert_view.html
+        context: alerta a ser visualizado
+    """
     try:
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
@@ -52,6 +66,12 @@ def alertView(request, pk):
 ##-----------------------------------------------------CREATE ALERT:
 @login_required(login_url='login')
 def createAlert(request):
+    """
+    View responsavel por criar um novo alerta de precos
+    Returns:
+        template: alert_form.html
+        context: formulario para criacao de alertas
+    """
     # get class reference
     form = AlertForm()
     # form on the POST method
@@ -77,6 +97,14 @@ def createAlert(request):
 ##------------------------------------------------------UPDATE ALERT:
 @login_required(login_url='login')
 def updateAlert(request, pk):
+    """
+    View para editar um alerta ja existente
+    Args:
+        pk: ID do alerta
+    Returns:
+        template: alert_form.html
+        context: formulario de alerta pré preenchido para edicao
+    """
     try:
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
@@ -107,6 +135,14 @@ def updateAlert(request, pk):
 ##------------------------------------------------------DELETE ALERT:
 @login_required(login_url='login')
 def deleteAlert(request, pk):
+    """
+    View para apagar alertas
+    Args:
+        pk: ID do alerta
+    Returns:
+        template: basic_alert.html
+        context: objeto alerta a ser apagado.
+    """
     try:
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
