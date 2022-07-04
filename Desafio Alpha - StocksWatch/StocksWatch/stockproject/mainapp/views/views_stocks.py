@@ -23,6 +23,15 @@ from mainapp.models import Mercado, CarteiraAtivo
 ## ------------------------------------------------------STOCK PICKER:
 @login_required(login_url='login')
 def stockPicker(request, pk):
+    """
+    View para selecao de ativos para cotacoes. Recebe o nome do mercado
+    para apresentar apensar os ativos pertencentes a tal mercado.
+    Args:
+        pk (String): nome do mercado
+    Returns:
+        template: stockpicker.html
+        context: stockpicker (tickers) e mercados (nomes)
+    """
 
     try:
         mercado = Mercado.objects.get(name=pk)
@@ -42,7 +51,14 @@ def stockPicker(request, pk):
 #recebe o submit ou do stockpicker ou do searchbar
 @login_required(login_url='login')
 def stockTracker(request):
-    
+    """
+    Recebe de stockpicker os nomes dos ativos para pesquisa de precos
+    Args:
+        request (List): Lista de ativos selecionados para pesquisa de cotacao
+    Returns:
+        template: stocktracker.html
+        context: lista de ativos, salas de atualizacao para celery
+    """
     #pega o resquest (ativo(s)) de name='stockpicker' (searchbar e menu)
     if request is not None:
         stockpicker = request.GET.getlist('stockpicker')
@@ -104,7 +120,14 @@ def stockTracker(request):
 ##------------------------------------------------------GRAFICOS:
 @login_required(login_url='login')
 def configGraph(request):
-
+    """
+    Mostra graficos (plotly) para o usuario do ativo escolhido
+    Args:
+        request (String): nome do ativo para mostrar grafico
+    Returns:
+        template: graph.html
+        context: o grafico em si e o nome do ativo para o titulo
+    """
     if request.method == 'GET':
 
         ticker = request.GET.get('graph')
@@ -152,6 +175,12 @@ def configGraph(request):
 ##----------------------------------------------- CARTEIRA ATIVOS:
 @login_required(login_url='login')
 def showCarteira(request):
+    """
+    Carteira de ativos do usuario para acompanhamento e balanceamento.
+    Returns:
+        template: carteira.html
+        context: ativos que o usuario selecionou para sua carteira
+    """
     data = {}
     carteiras = CarteiraAtivo.objects.all()
     carteira_usuario = []
@@ -191,6 +220,12 @@ def showCarteira(request):
 ##-----------------------------------------------------CREATE ATIVO CARTEIRA:
 @login_required(login_url='login')
 def createCarteira(request):
+    """
+    Adiciona novos ativos para a carteira de balanceamento do usuario
+    Returns:
+        template: carteira_form.html
+        context: formulario para adicao de ativo em carteira
+    """
     #get class reference
     form = CarteiraForm()
     #standard form on the POST method
@@ -213,6 +248,14 @@ def createCarteira(request):
 ##------------------------------------------------------UPDATE ATIVO CARTEIRA:
 @login_required(login_url='login')
 def updateCarteira(request, pk):
+    """
+    Modifica informacoes do ativo adicionado em carteira
+    Args:
+        pk: ID do item a ser modificado
+    Returns:
+        template: carteira_form.html
+        context: formulario de adicao de ativo ja preenchido
+    """
     carteira = CarteiraAtivo.objects.get(id=pk)
     form = CarteiraForm(instance=carteira)
 
@@ -234,6 +277,14 @@ def updateCarteira(request, pk):
 ##------------------------------------------------------DELETE ATIVO CARTEIRA:
 @login_required(login_url='login')
 def deleteCarteira(request, pk):
+    """
+    Apaga um ativo da carteira de balanceamento do usuario
+    Args:
+        pk: id do ativo a ser apagado
+    Returns:
+        template: basic_delete.html
+        context: confirmacao do ativo a ser deletado
+    """
     carteira = CarteiraAtivo.objects.get(id=pk)
 
     #prevents logged in users to delete other users things
