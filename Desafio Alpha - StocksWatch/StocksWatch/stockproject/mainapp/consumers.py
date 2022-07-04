@@ -7,6 +7,11 @@ from django_celery_beat.models import PeriodicTask, IntervalSchedule
 from .models import StockDetail
 
 class StockConsumer(AsyncWebsocketConsumer):
+    """
+    Recebe os ativos de um ou multiplos usuarios e adiciona as
+    listas de update de cotacao. Remove ativos nao mais utilizados
+    e salva em database a pesquisa relacionada ao ativo e usuario.
+    """
 
     @sync_to_async
     def addToCeleryBeat(self, stockpicker):
