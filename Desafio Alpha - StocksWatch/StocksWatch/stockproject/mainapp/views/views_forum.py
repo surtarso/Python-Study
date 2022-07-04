@@ -10,9 +10,6 @@ from mainapp.models import Message, Room, Topic
 from mainapp.forms import RoomForm
 
 
-
-
-
 ##--------------------------------------------------------FORUM:
 @login_required(login_url='login')
 def forum(request):
@@ -29,14 +26,14 @@ def forum(request):
     # filters to see only topic related messages on right sidebar
     room_messages = Message.objects.filter(Q(room__topic__name__icontains=q))
 
-    target = 'mainapp/forum/forum.html'
+    template = 'mainapp/forum/forum.html'
     context = { # itera em home.html
         'rooms': rooms,
         'topics': topics,
         'room_count':room_count,
         'room_messages':room_messages
         }
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##-----------------------------------------------------VIEW ROOM:
@@ -61,13 +58,13 @@ def room(request, pk):
         room.participants.add(request.user) 
         return redirect('room', pk=room.id)
 
-    target = 'mainapp/forum/room.html'
+    template = 'mainapp/forum/room.html'
     context = {
         'room':room,
         'room_messages':room_messages,
         'participants':participants
         }
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##-----------------------------------------------------CREATE ROOM:
@@ -86,9 +83,9 @@ def createRoom(request):
             room.save()  #save it
             return redirect('forum')
 
-    target = 'mainapp/forum/room_form.html'
+    template = 'mainapp/forum/room_form.html'
     context = {'form':form}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##------------------------------------------------------UPDATE ROOM:
@@ -112,9 +109,9 @@ def updateRoom(request, pk):
             form.save()
             return redirect('forum')
 
-    target = 'mainapp/forum/room_form.html'
+    template = 'mainapp/forum/room_form.html'
     context = {'form':form}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##------------------------------------------------------DELETE ROOM:
@@ -134,9 +131,9 @@ def deleteRoom(request, pk):
         room.delete()
         return redirect('forum')
 
-    target = 'mainapp/basic_delete.html'
+    template = 'mainapp/basic_delete.html'
     context = {'obj':room}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 
@@ -157,6 +154,6 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect('forum')
     
-    target = 'mainapp/basic_delete.html'
+    template = 'mainapp/basic_delete.html'
     context = {'obj':message}
-    return render(request, target, context)
+    return render(request, template, context)

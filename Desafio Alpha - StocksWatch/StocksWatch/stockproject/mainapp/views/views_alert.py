@@ -25,13 +25,13 @@ def alerts(request):
     mercado = Mercado.objects.all()
     alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
 
-    target = 'mainapp/stocks/alerts.html'
+    template = 'mainapp/stocks/alerts.html'
     context = { # itera em alerts_component.html
         'alerta': alerta,
         'alertas': alertas,
         'mercado': mercado,
         }
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##------------------------------------------------------ALERT VIEW:
@@ -50,9 +50,9 @@ def alertView(request, pk):
     if request.method == 'POST':    
         return redirect('view-alert', pk=alert.id)
     
-    target = 'mainapp/stocks/alert_view.html'
+    template = 'mainapp/stocks/alert_view.html'
     context = {'alert':alert}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 ##-----------------------------------------------------CREATE ALERT:
@@ -74,9 +74,9 @@ def createAlert(request):
             pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
 
-    target = 'mainapp/stocks/alert_form.html'
+    template = 'mainapp/stocks/alert_form.html'
     context = {'alert_form':form}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 
@@ -104,9 +104,9 @@ def updateAlert(request, pk):
             pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')
 
-    target = 'mainapp/stocks/alert_form.html'
+    template = 'mainapp/stocks/alert_form.html'
     context = {'alert_form':form}
-    return render(request, target, context)
+    return render(request, template, context)
 
 
 
@@ -128,6 +128,6 @@ def deleteAlert(request, pk):
         alert.delete()
         return redirect('alerts')
     
-    target = 'mainapp/basic_delete.html'
+    template = 'mainapp/basic_delete.html'
     context = {'obj':alert}
-    return render(request, target, context)
+    return render(request, template, context)
