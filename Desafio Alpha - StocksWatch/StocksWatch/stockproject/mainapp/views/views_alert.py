@@ -17,17 +17,11 @@ from mainapp.tasks import pegaAlertas
 def alerts(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
 
-    alerta = Alerta.objects.filter(
-        Q(mercado__name__icontains=q) |
-        Q(ativo__ticker__icontains=q)
-        )
-
     mercado = Mercado.objects.all()
-    alertas = Alerta.objects.filter(Q(ativo__ticker__icontains=q))
+    alertas = Alerta.objects.filter(Q(mercado__name__icontains=q) | Q(ativo__ticker__icontains=q))
 
     template = 'mainapp/stocks/alerts.html'
     context = { # itera em alerts_component.html
-        'alerta': alerta,
         'alertas': alertas,
         'mercado': mercado,
         }
