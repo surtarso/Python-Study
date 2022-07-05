@@ -1,5 +1,3 @@
-### Indice dos Templates
-
 #### Pasta [component](https://github.com/surtarso/Python-Projects/tree/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch/stockproject/mainapp/templates/mainapp/component) - Componentes reutilizáveis para os demais outros templates. (includes)
   
 #### Pasta [forum](https://github.com/surtarso/Python-Projects/tree/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch/stockproject/mainapp/templates/mainapp/forum) - Templates relacionados ao Forum, como criar e apagar salas de bate papo, mandar mensagens e visualizar o feed de noticias.
