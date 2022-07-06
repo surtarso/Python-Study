@@ -12,10 +12,9 @@ import yfinance as yf   #data for graphs
 import plotly.graph_objs as go
 #log in/ou register
 from django.contrib.auth.decorators import login_required
-from mainapp.forms import CarteiraForm
 #models
-from mainapp.models import Mercado, CarteiraAtivo
-
+from mainapp.models import Ativo, Mercado, CarteiraAtivo
+from mainapp.forms import CarteiraForm
 
 
 
@@ -130,7 +129,7 @@ def configGraph(request):
     """
     if request.method == 'GET':
 
-        ticker = request.GET.get('graph')
+        ticker = request.GET.get('ticker')
         data = yf.Ticker(str(ticker)+".SA").history("max")
 
         if data.empty:
@@ -169,8 +168,7 @@ def configGraph(request):
         return render(request, template, context)
     else:
         return HttpResponse('bad request')
-
-
+    
 
 ##----------------------------------------------- CARTEIRA ATIVOS:
 @login_required(login_url='login')
@@ -184,12 +182,21 @@ def showCarteira(request):
     data = {}
     carteiras = CarteiraAtivo.objects.all()
     carteira_usuario = []
+    # figure_dict = {}
+    figure_labels = []
+    figure_values = []
+    figure_group = []
+    
 
     # pega apensas ativos do usuario atual!
     for ativo in carteiras:
         if ativo.user == request.user:
             carteira_usuario.append(ativo)
-    
+            # figure_dict.update({ativo.ativo.ticker:ativo.nota})
+            figure_labels.append(str(ativo.ativo.ticker))
+            figure_values.append(int(ativo.nota))
+            figure_group.append(str(ativo.ativo.mercado))
+
     # numero de threads de acordo com o numero de ativos do usuario
     n_threads = len(carteira_usuario)  
     thread_list = []
@@ -210,9 +217,31 @@ def showCarteira(request):
     while not que.empty():
         result = que.get()
         data.update(result)
-
+    
+    ##--------- pie chart - ativos --------------
+    fig_stock = go.Figure()
+    fig_stock.add_trace(go.Pie(
+        labels = figure_labels,
+        values = figure_values,
+        # values = [figure_values[v] for v in figure_values],
+        direction ='counterclockwise',
+        sort = True
+        ))
+    figure_s = fig_stock.to_html(full_html = False)#, default_height=250, default_width=350)
+    
+    ##--------- pie chart - mercados ------------
+    fig_market = go.Figure()
+    fig_market.add_trace(go.Pie(
+        labels = figure_group,
+        values = figure_values,
+        direction ='counterclockwise',
+        sort = True
+        ))
+    figure_m = fig_market.to_html(full_html = False, default_height=225, default_width=300)
+    
+    
     template = 'mainapp/stocks/carteira.html'
-    context = {'data':data}
+    context = {'data':data, 'figure_s':figure_s, 'figure_m':figure_m}
     return render(request, template, context)
 
 
