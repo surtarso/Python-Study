@@ -2,7 +2,7 @@
 {% load static %}
 
 <head>
-    <meta http-equiv="Refresh" content="3; url='{% url 'home' %}'" />
+    <meta http-equiv="Refresh" content="5; url='{% url 'home' %}'" />
 </head>
 
 {% block body %}
@@ -10,6 +10,6 @@
     <img src="{% static 'mainapp/images/404.png' %}">
 </div>
 <div style="display: flex;" class="container">
-    <p>You will be redirected <a href="{% url 'home' %}">home</a> in 3 seconds.</p>
+    <p>Oops, this page doesn't exist, but don't worry! You will be redirected <a href="{% url 'home' %}">home</a> in 5 seconds.</p>
 </div>
 {% endblock body %}
