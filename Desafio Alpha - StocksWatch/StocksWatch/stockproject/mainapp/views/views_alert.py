@@ -49,7 +49,8 @@ def alertView(request, pk):
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse("this alert does not exist")
-        return redirect('alerts')
+        # return redirect('alerts')
+        return render(request, 'mainapp/404.html')
     
     if request.user != alert.host:
         # return HttpResponse("you are not supposed to see this")
@@ -109,7 +110,8 @@ def updateAlert(request, pk):
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this alert does not exist')
-        return redirect('alerts')
+        # return redirect('alerts')
+        return render(request, 'mainapp/404.html')
     
     form = AlertForm(instance=alert)
 
@@ -147,7 +149,8 @@ def deleteAlert(request, pk):
         alert = Alerta.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this alert does not exist')
-        return redirect('alerts')
+        # return redirect('alerts')
+        return render(request, 'mainapp/404.html')
     
     #prevents logged in users to delete other users posts
     if request.user != alert.host:

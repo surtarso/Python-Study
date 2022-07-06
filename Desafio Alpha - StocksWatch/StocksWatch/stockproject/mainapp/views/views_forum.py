@@ -57,7 +57,8 @@ def room(request, pk):
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this room does not exist')
-        return redirect('forum')
+        # return redirect('forum')
+        return render(request, 'mainapp/404.html')
     
     room_messages = room.message_set.all()
     participants = room.participants.all()
@@ -123,7 +124,8 @@ def updateRoom(request, pk):
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this room does not exist')
-        return redirect('forum')
+        # return redirect('forum')
+        return render(request, 'mainapp/404.html')
     
     form = RoomForm(instance=room)
 
@@ -157,7 +159,8 @@ def deleteRoom(request, pk):
         room = Room.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this room does not exist')
-        return redirect('forum')
+        # return redirect('forum')
+        return render(request, 'mainapp/404.html')
 
     #prevents logged in users to delete other users posts
     if request.user != room.host:
@@ -188,7 +191,8 @@ def deleteMessage(request, pk):
         message = Message.objects.get(id=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('this message does not exist')
-        return redirect('forum')
+        # return redirect('forum')
+        return render(request, 'mainapp/404.html')
     
     #prevents logged in users to delete other users messages
     if request.user != message.user:

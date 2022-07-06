@@ -113,7 +113,8 @@ def userProfile(request, pk):
     except ObjectDoesNotExist:
         # return HttpResponse('this profile does not exist')
         # return redirect('/')
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        # return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+        return render(request, 'mainapp/404.html')
     
     rooms = user.room_set.all()  # modelname_set.all()
     room_messages = user.message_set.all()

@@ -36,7 +36,8 @@ def stockPicker(request, pk):
         mercado = Mercado.objects.get(name=pk)
     except ObjectDoesNotExist:
         # return HttpResponse('no valid market chosen')
-        return redirect('/')
+        # return redirect('/')
+        return render(request, 'mainapp/404.html')
     
     stock_picker = mercado.ativo_set.all()
     

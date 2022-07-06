@@ -1,0 +1,12 @@
+{% include 'mainapp/basic.html' %}
+
+<head>
+    <meta http-equiv="Refresh" content="3; url='{% url 'home' %}'" />
+</head>
+
+{% block body %}
+<div class="container" style="align-text: center;">
+    <h1>404 - This page does not exist.</h1>
+    <p>You will be redirected <a href="{% url 'home' %}">home</a> in 3 seconds.</p>
+</div>
+{% endblock body %}
