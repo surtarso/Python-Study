@@ -182,20 +182,17 @@ def showCarteira(request):
     data = {}
     carteiras = CarteiraAtivo.objects.all()
     carteira_usuario = []
-    # figure_dict = {}
-    figure_labels = []
-    figure_values = []
-    figure_group = []
-    
+    figure_ativos = []
+    figure_notas = []
+    figure_markets = []
 
     # pega apensas ativos do usuario atual!
     for ativo in carteiras:
         if ativo.user == request.user:
             carteira_usuario.append(ativo)
-            # figure_dict.update({ativo.ativo.ticker:ativo.nota})
-            figure_labels.append(str(ativo.ativo.ticker))
-            figure_values.append(int(ativo.nota))
-            figure_group.append(str(ativo.ativo.mercado))
+            figure_ativos.append(str(ativo.ativo.ticker))
+            figure_notas.append(int(ativo.nota))
+            figure_markets.append(str(ativo.ativo.mercado))
 
     # numero de threads de acordo com o numero de ativos do usuario
     n_threads = len(carteira_usuario)  
@@ -219,29 +216,29 @@ def showCarteira(request):
         data.update(result)
     
     ##--------- pie chart - ativos --------------
-    fig_stock = go.Figure()
-    fig_stock.add_trace(go.Pie(
-        labels = figure_labels,
-        values = figure_values,
-        # values = [figure_values[v] for v in figure_values],
+    stocks_fig = go.Figure()
+    stocks_fig.add_trace(go.Pie(
+        labels = figure_ativos,
+        values = figure_notas,
         direction ='counterclockwise',
         sort = True
         ))
-    figure_s = fig_stock.to_html(full_html = False)#, default_height=250, default_width=350)
+    figure_s = stocks_fig.to_html(full_html = True)#, default_height=250, default_width=350)
     
     ##--------- pie chart - mercados ------------
-    fig_market = go.Figure()
-    fig_market.add_trace(go.Pie(
-        labels = figure_group,
-        values = figure_values,
+    markets_fig = go.Figure()
+    markets_fig.add_trace(go.Pie(
+        labels = figure_markets,
         direction ='counterclockwise',
         sort = True
         ))
-    figure_m = fig_market.to_html(full_html = False, default_height=225, default_width=300)
+    figure_m = markets_fig.to_html(full_html = True, default_height=225, default_width=300)
     
     
     template = 'mainapp/stocks/carteira.html'
-    context = {'data':data, 'figure_s':figure_s, 'figure_m':figure_m}
+    context = {'data':data,
+               'figure_stocks':figure_s,
+               'figure_markets':figure_m}
     return render(request, template, context)
 
 
