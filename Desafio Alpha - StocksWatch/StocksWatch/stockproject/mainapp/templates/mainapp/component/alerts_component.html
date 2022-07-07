@@ -22,6 +22,7 @@
         {% for alerta in alertas %}
         <!-- mostra apenas alertas do usuario logado -->
         {% if request.user == alerta.host %}
+
         <div class="col">
             <div class="card" style="background-color: whitesmoke;">
                 <div class="card-body">
@@ -43,7 +44,6 @@
                 </div>
             </div>
         </div>
-        
         <!-- MODAL -->
         <div id="modal" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -51,7 +51,6 @@
                     <ul class="list-group list-group-flush">
                         <div class="modal-header">
                             <li class="list-group-item">{{ alerta.mercado }} - {{ alerta.ativo }}</li>
-                            <a href="{% url 'alerts' %}" style="color: gray;" class="close" data-dismiss="modal">X</a>
                         </div>
                         <div class="modal-body">
                             <li class="list-group-item">Compra: R${{ alerta.compra }}</li>
