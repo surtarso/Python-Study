@@ -283,7 +283,10 @@ def updateCarteira(request, pk):
         template: carteira_form.html
         context: formulario de adicao de ativo ja preenchido
     """
-    carteira = CarteiraAtivo.objects.get(id=pk)
+    try:
+        carteira = CarteiraAtivo.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'mainapp/404.html')
     form = CarteiraForm(instance=carteira)
 
     #prevents logged in users to alter other users things
@@ -312,7 +315,10 @@ def deleteCarteira(request, pk):
         template: basic_delete.html
         context: confirmacao do ativo a ser deletado
     """
-    carteira = CarteiraAtivo.objects.get(id=pk)
+    try:
+        carteira = CarteiraAtivo.objects.get(id=pk)
+    except ObjectDoesNotExist:
+        return render(request, 'mainapp/404.html')
 
     #prevents logged in users to delete other users things
     if request.user != carteira.user:
