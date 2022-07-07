@@ -27,7 +27,7 @@
             <div class="card" style="background-color: whitesmoke;">
                 <div class="card-body">
                     <!-- nome do alerta (ticker) com link para MODAL -->
-                    <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal" class="btn btn-primary card-title">{{alerta}}</a>
+                    <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>
                     <!-- mercado dono do ativo do alerta -->
                     <p class="card-text">{{alerta.mercado}}</p>
                     <!--  tempo desde a criacao/update do alerta -->
@@ -45,7 +45,7 @@
             </div>
         </div>
         <!-- MODAL -->
-        <div id="modal" class="modal fade" tabindex="-1">
+        <div id="modal{{alerta}}" class="modal fade" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <ul class="list-group list-group-flush">

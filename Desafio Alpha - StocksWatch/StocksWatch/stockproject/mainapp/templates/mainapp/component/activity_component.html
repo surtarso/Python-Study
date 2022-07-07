@@ -64,7 +64,7 @@
     <div class="col">
         <div style="background-color: whitesmoke;" class="card">
             <!-- nome do alerta (modal) -->
-            <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal" class="btn btn-primary card-title">{{alerta}}</a>
+            <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>
             <!-- mercado dono do alerta -->
             <small>{{ alerta.mercado }}</small>
             <!-- tempo desde a criacao -->
@@ -83,7 +83,7 @@
     </div>
 
     <!-- MODAL -->
-    <div id="modal" class="modal fade" tabindex="-1">
+    <div id="modal{{alerta}}" class="modal fade" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <ul class="list-group list-group-flush">
