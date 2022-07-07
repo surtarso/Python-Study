@@ -27,7 +27,7 @@
             <!-- sala da mensagem enviada -->
             <a  style="margin: 3px;"
                 class="btn btn-primary btn-sm"
-                href="{% url 'user-profile' message.user.id %}">{{ message.room }}</a>
+                href="{% url 'room' message.room.id %}">{{ message.room }}</a>
 
             <!-- mensagem enviada -->
             <small class="text-muted">"{{ message }}"</small>
@@ -63,8 +63,8 @@
     {% if request.user == alerta.host %}
     <div class="col">
         <div style="background-color: whitesmoke;" class="card">
-            <!-- nome do alerta (ticker) -->
-            <a style="margin: 3px;" class="btn btn-primary btn-sm" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+            <!-- nome do alerta (modal) -->
+            <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal" class="btn btn-primary card-title">{{alerta}}</a>
             <!-- mercado dono do alerta -->
             <small>{{ alerta.mercado }}</small>
             <!-- tempo desde a criacao -->
@@ -79,6 +79,27 @@
             <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
                 class="btn btn-danger btn-sm" 
                 href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+        </div>
+    </div>
+    
+    <!-- MODAL -->
+    <div id="modal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <ul class="list-group list-group-flush">
+                    <div class="modal-header">
+                        <li class="list-group-item">{{ alerta.mercado }} - {{ alerta.ativo }}</li>
+                        <a href="{% url 'alerts' %}" style="color: gray;" class="close" data-dismiss="modal">X</a>
+                    </div>
+                    <div class="modal-body">
+                        <li class="list-group-item">Compra: R${{ alerta.compra }}</li>
+                        <li class="list-group-item">Venda:  R${{ alerta.venda }}</li>
+                        <li class="list-group-item">Busca:    {{ alerta.periodo }}min(s)</li>
+                        <li class="list-group-item">Duração:  {{ alerta.duracao }}dia(s)</li>
+                        <li class="list-group-item">Alertar:  {{ alerta.email }}</li>
+                    </div>
+                </ul>
+            </div>
         </div>
     </div>
     <br>
