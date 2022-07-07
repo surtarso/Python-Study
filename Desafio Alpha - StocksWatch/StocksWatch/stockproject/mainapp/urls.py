@@ -27,7 +27,6 @@ urlpatterns = [
 
     #----- ALERTS (views.views_alert.py)
     path('alerts/', views.alerts, name="alerts"),  # alerts "home"
-    path('alert/<str:pk>/', views.alertView, name="view-alert"),
     path('create-alert/', views.createAlert, name="create-alert"),
     path('update-alert/<str:pk>/', views.updateAlert, name="update-alert"),
     path('delete-alert/<str:pk>/', views.deleteAlert, name="delete-alert"),

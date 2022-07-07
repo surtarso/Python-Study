@@ -25,8 +25,8 @@
         <div class="col">
             <div class="card" style="background-color: whitesmoke;">
                 <div class="card-body">
-                    <!-- nome do alerta (ticker) com link para visualizacao - WANT MODAL!!!-->
-                    <a type="button" data-toggle="modal" class="btn btn-primary card-title" href="{% url 'view-alert' alerta.id %}">{{alerta}}</a>
+                    <!-- nome do alerta (ticker) com link para MODAL -->
+                    <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal" class="btn btn-primary card-title">{{alerta}}</a>
                     <!-- mercado dono do ativo do alerta -->
                     <p class="card-text">{{alerta.mercado}}</p>
                     <!--  tempo desde a criacao/update do alerta -->
@@ -43,7 +43,37 @@
                 </div>
             </div>
         </div>
+
+        <div id="modal" class="modal fade" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <ul class="list-group list-group-flush">
+                        <div class="modal-header">
+                            <li class="list-group-item">{{ alerta.mercado }} - {{ alerta.ativo }}</li>
+                            <a href="{% url 'alerts' %}" style="color: gray;" class="close" data-dismiss="modal">X</a>
+                        </div>
+                        <div class="modal-body">
+                            <li class="list-group-item">Compra: R${{ alerta.compra }}</li>
+                            <li class="list-group-item">Venda:  R${{ alerta.venda }}</li>
+                            <li class="list-group-item">Busca:    {{ alerta.periodo }}min(s)</li>
+                            <li class="list-group-item">Duração:  {{ alerta.duracao }}dia(s)</li>
+                            <li class="list-group-item">Alertar:  {{ alerta.email }}</li>
+                        </div>
+                    </ul>
+                </div>
+            </div>
+        </div>
         {% endif %}
         {% endfor %}
     </div>
 </div>
+
+<script>
+    const myModal = document.getElementById('modal')
+    const myInput = document.getElementById('input')
+
+    myModal.addEventListener('shown.bs.modal', () => {
+    myInput.focus()
+})
+
+</script>

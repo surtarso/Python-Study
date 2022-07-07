@@ -34,36 +34,6 @@ def alerts(request):
     return render(request, template, context)
 
 
-##------------------------------------------------------ALERT VIEW:
-@login_required(login_url='login')
-def alertView(request, pk):
-    """
-    View que mostra detalhes de um alerta especifico
-    Args:
-        pk: ID do alerta
-    Returns:
-        template: alert_view.html
-        context: alerta a ser visualizado
-    """
-    try:
-        alert = Alerta.objects.get(id=pk)
-    except ObjectDoesNotExist:
-        # return HttpResponse("this alert does not exist")
-        # return redirect('alerts')
-        return render(request, 'mainapp/404.html')
-    
-    if request.user != alert.host:
-        # return HttpResponse("you are not supposed to see this")
-        return redirect('alerts')
-
-    if request.method == 'POST':    
-        return redirect('view-alert', pk=alert.id)
-    
-    template = 'mainapp/stocks/alert_view.html'
-    context = {'alert':alert}
-    return render(request, template, context)
-
-
 ##-----------------------------------------------------CREATE ALERT:
 @login_required(login_url='login')
 def createAlert(request):

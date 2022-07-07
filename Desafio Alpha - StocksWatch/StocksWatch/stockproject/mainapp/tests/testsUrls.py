@@ -113,14 +113,6 @@ class TestURLs(SimpleTestCase):
         self.assertTemplateUsed('mainapp/stocks/alerts.html')
 
         """
-        Testa se o reverse de VIEW-ALERT existe e está correlacionado
-        com seu template, utilizando uma ID como argumento
-        """
-        url = reverse('view-alert', args=['pk'])
-        self.assertEquals(resolve(url).func, alertView)
-        self.assertTemplateUsed('mainapp/stocks/alert_view.html')
-
-        """
         Testa se o reverse de CREATE-ALERTS existe e está correlacionado
         com seu template
         """
