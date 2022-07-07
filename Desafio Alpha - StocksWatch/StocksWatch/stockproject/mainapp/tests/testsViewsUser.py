@@ -15,6 +15,12 @@ class TestLoggedInUserURLs(TestCase):
         self.user_a_password = user_a_password
         self.user_a = user_a
 
+    def test_pages_dont_exist(self):
+        random_url = '/thispageshouldntexist/'
+        response = self.client.post(random_url)
+        status_code = response.status_code
+        self.assertEqual(status_code, 404)
+        
     def test_user_exists(self):
         user_count = User.objects.all().count()
         self.assertNotEqual(user_count, 0)
