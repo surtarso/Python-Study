@@ -178,7 +178,8 @@ def showCarteira(request):
     Carteira de ativos do usuario para acompanhamento e balanceamento.
     Returns:
         template: carteira.html
-        context: ativos que o usuario selecionou para sua carteira
+        context: ativos que o usuario selecionou para sua carteira,
+        lita de ativos+notas e de mercados para graficos
     """
     data = {}
     carteiras = CarteiraAtivo.objects.all()
@@ -190,7 +191,9 @@ def showCarteira(request):
     # pega apensas ativos do usuario atual!
     for ativo in carteiras:
         if ativo.user == request.user:
+            #para tabela
             carteira_usuario.append(ativo)
+            #para graficos
             figure_ativos.append(str(ativo.ativo.ticker))
             figure_notas.append(int(ativo.nota))
             figure_markets.append(str(ativo.ativo.mercado))
@@ -199,6 +202,7 @@ def showCarteira(request):
     n_threads = len(carteira_usuario)  
     thread_list = []
     que = queue.Queue()
+    #busca cotacoes
     for i in range(n_threads):
         thread = Thread(
             target = lambda q,
