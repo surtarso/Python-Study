@@ -9,11 +9,11 @@
   <img src="shots/face.png" width=545 height=200>
 
 ## Conceito:
-  - [*Stocks_App_Concept.py*](Stocks_App_Concept.py)
+  - [*Stocks_App_Concept.py*](tests/Stocks_App_Concept.py)
     - Procurar preço de ativos: yfinance e yahoo-fin
     - Setar preço compra/venda e duração da operação
     - Mandar e-mails em preços atingidos: console mail
 
-  - [*graph_generation_tests.py*](graph_generation_tests.py)
+  - [*graph_generation_tests.py*](tests/graph_generation_tests.py)
     - Gera gráficos com plotly e yfinance
 
