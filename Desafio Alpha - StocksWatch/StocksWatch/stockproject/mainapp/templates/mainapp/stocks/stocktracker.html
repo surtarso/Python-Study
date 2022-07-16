@@ -7,6 +7,10 @@
 {% extends 'mainapp/basic.html' %}
 {% load static %}
 
+{% block head %}
+<!-- jquery datatables CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+{% endblock head %}
 
 {% block title %}
 {% load myfilters %}
@@ -146,14 +150,12 @@ StocksWatch - Tracker
     Adiciona JQUERY DATATABLES para a tabela acima para utilizacao 
     de filtros por indice e ordenacao da tabela
 -->
-<script
-        src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-        crossorigin="anonymous">
-</script>
-<script>
-    $(document).ready( function () {
+<!-- jquery datatables JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js">
+    $(document).ready(function () {
         $('#tabela').DataTable();
-    } );
+    });
 </script>
+
 {% endblock body %}
