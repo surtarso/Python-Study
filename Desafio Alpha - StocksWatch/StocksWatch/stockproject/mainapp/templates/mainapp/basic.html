@@ -17,7 +17,7 @@
   {% block head %}{% endblock head %}
   <style>
     {% block css %}{% endblock css %}
-    .footer{
+    .footer {
       position:fixed;
       bottom:0;
       width:100%;
@@ -25,6 +25,10 @@
       height:20px;
       font-family: Arial;
       font-size: small;
+      color: gray;
+    }
+    .footer a {
+      text-decoration:none;
       color: gray;
     }
   </style>
@@ -41,7 +45,8 @@
 
   
   <footer class="footer">
-    <p>Webmaster: Tarso Galvão - Powered by: Bootstrap JQuery Python Django MySQL</p>
+    <p>Webmaster: <a href="https://tarsogalvao.ddns.net" target="_blank">
+        Tarso Galvão</a> - Powered by: Bootstrap JQuery Python Django MySQL</p>
   </footer>
 
  
