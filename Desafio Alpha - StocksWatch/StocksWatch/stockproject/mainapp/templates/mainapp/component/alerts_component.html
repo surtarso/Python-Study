@@ -3,13 +3,13 @@
     do usuario logado. Também é um componente da pagina PROFILE quando acessada pelo proprio usuario ativo.
 -->
 
+
 <!-- titulo do componente -->
 <div class="container">
-    <h3 style="text-shadow: gray 1px 2px 2px;">Alertas</h3>
+    <h3 class="active-title">Alertas</h3>
     <br>
     <!-- botao para criar um novo alerta -->
     <a class="btn btn-outline-primary btn-sm d-grid gap-2" 
-    style="border: 1px solid gray;box-shadow: black 1px 3px 6px;"
     href="{% url 'create-alert' %}">Criar Alerta</a>
 </div>
 
@@ -25,11 +25,11 @@
         <!-- mostra apenas alertas do usuario logado -->
         {% if request.user == alerta.host %}
 
-        <div class="col">
-            <div class="card bg-light" style="border: 1px solid gray;box-shadow: black 1px 3px 6px;">
+        <div class="col card-wrapper">
+            <div class="card bg-light card-box">
                 <div class="card-body">
                     <!-- nome do alerta (ticker) com link para MODAL -->
-                    <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title" style="box-shadow: black 1px 2px 3px;">{{alerta}}</a>
+                    <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>
                     <!-- mercado dono do ativo do alerta -->
                     <p class="card-text">{{alerta.mercado}}</p>
                     <!--  tempo desde a criacao/update do alerta -->
@@ -37,11 +37,9 @@
                 </div>
                     <div class="card-footer">
                         <!-- botao para EDITAR alerta -->
-                        <a  style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
-                            class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
+                        <a class="btn btn-warning btn-sm" href="{% url 'update-alert' alerta.id %}">Editar</a>
                         <!-- botao para APAGAR alerta -->
-                        <a  style="--bs-btn-padding-y: .10rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
-                            class="btn btn-outline-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+                        <a class="btn btn-outline-danger btn-sm" href="{% url 'delete-alert' alerta.id %}">Apagar</a>
                     </div>
                 
             </div>
@@ -65,7 +63,9 @@
                 </div>
             </div>
         </div>
+        
         {% endif %}
         {% endfor %}
     </div>
 </div>
+

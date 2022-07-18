@@ -42,15 +42,18 @@
             <a class="nav-link" href="{% url 'alerts' %}">Alertas</a>
           </li>
           <!-- link para PROFILE -->
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'user-profile' request.user.id %}">Profile</a>
-          </li>
+          </li> -->
           <!-- link para CARTEIRA -->
           <li class="nav-item">
             <a class="nav-link" href="{% url 'carteira' %}">Carteira</a>
           </li>
+           <!-- link para PROFILE -->
+          <li class="nav-link text-capitalize">Olá, 
+            <a href="{% url 'user-profile' request.user.id %}"
+              style="text-decoration:none;color:darkcyan;">{{ request.user }}!</a></li>
           <!-- link para SAIR (deslogar da conta) para usuarios logados -->
-          <li class="nav-link text-capitalize">Olá, {{ request.user }}!</li>
           <a class="nav-link" href="{% url 'logout' %}">Sair</a>
         {% else %}
           <!-- link para ENTRAR (logar na conta) para usuarios deslogados-->

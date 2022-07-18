@@ -12,13 +12,6 @@
 StocksWatch - Carteira
 {% endblock title %}
 
-{% block css %}
-.red { color: red; }
-.green { color: green; }
-.orange { color: orange; }
-.brown { color: brown; }
-{% endblock css %}
-
 <!--
     Formatação da tabela da carteira do usuario em indices
 -->
@@ -28,7 +21,7 @@ StocksWatch - Carteira
     <h3>Carteira</h3>
 
     <table class="table-responsive">
-        <table id="tabela" class="table table-hover" style="border: 1px solid gray;">
+        <table id="tabela" class="table table-hover">
             <thead class="table-light">
                 <tr>
                     <!-- titulos da tabela -->
@@ -127,11 +120,9 @@ StocksWatch - Carteira
                     <td>
                         <!-- botoes de manipulacao de ativos da carteira - editar/excluir -->
                         <a class="btn btn-warning btn-sm"
-                            style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
                             href="{% url 'update-carteira' key.id %}">E</a>
 
                         <a class="btn btn-danger btn-sm"
-                            style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
                             href="{% url 'delete-carteira' key.id %}">X</a>
                     </td>
 
@@ -139,7 +130,6 @@ StocksWatch - Carteira
                         <!-- botao para historico em graficos -->
                         <form action='graph'>
                             <button class="btn btn-primary btn-sm"
-                                style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
                                 name='ticker' value={{key}} type="submit">Gráfico</button>
                         </form>
                     </td>

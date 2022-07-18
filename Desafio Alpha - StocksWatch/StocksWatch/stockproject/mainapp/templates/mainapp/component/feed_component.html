@@ -6,7 +6,7 @@
 
 {% if request.user == user %}
 <div class="container">
-    <h3 style="text-shadow: gray 1px 2px 2px;">Salas</h3>
+    <h3 class="active-title">Salas</h3>
     <br>
     <!-- mostra apenas numero de salas quando na pagina do forum -->
     {% if room_count %}
@@ -14,7 +14,6 @@
     {% endif %}
     <!-- botao para criar nova sala -->
     <a class="btn btn-outline-primary btn-sm d-grid gap-2"
-    style="border: 1px solid gray;box-shadow: black 1px 3px 6px;"
         href="{% url 'create-room' %}">Criar Sala</a>
 </div>
 <br>
@@ -29,11 +28,11 @@
 <div class="container">
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for room in rooms %}
-        <div class="col">
-            <div class="card bg-light" style="border: 1px solid gray;box-shadow: black 1px 3px 6px;">
+        <div class="col card-wrapper">
+            <div class="card bg-light card-box">
                 <div class="card-body">
                     <!-- nome da sala -->
-                    <a class="btn btn-primary d-grip gap-2 card-title" href="{% url 'room' room.id %}" style="box-shadow: black 1px 2px 3px;">{{room.name}}</a> 
+                    <a class="btn btn-primary d-grip gap-2 card-title" href="{% url 'room' room.id %}">{{room.name}}</a> 
                     <!-- topico -->
                     <p class="card-text">{{room.topic.name}}</p>
                     <!-- data de criacao/modificacao -->
@@ -43,17 +42,14 @@
                     <div class="card-footer">
                         <!-- adiciona botoes editar/apagar apenas para usuario dono da sala -->
                         {% if request.user == room.host %}
-                            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                                class="btn btn-warning btn-sm" 
+                            <a class="btn btn-warning btn-sm" 
                                 href="{% url 'update-room' room.id %}">Editar</a>
-                            <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                                class="btn btn-outline-danger btn-sm" 
+                            <a class="btn btn-outline-danger btn-sm" 
                                 href="{% url 'delete-room' room.id %}">Apagar</a>
                         {% endif %}
                         <!-- link para o profile do usuario dono da sala -->
                         {% if request.user != room.host %}
-                        <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                            class="btn btn-outline-secondary btn-sm" 
+                        <a class="btn btn-outline-secondary btn-sm" 
                             href="{% url 'user-profile' room.host.id %}">
                             @{{room.host.username}}
                         </a>

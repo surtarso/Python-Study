@@ -6,9 +6,9 @@
 
 <!-- esconde titulo de mensagens na pagina de alertas e vice versa -->
 {% if alerta and not room_messages %}
-<h3 style="text-shadow: gray 1px 2px 2px;">Recentes</h3>
+<h3 class="active-title">Recentes</h3>
 {% else %}
-<h3 style="text-shadow: gray 1px 2px 2px;">Atividade</h3>
+<h3 class="active-title">Atividade</h3>
 {% endif %}
 <br>
 
@@ -19,14 +19,13 @@
 <!-- MENSAGENS (atividade recente) -->
 <div class="container">
     {% for message in room_messages %}
-    <div class="col">
-        <div class="card bg-light" style="border: 1px solid gray;box-shadow: black 1px 3px 6px;">
+    <div class="col card-wrapper">
+        <div class="card bg-light card-box">
             <!-- tempo desde a mensagem -->
             <small>({{ message.created|timesince }} ago)</small>
 
             <!-- sala da mensagem enviada -->
-            <a  style="margin: 3px;box-shadow: black 1px 2px 3px;"
-                class="btn btn-primary btn-sm"
+            <a class="btn btn-primary btn-sm"
                 href="{% url 'room' message.room.id %}">{{ message.room }}</a>
 
             <!-- mensagem enviada -->
@@ -35,15 +34,13 @@
             <div class="card-footer">
             <!-- esconde link para profile para dono da mensagem -->
             {% if request.user != message.user %}
-            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                class="btn btn-outline-secondary btn-sm" 
+            <a class="btn btn-outline-secondary btn-sm" 
                 href="{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>
             {% endif %}
 
             <!-- adiciona botao de apagar para dono da mensagem -->
             {% if request.user == message.user %}
-                <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                    class="btn btn-outline-danger btn-sm" 
+                <a class="btn btn-outline-danger btn-sm" 
                     href="{% url 'delete-message' message.id %}">Apagar</a>
             {% endif %}
             </div>
@@ -63,10 +60,10 @@
     {% for alerta in alertas %}
     <!-- mostra apenas alertas do usuario logado -->
     {% if request.user == alerta.host %}
-    <div class="col">
-        <div class="card bg-light" style="border: 1px solid gray;box-shadow: black 1px 3px 6px;">
+    <div class="col card-wrapper">
+        <div class="card bg-light card-box">
             <!-- nome do alerta (modal) -->
-            <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title" style="box-shadow: black 1px 2px 3px;">{{alerta}}</a>
+            <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>
             <!-- mercado dono do alerta -->
             <small>{{ alerta.mercado }}</small>
             <!-- tempo desde a criacao -->
@@ -75,12 +72,10 @@
             <small>{{ alerta.created }}</small>
             <!-- botao editar alerta -->
             <div class="card-footer">
-            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
-                class="btn btn-warning btn-sm" 
+            <a class="btn btn-warning btn-sm" 
                 href="{% url 'update-alert' alerta.id %}">Editar</a>
             <!-- botao apagar alerta -->
-            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
-                class="btn btn-outline-danger btn-sm" 
+            <a class="btn btn-outline-danger btn-sm" 
                 href="{% url 'delete-alert' alerta.id %}">Apagar</a>
             </div>
         </div>
