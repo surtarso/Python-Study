@@ -8,27 +8,38 @@ StocksWatch - Home
 {% endblock title %}
 
 {% block body %}
-<!-- block acordeon com as informacoes do site -->
-<div class="container">
+
+<div class="container" style="margin-top:4vmax;">
+
+
   <!-- titulo principal da pagina -->
-    <div class="container">
-      <h1>Stocks Watch</h1>
+    <div class="row row-cols-3 row-cols-md-3" style="display:flex;flex-direction:row;justify-content:center;">
+      <div class="col" style="text-align:right;margin-top:160px">
+      <h1>Venha investir com segurança e conforto!</h1>
+      </div>
+      <div class="col">
+      <lottie-player src="https://assets4.lottiefiles.com/packages/lf20_kuhijlvx.json"  background="transparent"  speed="1"  style="width: 300px; height: 300px;"  loop  autoplay></lottie-player>
+      </div>
     </div>
-<div class="accordion accordion-flush" id="accordionFlushExample">
+
+<br>
+
+<!-- block acordeon com as informacoes do site -->
+<div class="accordion" id="accordionFlushExample">
     <!-- primeiro botao do acordeon -->
-    <div class="accordion-item">
+    <div class="accordion-item" style="border-radius:4px;">
       <h2 class="accordion-header" id="flush-headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-          Stocks Watch
+          Sobre
         </button>
       </h2>
       <!-- texto do primeiro botao -->
       <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">StocksWatch é uma ferramenta para te auxiliar no mercado acionário. Inclui ferramentas para balancear sua carteira e gerar alertas para preços de ativos.</div>
+        <div class="accordion-body">StocksWatch é um aplicativo para te auxiliar no mercado acionário. Inclui utilidades para balancear sua carteira e gerar alertas para preços de ativos.</div>
       </div>
     </div>
     <!-- segundo botao do acordeon -->
-    <div class="accordion-item">
+    <div class="accordion-item" style="border-radius:4px;">
       <h2 class="accordion-header" id="flush-headingTwo">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
           Forum
@@ -40,7 +51,7 @@ StocksWatch - Home
       </div>
     </div>
     <!-- terceiro botao do acordeon -->
-    <div class="accordion-item">
+    <div class="accordion-item" style="border-radius:4px;">
       <h2 class="accordion-header" id="flush-headingThree">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
           Mercado
@@ -52,7 +63,7 @@ StocksWatch - Home
       </div>
     </div>
     <!-- quarto botao do acordeon -->
-    <div class="accordion-item">
+    <div class="accordion-item" style="border-radius:4px;">
       <h2 class="accordion-header" id="flush-headingFour">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour">
           Carteira
@@ -65,4 +76,6 @@ StocksWatch - Home
     </div>
   </div>
 </div>
+
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 {% endblock body %}
