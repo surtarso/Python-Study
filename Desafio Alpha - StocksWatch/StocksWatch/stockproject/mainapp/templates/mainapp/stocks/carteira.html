@@ -10,7 +10,7 @@
 
 {%block head%}
 <!-- jquery datatables CSS -->
-<link rel="stylesheet" type="text/css" href="/static/mainapp/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="{% static 'mainapp/css/jquery.dataTables.css' %}">
 {%endblock head%}
 
 
@@ -277,9 +277,9 @@ StocksWatch - Carteira
     de filtros por indice e ordenacao da tabela
 -->
 <!-- jquery JS -->
-<script src="/static/mainapp/js/jquery-3.6.0.min.js"></script>
+<script src="{% static 'mainapp/js/jquery-3.6.0.min.js' %}"></script>
 <!-- jquery datatables JS -->
-<script type="text/javascript" charset="utf8" src="/static/mainapp/js/jquery.dataTables.js"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'mainapp/js/jquery.dataTables.js' %}"></script>
 
 <script>
     $(document).ready(function () {

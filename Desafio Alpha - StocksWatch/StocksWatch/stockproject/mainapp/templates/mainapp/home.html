@@ -2,6 +2,7 @@
   home.html é a landing page contendo informacoes sobre o conteudo do site
 -->
 {% extends 'mainapp/basic.html' %}
+{% load static %}
 
 {% block title %}
 StocksWatch - Home
@@ -18,7 +19,7 @@ StocksWatch - Home
       <h1 class="home-title">Venha investir com segurança e conforto!</h1>
       </div>
       <div class="col">
-      <lottie-player src="/static/mainapp/images/logo.json"  background="transparent"  speed="1" loop  autoplay></lottie-player>
+      <lottie-player src="{% static 'mainapp/images/logo.json' %}"  background="transparent"  speed="1" loop  autoplay></lottie-player>
       </div>
     </div>
 
@@ -77,5 +78,5 @@ StocksWatch - Home
   </div>
 </div>
 
-<script src="/static/mainapp/js/lottie-player.js"></script>
+<script src="{% static 'mainapp/js/lottie-player.js' %}"></script>
 {% endblock body %}

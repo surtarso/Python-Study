@@ -10,9 +10,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- bootastrap CSS -->
-  <link href="/static/mainapp/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'mainapp/css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- static css file -->
-  <link href="/static/mainapp/css/styles.css" rel="stylesheet">
+  <link href="{% static 'mainapp/css/styles.css' %}" rel="stylesheet">
 
   {% block head %}{% endblock head %}
 
@@ -36,9 +36,9 @@
  
 
   <!-- bootastrap JS -->
-  <script src="/static/mainapp/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'mainapp/js/bootstrap.bundle.min.js' %}"></script>
   <!-- light/dark mode switcher -->
-  <script type="text/javascript" src="/static/mainapp/js/mode_switcher.js"></script>
+  <script type="text/javascript" src="{% static 'mainapp/js/mode_switcher.js' %}"></script>
 
 </body>
 </html>
