@@ -4,12 +4,12 @@
     os alertas de tal mercado ao clicar
 -->
 
-<h3>Mercados</h3>
+<h3 style="text-shadow: gray 2px 2px 3px;">Mercados</h3>
 <br>
 
 <!-- "Todos" os alertas é um link para pagina pessoal de alertas-->
 <div>
-    <a  style="margin: 3px"
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;"
         class="btn btn-secondary btn-sm d-grid gap-2"
         href="{% url 'alerts' %}">Todos</a>
 </div>
@@ -20,7 +20,7 @@
 -->
 {% for mercado in mercado %}
 <div>
-    <a  style="margin: 3px"
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;"
         class="btn btn-secondary btn-sm d-grid gap-2" 
         href="{% url 'alerts' %}?q={{ mercado }}">{{ mercado.name }}</a>
 </div>

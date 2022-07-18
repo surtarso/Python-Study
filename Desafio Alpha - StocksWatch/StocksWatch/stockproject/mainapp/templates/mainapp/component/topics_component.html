@@ -3,12 +3,12 @@
     que lista os filtros de mensagens por topico e alertas por mercado
 -->
 
-<h3>Tópicos</h3>
+<h3 style="text-shadow: gray 1px 2px 2px;">Tópicos</h3>
 <br>
 
 <!-- link para a pagina FORUM (todos as salas)-->
 <div>
-    <a  style="margin: 3px" 
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;" 
         class="btn btn-outline-warning btn-sm d-grid gap-2" 
         href="{% url 'forum' %}">Salas</a>
 </div>
@@ -19,7 +19,7 @@
 -->
 {% for topic in topics %}
 <div>
-    <a  style="margin: 3px"
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;"
         class="btn btn-secondary btn-sm d-grid gap-2" 
         href="{% url 'forum' %}?q={{ topic.name }}">{{ topic.name }}</a>
 </div>
@@ -28,7 +28,7 @@
 
 <!-- link para a pagina ALERTAS (todos os alertas pessoais)-->
 <div>
-    <a  style="margin: 3px" 
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;" 
         class="btn btn-outline-warning btn-sm d-grid gap-2" 
         href="{% url 'alerts' %}">Alertas</a>
 </div>
@@ -39,7 +39,7 @@
 -->
 {% for mercado in mercado %}
 <div>
-    <a  style="margin: 3px"
+    <a  style="margin: 3px;box-shadow: black 1px 3px 3px;"
         class="btn btn-secondary btn-sm d-grid gap-2" 
         href="{% url 'alerts' %}?q={{ mercado }}">{{ mercado.name }}</a>
 </div>
