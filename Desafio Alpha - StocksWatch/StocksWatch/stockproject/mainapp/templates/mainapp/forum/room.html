@@ -44,7 +44,7 @@ StocksWatch - Sala
                         <!-- DELETE apenas para dono da mensagem -->
                         {% if request.user == message.user %}
                             <a  style="--bs-btn-font-size: .55rem; margin: 3px;"
-                                class="btn btn-danger btn-sm"
+                                class="btn btn-outline-danger btn-sm"
                                 href="{% url 'delete-message' message.id %}">Delete</a>
                         {% endif %}
                         <!-- corpo da mensagem -->

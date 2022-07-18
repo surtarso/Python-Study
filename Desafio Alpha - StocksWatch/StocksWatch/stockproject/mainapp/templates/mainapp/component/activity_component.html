@@ -31,20 +31,22 @@
 
             <!-- mensagem enviada -->
             <small>"{{ message }}"</small>
-
+            
+            <div class="card-footer">
             <!-- esconde link para profile para dono da mensagem -->
             {% if request.user != message.user %}
-            <a  style="--bs-btn-font-size: .75rem; margin: 3px;"
-                class="btn btn-secondary btn-sm" 
+            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
+                class="btn btn-outline-secondary btn-sm" 
                 href="{% url 'user-profile' message.user.id %}">@{{ message.user }}</a>
             {% endif %}
 
             <!-- adiciona botao de apagar para dono da mensagem -->
             {% if request.user == message.user %}
-                <a  style="margin: 3px;"
-                    class="btn btn-danger btn-sm" 
+                <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
+                    class="btn btn-outline-danger btn-sm" 
                     href="{% url 'delete-message' message.id %}">Apagar</a>
             {% endif %}
+            </div>
         </div>
     </div>
     <br>
@@ -72,13 +74,15 @@
             <!-- data da criacao -->
             <small>{{ alerta.created }}</small>
             <!-- botao editar alerta -->
-            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
-                class="btn btn-warning btn-sm" 
+            <div class="card-footer">
+            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
+                class="btn btn-outline-warning btn-sm" 
                 href="{% url 'update-alert' alerta.id %}">Editar</a>
             <!-- botao apagar alerta -->
-            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem; margin: 3px;" 
-                class="btn btn-danger btn-sm" 
+            <a  style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;" 
+                class="btn btn-outline-danger btn-sm" 
                 href="{% url 'delete-alert' alerta.id %}">Apagar</a>
+            </div>
         </div>
     </div>
 

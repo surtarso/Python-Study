@@ -13,7 +13,7 @@
     <h5>{{ room_count }} sala(s) disponíveis</h5>
     {% endif %}
     <!-- botao para criar nova sala -->
-    <a class="btn btn-primary btn-sm d-grid gap-2" 
+    <a class="btn btn-outline-primary btn-sm d-grid gap-2" 
         href="{% url 'create-room' %}">Criar Sala</a>
 </div>
 <br>
@@ -37,28 +37,28 @@
                     <p class="card-text">{{room.topic.name}}</p>
                     <!-- data de criacao/modificacao -->
                     <small>{{room.updated}}</small>
-                    
+                </div>
                     <!-- botoes -->
                     <div class="card-footer">
                         <!-- adiciona botoes editar/apagar apenas para usuario dono da sala -->
                         {% if request.user == room.host %}
                             <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                                class="btn btn-warning btn-sm" 
+                                class="btn btn-outline-warning btn-sm" 
                                 href="{% url 'update-room' room.id %}">Editar</a>
                             <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                                class="btn btn-danger btn-sm" 
+                                class="btn btn-outline-danger btn-sm" 
                                 href="{% url 'delete-room' room.id %}">Apagar</a>
                         {% endif %}
                         <!-- link para o profile do usuario dono da sala -->
                         {% if request.user != room.host %}
                         <a style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                            class="btn btn-secondary btn-sm" 
+                            class="btn btn-outline-secondary btn-sm" 
                             href="{% url 'user-profile' room.host.id %}">
                             @{{room.host.username}}
                         </a>
                         {% endif %}
                     </div>
-                </div>
+                
             </div>
         </div>
         {% endfor %}
