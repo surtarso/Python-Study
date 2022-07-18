@@ -13,3 +13,5 @@
 - Arquivo [basic_navbar.html](https://github.com/surtarso/Python-Projects/blob/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch/stockproject/mainapp/templates/mainapp/basic_navbar.html) - NavBar que acompanha todas as paginas do site.
   
 - Arquivo [home.html](https://github.com/surtarso/Python-Projects/blob/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch/stockproject/mainapp/templates/mainapp/home.html) - Template da landing page. (pagina inicial)
+
+- Arquivo [404.html](https://github.com/surtarso/Python-Projects/blob/main/Desafio%20Alpha%20-%20StocksWatch/StocksWatch/stockproject/mainapp/templates/mainapp/404.html) - Custom 404.
