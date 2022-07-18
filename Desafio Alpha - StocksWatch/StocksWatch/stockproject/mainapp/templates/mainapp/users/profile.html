@@ -32,6 +32,7 @@ StocksWatch Profile
 <!-- titulo da pagina com nome do usuario -->
 <div class="profile_title bg-light">
     <h2 class="text-capitalize">{{user.username}}'s Profile</h2>
+    <hr>
 </div>
 
 <div class="profile-container">
@@ -47,6 +48,7 @@ StocksWatch Profile
             {% include 'mainapp/component/alerts_component.html' %}
         {% endif %}
         <br>
+        
         {% include 'mainapp/component/feed_component.html' %}   
     </div>
 <!-- coluna da direita: atividade recente apenas para profile proprio -->
