@@ -3,13 +3,13 @@
   Contem os menus para acesso ao site para usuarios logados, alem de uma caixa de procura para cotacoes
   Para usuarios nao logados possui apenas um botao para logar/registrar.
 -->
-
+{% load static %}
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <!-- titulo da pagina no navbar com link para home -->
     
     <a href="/" class="navbar-brand">
-      <img src="/static/mainapp/images/favicon.ico" width="24px">
+      <img src="{%  static 'mainapp/images/favicon.ico' %}" width="24px">
       StocksWatch</a>
 
 
@@ -41,7 +41,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'alerts' %}">Alertas</a>
           </li>
-          <!-- link para PROFILE -->
+          <!-- link para PROFILE (mudei para nome do user)-->
           <!-- <li class="nav-item">
             <a class="nav-link" href="{% url 'user-profile' request.user.id %}">Profile</a>
           </li> -->
