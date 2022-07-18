@@ -14,94 +14,9 @@
   <!-- bootastrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <!-- static css file -->
+  <link href="/static/mainapp/css/styles.css" rel="stylesheet">
   {% block head %}{% endblock head %}
-  <style>
-    {% block css %}{% endblock css %}
-    * {
-      transition: All 0.25s linear;
-    }
-    .btn-outline-primary{
-    border: 1px solid gray;
-    box-shadow: black 1px 3px 6px;
-    }
-    .btn-secondary,
-    .btn-outline-warning{
-      margin: 3px;
-      box-shadow: black 1px 3px 3px;
-    }
-    .btn:hover{
-      transform: scale(1.015);
-    }
-    .footer {
-      position:fixed;
-      bottom:0;
-      width:100%;
-      text-align:center;
-      height:20px;
-      font-family: Arial;
-      font-size: small;
-      color: gray;
-    }
-    .footer a {
-      text-decoration:none;
-      color: gray;
-    }
-    .footer a:hover {
-      color: darkcyan;
-    }
-    .card-wrapper:hover {
-        transform: scale(1.04);
-    }
-    .card-box{
-      border: 1px solid gray;
-      box-shadow: black 1px 3px 6px;
-    }
-    .card-box a{
-      margin: 3px;
-      box-shadow: black 1px 2px 3px;
-    }
-    .card-footer a {
-      --bs-btn-padding-y: .15rem;
-      --bs-btn-padding-x: .2rem;
-      --bs-btn-font-size: .75rem;
-    }
-    .active-title{
-      text-shadow: gray 1px 2px 2px;
-    }
-    .profile-container,
-    .home-container{
-      display: grid;
-      grid-template-columns: 1fr 6fr 1fr;
-      padding: 5px;
-    }
-    .profile_title,
-    .feed_component,
-    .topics_component,
-    .alert_component,
-    .mercado_component,
-    .activity_component{
-        padding: 5px;
-        text-align: center;
-        align-items: center;
-        position: relative;
-    }
-    .form-control{
-      border: 1px solid gray;
-    }
-    .red { color: red; }
-    .green { color: green; }
-    .darkgreen { color: darkgreen; }
-    .brown { color: brown; }
-
-    #tabela{
-      border: 1px solid gray;
-    }
-    .room-container{
-      display: grid;
-      grid-template-columns: 5fr 1fr;
-      padding: 4px;
-    }
-  </style>
   <title>{% block title %} {% endblock title %}</title>
 </head>
 
@@ -111,7 +26,6 @@
 
   {% block body %}
   {% endblock body %}
-
 
   
   <footer class="footer">
@@ -129,118 +43,8 @@
     crossorigin="anonymous"></script>
 
   <!-- light/dark mode switcher -->
-  <script>
-    (function () {
-      let lightSwitch = document.getElementById('lightSwitch');
-      if (!lightSwitch) {
-        return;
-      }
+  <script type="text/javascript" src="/static/mainapp/js/mode_switcher.js"></script>
 
-      /**
-       * @function darkmode
-       * @summary: changes the theme to 'dark mode' and save settings to local stroage.
-       * Basically, replaces/toggles every CSS class that has '-light' class with '-dark'
-       */
-
-      function darkMode() {
-        document.querySelectorAll('.bg-light').forEach((element) => {
-          element.className = element.className.replace(/-light/g, '-dark');
-        });
-
-        document.body.classList.add('bg-dark');
-
-        if (document.body.classList.contains('text-dark')) {
-          document.body.classList.replace('text-dark', 'text-light');
-        } else {
-          document.body.classList.add('text-light');
-        }
-
-        // Tables
-        var tables = document.querySelectorAll('table');
-        for (var i = 0; i < tables.length; i++) {
-          // add table-dark class to each table
-          tables[i].classList.add('table-dark');
-        }
-
-        // set light switch input to true
-        if (!lightSwitch.checked) {
-          lightSwitch.checked = true;
-        }
-        localStorage.setItem('lightSwitch', 'dark');
-      }
-
-      /**
-       * @function lightmode
-       * @summary: changes the theme to 'light mode' and save settings to local stroage.
-       */
-      function lightMode() {
-        document.querySelectorAll('.bg-dark').forEach((element) => {
-          element.className = element.className.replace(/-dark/g, '-light');
-        });
-
-        document.body.classList.add('bg-light');
-
-        if (document.body.classList.contains('text-light')) {
-          document.body.classList.replace('text-light', 'text-dark');
-        } else {
-          document.body.classList.add('text-dark');
-        }
-
-        // Tables
-        var tables = document.querySelectorAll('table');
-        for (var i = 0; i < tables.length; i++) {
-          if (tables[i].classList.contains('table-dark')) {
-            tables[i].classList.remove('table-dark');
-          }
-        }
-
-        if (lightSwitch.checked) {
-          lightSwitch.checked = false;
-        }
-        localStorage.setItem('lightSwitch', 'light');
-      }
-
-      /**
-       * @function onToggleMode
-       * @summary: the event handler attached to the switch. calling @darkMode or @lightMode depending on the checked state.
-       */
-      function onToggleMode() {
-        if (lightSwitch.checked) {
-          darkMode();
-        } else {
-          lightMode();
-        }
-      }
-
-      /**
-       * @function getSystemDefaultTheme
-       * @summary: get system default theme by media query
-       */
-      function getSystemDefaultTheme() {
-        const darkThemeMq = window.matchMedia('(prefers-color-scheme: dark)');
-        if (darkThemeMq.matches) {
-          return 'dark';
-        }
-        return 'light';
-      }
-
-      function setup() {
-        var settings = localStorage.getItem('lightSwitch');
-        if (settings == null) {
-          settings = getSystemDefaultTheme();
-        }
-
-        if (settings == 'dark') {
-          lightSwitch.checked = true;
-        }
-
-        lightSwitch.addEventListener('change', onToggleMode);
-        onToggleMode();
-      }
-
-      setup();
-    })();
-  </script>
 </body>
 
 </html>
