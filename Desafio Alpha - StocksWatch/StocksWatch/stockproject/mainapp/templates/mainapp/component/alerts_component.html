@@ -24,7 +24,7 @@
         {% if request.user == alerta.host %}
 
         <div class="col">
-            <div class="card" style="background-color: whitesmoke;">
+            <div class="card bg-light" style="border: 1px solid gray;">
                 <div class="card-body">
                     <!-- nome do alerta (ticker) com link para MODAL -->
                     <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>

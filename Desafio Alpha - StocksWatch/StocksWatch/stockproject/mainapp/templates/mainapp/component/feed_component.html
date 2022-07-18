@@ -29,7 +29,7 @@
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for room in rooms %}
         <div class="col">
-            <div class="card" style="background-color: whitesmoke;">
+            <div class="card bg-light" style="border: 1px solid gray;">
                 <div class="card-body">
                     <!-- nome da sala -->
                     <a class="btn btn-primary d-grip gap-2 card-title" href="{% url 'room' room.id %}">{{room.name}}</a> 

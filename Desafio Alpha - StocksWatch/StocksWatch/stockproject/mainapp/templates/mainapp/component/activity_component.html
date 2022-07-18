@@ -20,9 +20,9 @@
 <div class="container">
     {% for message in room_messages %}
     <div class="col">
-        <div style="background-color: whitesmoke;" class="card">
+        <div class="card bg-light" style="border: 1px solid gray;">
             <!-- tempo desde a mensagem -->
-            <small class="text-muted">({{ message.created|timesince }} ago)</small>
+            <small>({{ message.created|timesince }} ago)</small>
 
             <!-- sala da mensagem enviada -->
             <a  style="margin: 3px;"
@@ -30,7 +30,7 @@
                 href="{% url 'room' message.room.id %}">{{ message.room }}</a>
 
             <!-- mensagem enviada -->
-            <small class="text-muted">"{{ message }}"</small>
+            <small>"{{ message }}"</small>
 
             <!-- esconde link para profile para dono da mensagem -->
             {% if request.user != message.user %}
@@ -62,7 +62,7 @@
     <!-- mostra apenas alertas do usuario logado -->
     {% if request.user == alerta.host %}
     <div class="col">
-        <div style="background-color: whitesmoke;" class="card">
+        <div class="card bg-light" style="border: 1px solid gray;">
             <!-- nome do alerta (modal) -->
             <a id="input" type="button" data-bs-toggle="modal" data-bs-target="#modal{{alerta}}" class="btn btn-primary card-title">{{alerta}}</a>
             <!-- mercado dono do alerta -->

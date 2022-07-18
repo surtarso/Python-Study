@@ -14,12 +14,7 @@ StocksWatch - Sala
 .room-container{
     display: grid;
     grid-template-columns: 5fr 1fr;
-    padding: 5px;
-}
-.message{
-    background-color: whitesmoke;
-    padding: 5px;
-    border-radius: 4px;
+    padding: 4px;
 }
 {% endblock css %}
 
@@ -45,8 +40,7 @@ StocksWatch - Sala
                 <ul class="card-body list-group list-group-flush">
                     <li class="list-group-item">
                         <!-- usuario e tempo desde criacao da mensagem -->
-                        <small  style="color: #1a1ba1a;"
-                                class="card-title">@{{ message.user }} ({{ message.created|timesince }} ago)</small>
+                        <small class="card-title">@{{ message.user }} ({{ message.created|timesince }} ago)</small>
                         <!-- DELETE apenas para dono da mensagem -->
                         {% if request.user == message.user %}
                             <a  style="--bs-btn-font-size: .55rem; margin: 3px;"
@@ -64,9 +58,9 @@ StocksWatch - Sala
         <!-- caixa de mensagens -->
         {% if request.user.is_authenticated %}
         <div class="input-group input-group-sm mb-3">
-            <form class="input-group-text" method="POST" action="">
+            <form class="input-group-text bg-light" method="POST" action="" style="border:none;">
                 {% csrf_token %}
-                <input class="form-control" type="text" name="body" placeholder="mensagem..." />
+                <input class="form-control bg-light" type="text" name="body" placeholder="mensagem..." />
             </form>
         </div>
         {% endif %}
