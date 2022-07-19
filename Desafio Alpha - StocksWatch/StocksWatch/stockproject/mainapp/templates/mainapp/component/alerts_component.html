@@ -20,7 +20,7 @@
     e os exibe em "cards" na pagina ALERTAS e na pagina PROFILE quando acessada pelo proprio usuario ativo.
 -->
 <div class="container">
-    <div class="row row-cols-1 row-cols-md-5 g-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4 ">
         {% for alerta in alertas %}
         <!-- mostra apenas alertas do usuario logado -->
         {% if request.user == alerta.host %}
