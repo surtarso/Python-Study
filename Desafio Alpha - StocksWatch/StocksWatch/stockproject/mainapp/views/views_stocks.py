@@ -228,7 +228,7 @@ def showCarteira(request):
         direction ='counterclockwise',
         sort = True
         ))
-    figure_s = stocks_fig.to_html(full_html = True)#, default_height=250, default_width=350)
+    figure_s = stocks_fig.to_html(full_html = True)
     
     ##--------- pie chart - mercados ------------
     markets_fig = go.Figure()
@@ -237,7 +237,7 @@ def showCarteira(request):
         direction ='counterclockwise',
         sort = True
         ))
-    figure_m = markets_fig.to_html(full_html = True)#, default_height=225, default_width=300)
+    figure_m = markets_fig.to_html(full_html = True)
     
     
     template = 'mainapp/stocks/carteira.html'
