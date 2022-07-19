@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-h!&-fg8y+^*_5npjhdrt&y7(ifp^1vg5a&e49563b&#xde153%
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tarsogalvao.ddns.net', 'surtarso.ddns.net']
+ALLOWED_HOSTS = ['192.168.15.200', '127.0.0.1', 'localhost', 'tarsogalvao.ddns.net', 'surtarso.ddns.net']
 
 
 # Application definition
@@ -163,11 +163,13 @@ CHANNEL_LAYERS = {
 # CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
 # Deploy settings
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
-# SECURE_HSTS_SECONDS = 5600
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+#SECURE_HSTS_PRELOAD = True
+#SECURE_HSTS_SECONDS = 5600
 
-# SECURE_SSL_REDIRECT = True
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+
+
+#SECURE_SSL_REDIRECT = True
