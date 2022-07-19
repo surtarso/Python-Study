@@ -109,6 +109,25 @@ box-shadow: black 1px 3px 6px;
   align-content: center;
   width: 100%;
 }
+.carteira-graphs{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+/*-----------------------------GRAPHS: */
+.graph-container{
+  display: block;
+  overflow-x: auto;
+  align-content: center;
+  width: 100%;
+}
+.thegraph{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
 
 /*------------------------------------------------FOOTER: */
 .footer {

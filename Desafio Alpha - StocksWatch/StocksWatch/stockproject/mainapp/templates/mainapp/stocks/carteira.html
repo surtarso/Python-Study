@@ -229,11 +229,13 @@ StocksWatch - Carteira
                     aria-expanded="true" aria-controls="collapseOne">
                     Patrimonio: R$ <text id='patrimonio'></text></button>
             </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+            <div id="collapseOne" class="accordion-collapse collapse carteira-graphs" aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample">
                 <!-- corpo do acordeon que recebe os graficos -->
-                <div class="accordion-body carteira-graphs">
+                <div class="accordion-body">
                     {{ figure_markets|safe }}
+                </div>
+                <div class="accordion-body">
                     {{ figure_stocks|safe }}
                 </div>
             </div>
