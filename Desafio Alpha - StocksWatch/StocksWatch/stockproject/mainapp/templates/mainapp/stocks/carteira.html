@@ -23,7 +23,7 @@ StocksWatch - Carteira
     Formatação da tabela da carteira do usuario em indices
 -->
 {% block body %}
-<div class="container-xxl" style="font-size: 12px;">
+<div class="container-xxl">
     <br>
     <h3>Carteira</h3>
 
@@ -221,8 +221,8 @@ StocksWatch - Carteira
     cada ativo e o nomero de papeis necessarios para compra ou venda.
 -->
     <!-- totais e balanço da carteira WIP -->
-    <div class="accordion">
-        <div class="accordion-item">
+    <div class="accordion accordion-wrapper">
+        <div class="accordion-item carteira-graphs-wrapper">
             <h2 class="accordion-header" id="headingOne">
                 <!-- botao do acordeon que recebe o valor total da soma da carteira-->
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
@@ -232,7 +232,7 @@ StocksWatch - Carteira
             <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                 data-bs-parent="#accordionExample">
                 <!-- corpo do acordeon que recebe os graficos -->
-                <div class="accordion-body" style="display: grid; grid-template-columns: 1fr 3fr;">
+                <div class="accordion-body carteira-graphs">
                     {{ figure_markets|safe }}
                     {{ figure_stocks|safe }}
                 </div>

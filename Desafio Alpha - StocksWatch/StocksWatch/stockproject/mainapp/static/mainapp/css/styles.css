@@ -99,10 +99,16 @@ box-shadow: black 1px 3px 6px;
 }
 
 /*----------------------------TABLES: */
-#tabela{
-  border: 1px solid gray;
+.container-xxl{
+  margin-bottom: 20px;
+  font-size: 12px;
 }
-
+#carteira-graphs-wrapper{
+  display: block;
+  overflow-x: auto;
+  align-content: center;
+  width: 100%;
+}
 
 /*------------------------------------------------FOOTER: */
 .footer {
