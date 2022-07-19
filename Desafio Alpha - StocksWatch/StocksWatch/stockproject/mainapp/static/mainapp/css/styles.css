@@ -137,6 +137,24 @@ box-shadow: black 1px 3px 6px;
     grid-template-columns: 1fr 5fr 2fr;
     padding: 0px;
   }
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    font-size: 12px;
+  }
+  table thead,
+  table tbody {
+    display: table;
+    width: auto;
+  }
+  th{
+    min-width: 82px;
+    max-width: 100px;
+  } 
+  td{
+    min-width: 100px;
+  }
 }
 
 
@@ -221,8 +239,22 @@ box-shadow: black 1px 3px 6px;
     margin: 1px;
   }
   /*--------------------------TABELAS: */
-  #tabela{
-    font-size: 10px;
+  table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    font-size: 12px;
+  }
+  table thead,
+  table tbody {
+    display: table;
+    width: auto;
+  }
+  th{
+    min-width: 82px;
+  } 
+  td{
+    min-width: 100px;
   }
   /*------------------------------------------------FOOTER: */
   .footer {
