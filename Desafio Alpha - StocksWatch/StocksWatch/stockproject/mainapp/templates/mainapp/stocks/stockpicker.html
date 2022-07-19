@@ -21,7 +21,7 @@ StocksWatch - Picker
         <label for="stockpicker" style="color:gray;">Selecione o(s) ativo(s)</label>
 
         <!-- itera por todos os tickers disponiveis em DB e apresenta ao usuario -->
-        <select class="form-select form-select-lg mb-3" size="20" multiple aria-label="multiple select example" name="stockpicker">
+        <select class="form-select form-select-lg mb-3" size="15" multiple aria-label="multiple select example" name="stockpicker">
         {% for i in stockpicker %}
         <option value="{{i}}">{{i}}</option>
         {% endfor %}
