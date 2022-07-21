@@ -36,8 +36,7 @@ StocksWatch - Sala
                         <small class="card-title">@{{ message.user }} ({{ message.created|timesince }} ago)</small>
                         <!-- DELETE apenas para dono da mensagem -->
                         {% if request.user == message.user %}
-                            <a  style="--bs-btn-font-size: .55rem; margin: 3px;"
-                                class="btn btn-outline-danger btn-sm"
+                            <a  class="btn btn-outline-danger btn-sm msgdel-btn"
                                 href="{% url 'delete-message' message.id %}">Delete</a>
                         {% endif %}
                         <!-- corpo da mensagem -->
@@ -51,7 +50,7 @@ StocksWatch - Sala
         <!-- caixa de mensagens -->
         {% if request.user.is_authenticated %}
         <div class="input-group input-group-sm mb-3">
-            <form class="input-group-text bg-light" method="POST" action="" style="border:none;">
+            <form class="input-group-text bg-light" method="POST" action="">
                 {% csrf_token %}
                 <input class="form-control bg-light" type="text" name="body" placeholder="mensagem..." />
             </form>
@@ -71,7 +70,7 @@ StocksWatch - Sala
         <div class="card">
             {% for user in participants %}
                 <ul class="list-group list-group-flush">
-                    <li style="background-color: whitesmoke;" class="list-group-item">@{{ user.username }}</li>
+                    <li class="list-group-item">@{{ user.username }}</li>
                 </ul>
             {% endfor %}
         </div>

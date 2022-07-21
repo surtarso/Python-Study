@@ -11,7 +11,7 @@ StocksWatch - Criar
 
 {% block body %}
 
-<div class="container" style="margin-top: 20px">
+<div class="container lil-space">
     <form class="form-control bg-light" method="POST" action=""> {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit" />

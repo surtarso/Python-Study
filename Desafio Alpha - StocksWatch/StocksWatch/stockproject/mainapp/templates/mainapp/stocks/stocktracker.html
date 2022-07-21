@@ -54,7 +54,7 @@ StocksWatch - Tracker
         <td id="{{key}}_open">{{ value|get:"Open" }}</td> <!-- preco de abertura -->
         <!-- Intradia -->
         <td id="{{key}}_change">  <!-- intradia -->
-          <script>
+          <script type="text/javascript">
             //calcula intradia -> preco - fechamento
             var change = document.getElementById("{{key}}_price").innerHTML - document.getElementById("{{key}}_prevprice").innerHTML;
             change = Number((change).toFixed(4));
@@ -77,8 +77,7 @@ StocksWatch - Tracker
         <!-- botao para historico em graficos -->
         <td>    
           <form action='graph'>
-              <button style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .75rem;"
-                      class="btn btn-primary btn-sm" 
+              <button class="btn btn-primary btn-sm" 
                       name='ticker' 
                       value={{key}} 
                       type="submit">Gráfico</button>
@@ -97,47 +96,12 @@ StocksWatch - Tracker
 </div>
 
 <!--
-  Script responsavel pela comunicacao com celery para atualizacao em tempo real (a cada 10 segs)
-  das informacoes dos ativos. 
+  Script responsavel pela comunicacao com celery para atualizacao 
+  em tempo real (a cada 10 segs) das informacoes dos ativos. 
 -->
 <!-- WEBSOCKET - JSON - LIVE STOCK -->
 {{ room_name|json_script:"room-name" }}
-<script>
-  const roomName = JSON.parse(document.getElementById('room-name').textContent)
-  var queryString = window.location.search;
-  queryString = queryString.substring(1);
-  console.log(queryString);
-  const stockSocket = new WebSocket(
-    'ws://' + window.location.host + '/ws/stock/' + roomName + '/' + '?' + queryString
-  );
-
-  stockSocket.onmessage = function(e) {
-    console.log(e.data);
-    const data = JSON.parse(e.data);
-    console.log(data);
-    for (const [key, value] of Object.entries(data)){
-      var price = Number((value['Quote Price']).toFixed(4));
-      var prevprice = Number((value['Previous Close']).toFixed(4));
-      document.getElementById(key + '_price').innerHTML = price;
-      document.getElementById(key + '_prevprice').innerHTML = prevprice;
-      document.getElementById(key + '_open').innerHTML = value['Open'];
-      document.getElementById(key + '_range').innerHTML = value['52 Week Range'];
-      document.getElementById(key + '_cap').innerHTML = value['Market Cap'];
-      document.getElementById(key + '_volume').innerHTML = value['Volume'];
-      var change = document.getElementById(key + '_price').innerHTML - document.getElementById(key + '_prevprice').innerHTML;
-      change = Number((change).toFixed(4));
-      if (change >= 0){
-        document.getElementById(key + '_change').className = "green";
-        document.getElementById(key + '_change').innerHTML = change;
-      }
-      else if (change < 0){
-        document.getElementById(key + '_change').className = "red";
-        document.getElementById(key + '_change').innerHTML = change;
-      }
-    }
-  }
-</script>
-
+<script type="text/javascript" src="{% static 'mainapp/js/live-stocks.js' %}"></script>
 <!--
     Adiciona JQUERY para a tabela acima para utilizacao 
     de filtros por indice e ordenacao da tabela
@@ -146,11 +110,7 @@ StocksWatch - Tracker
 <script type="text/javascript" src="{% static 'mainapp/js/jquery-3.6.0.min.js' %}"></script>
 <!-- jquery datatables JS -->
 <script type="text/javascript" charset="utf8" src="{% static 'mainapp/js/jquery.dataTables.js' %}"></script>
-
-<script>
-  $(document).ready(function () {
-    $('#tabela').DataTable();
-  });
-</script>
+<!-- start jquery -->
+<script type="text/javascript" src="{% static 'mainapp/js/sort-table.js' %}"></script>
 
 {% endblock body %}

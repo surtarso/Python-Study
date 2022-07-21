@@ -282,11 +282,7 @@ StocksWatch - Carteira
 <script type="text/javascript" src="{% static 'mainapp/js/jquery-3.6.0.min.js' %}"></script>
 <!-- jquery datatables JS -->
 <script type="text/javascript" charset="utf8" src="{% static 'mainapp/js/jquery.dataTables.js' %}"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#tabela').DataTable();
-    });
-</script>
+<!-- start jquery -->
+<script type="text/javascript" src="{% static 'mainapp/js/sort-table.js' %}"></script>
 
 {% endblock body %}

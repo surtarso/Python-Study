@@ -7,6 +7,13 @@
 .darkgreen { color: darkgreen; }
 .brown { color: brown; }
 
+.nav-username{
+  text-decoration:none;
+  color:darkcyan;
+}
+.lil-space{
+  margin-top: 20px
+}
 /*-------------------------------------------------HOME : */
 .home-container{
   margin-top:4vmax;
@@ -29,8 +36,8 @@
 
 /*----------------------------------------------- BUTTONS: */
 .btn-outline-primary{
-border: 1px solid gray;
-box-shadow: black 1px 3px 6px;
+  border: 1px solid gray;
+  box-shadow: black 1px 3px 6px;
 }
 .btn-secondary,
 .btn-outline-warning{
@@ -91,13 +98,25 @@ box-shadow: black 1px 3px 6px;
 .form-control{
   border: 1px solid gray;
 }
+.form-control label{
+  color:gray;
+}
 /*-------------------------------CHAT ROOM: */
 .room-container{
   display: grid;
   grid-template-columns: 5fr 1fr;
   padding: 4px;
 }
-
+.msgdel-btn{
+  --bs-btn-font-size: .55rem;
+  margin: 3px;
+}
+.card-participants li{
+  background-color: whitesmoke;
+}
+.input-group-text{
+  border: none;
+}
 /*----------------------------TABLES: */
 .container-xxl{
   margin-bottom: 20px;
