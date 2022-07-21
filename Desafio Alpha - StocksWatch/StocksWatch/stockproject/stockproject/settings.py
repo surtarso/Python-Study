@@ -22,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-h!&-fg8y+^*_5npjhdrt&y7(ifp^1vg5a&e49563b&#xde153%'
+# SECRET_KEY = 'hasudhiu234892wruhe%DFGFDG#$^&JHFGG#$%@@#rg78g25675463487tt234'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -125,7 +126,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_URL = '/stonks/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "mainapp/static",
+    # '/var/www/html/stonks/static/',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -157,19 +162,19 @@ CHANNEL_LAYERS = {
 }
 
 
-# REDIS related settings
-# REDIS_HOST = 'localhost'
-# REDIS_PORT = '6379'
-# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+# # REDIS related settings
+REDIS_HOST = 'localhost'
+REDIS_PORT = '6379'
+CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
-# Deploy settings
-#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+# # Deploy settings
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
-#SECURE_HSTS_PRELOAD = True
-#SECURE_HSTS_SECONDS = 5600
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_SECONDS = 5600
 
-#SESSION_COOKIE_SECURE = True
-#CSRF_COOKIE_SECURE = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
-#SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True

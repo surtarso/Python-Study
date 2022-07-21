@@ -2,6 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.staticfiles.storage import staticfiles_storage
 from django.views.generic.base import RedirectView
+# from django.conf import settings
+# from django.conf.urls.static import static
 
 urlpatterns = [
     #----- FAVICON
@@ -40,4 +42,5 @@ urlpatterns = [
     path('create-carteira/', views.createCarteira, name="create-carteira"),
     path('update-carteira/<str:pk>/', views.updateCarteira, name="update-carteira"),
     path('delete-carteira/<str:pk>/', views.deleteCarteira, name="delete-carteira"),
-]
+] 
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
