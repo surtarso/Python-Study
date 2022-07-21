@@ -127,10 +127,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "mainapp/static",
-    # '/var/www/html/stonks/static/',
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / "mainapp/static",
+#     '/var/www/html/stonks/static/',
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -163,9 +163,9 @@ CHANNEL_LAYERS = {
 
 
 # # REDIS related settings
-REDIS_HOST = 'localhost'
-REDIS_PORT = '6379'
-CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
+# REDIS_HOST = 'localhost'
+# REDIS_PORT = '6379'
+# CELERY_BROKER_TRANSPORT_OPTIONS = {'visibility_timeout': 3600}
 
 # # Deploy settings
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
