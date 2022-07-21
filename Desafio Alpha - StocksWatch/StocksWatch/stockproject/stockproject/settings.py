@@ -28,7 +28,8 @@ SECRET_KEY = 'django-insecure-h!&-fg8y+^*_5npjhdrt&y7(ifp^1vg5a&e49563b&#xde153%
 DEBUG = True
 
 #ALLOWED_HOSTS = []
-ALLOWED_HOSTS = ['192.168.15.200', '127.0.0.1', 'localhost', 'tarsogalvao.ddns.net', 'surtarso.ddns.net']
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['0.0.0.0', '192.168.15.200', '127.0.0.1', 'localhost', 'tarsogalvao.ddns.net', 'surtarso.ddns.net']
 
 
 # Application definition
@@ -56,7 +57,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.contrib.sessions.backends.db',
 ]
+
+# SESSION_ENGINE = []
+# AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
 
 ROOT_URLCONF = 'stockproject.urls'
 
@@ -169,12 +174,18 @@ CHANNEL_LAYERS = {
 
 # # Deploy settings
 # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
 # SECURE_HSTS_PRELOAD = True
 # SECURE_HSTS_SECONDS = 5600
-
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
-
-
 # SECURE_SSL_REDIRECT = True
+
+
+## test settings
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_AGE = 86400 # sec
+SESSION_COOKIE_DOMAIN = None
+SESSION_COOKIE_NAME = 'DSESSIONID'
+SESSION_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
