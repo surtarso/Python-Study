@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 #models
 from mainapp.models import Alerta, Mercado
 from mainapp.forms import AlertForm
-from mainapp.tasks import pegaAlertas
+# from mainapp.tasks import pegaAlertas
+
 
 
 
@@ -56,8 +57,8 @@ def createAlert(request):
             alert.save()  #save it
 
             ## add call for email task
-            pegaAlertas.delay()  # chama pegaAlertas no tasks.py
-            return redirect('alerts')  ## MUDAR PARA LISTA DE ALERTAS DEPOIS
+            # pegaAlertas.delay()  # chama pegaAlertas no tasks.py
+            return redirect('alerts') 
 
     template = 'mainapp/stocks/alert_form.html'
     context = {'alert_form':form}
@@ -95,7 +96,7 @@ def updateAlert(request, pk):
         if form.is_valid():
             form.save()
             ## add call for email task
-            pegaAlertas.delay()  # chama pegaAlertas no tasks.py
+            # pegaAlertas.delay()  # chama pegaAlertas no tasks.py
             return redirect('alerts')
 
     template = 'mainapp/stocks/alert_form.html'
