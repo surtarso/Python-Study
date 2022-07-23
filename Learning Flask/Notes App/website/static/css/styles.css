@@ -1,0 +1,23 @@
+h1, h3{
+    text-align: center;
+    margin: 15px;
+}
+
+button {
+    margin-top: 5px;
+}
+
+label{
+    margin-left: 5px;
+}
+
+.home-wrapper{
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: right;
+}
+.home-logo{
+    max-width: 650px;
+}
