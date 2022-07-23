@@ -4,12 +4,12 @@ from sqlalchemy.sql import func
 
 
 class Note(db.Model):
+    # __tablename__ = 'notes'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(10000))
     date = db.Column(db.DateTime(timezone=True), default=func.now())
     #one to many - user to notes
     userID = db.Column(db.Integer, db.ForeignKey('user.id'))  #lower on FK
-    
 
 class User(db.Model, UserMixin):
     #sign up form info

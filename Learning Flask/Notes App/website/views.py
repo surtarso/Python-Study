@@ -10,7 +10,8 @@ views = Blueprint('views', __name__)
 ##-----------------------------------------------------------HOME:
 @views.route('/')
 def home():
-    return render_template('home.html', user=current_user)
+    notes = Note.query.all()
+    return render_template('home.html', user=current_user, notes=notes)
 
 
 ##----------------------------------------------------------NOTES:

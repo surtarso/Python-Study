@@ -68,8 +68,8 @@ def sign_up():
             flash('passwords dont match', category='error')
         #sucess:
         else:
-            newUser = User(email=email, firstName=firstName, lastName=lastName, password=generate_password_hash(password1, method='sha256'))
-            db.session.add(newUser)
+            user = User(email=email, firstName=firstName, lastName=lastName, password=generate_password_hash(password1, method='sha256'))
+            db.session.add(user)
             db.session.commit()
             flash('account created', category='success')
             login_user(user, remember=True)

@@ -4,10 +4,27 @@
 
 {% block body %}
 <h1>Notorious</h1>
-<header class="home-wrapper">
-    <lottie-player class="home-logo" src="https://assets2.lottiefiles.com/packages/lf20_0j4kzlaf.json" background="transparent" speed="1" loop autoplay></lottie-player>
-    <h2>
-        Take your notes to the next level!
-    </h2>
-</header>
+
+    {% if user.is_authenticated %}
+
+        <header class="home-loggedin-wrapper">
+            {% for note in notes %}
+            <div class="home-notes">
+                <small>Added: {{note.date}} - by: {{ user.query.get(note.userID).firstName }}</small>
+                <p> {{ note.text }} </p>
+            </div>
+            {% endfor %}
+        </header>
+
+    {% else %}
+
+        <header class="home-loggedout-wrapper">
+            <lottie-player class="home-logo" src="https://assets2.lottiefiles.com/packages/lf20_0j4kzlaf.json" background="transparent" speed="1" loop autoplay></lottie-player>
+            <h2>
+                Take your notes to the next level!
+            </h2>
+        </header>
+
+    {% endif %}
+
 {% endblock body %}
