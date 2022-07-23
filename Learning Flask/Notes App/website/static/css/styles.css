@@ -3,21 +3,35 @@ h1, h3{
     margin: 15px;
 }
 
-button {
+button{
     margin-top: 5px;
+    
+}
+.close{
+    float: right;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 label{
     margin-left: 5px;
+}
+input{
+    min-width: 400px;
+    max-width: 600px;
 }
 
 .home-wrapper{
     padding-top: 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     text-align: right;
 }
 .home-logo{
-    max-width: 650px;
+    max-width: 600px;
+    
 }
