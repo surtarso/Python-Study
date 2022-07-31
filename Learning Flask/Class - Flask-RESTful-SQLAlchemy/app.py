@@ -71,7 +71,6 @@ class Pessoa(Resource):
 
 
 class ListaPessoas(Resource):
-    @auth.login_required
     def get(self):
         pessoas = Pessoas.query.all()
         response = [{'id':i.id, 'nome':i.nome, 'idade':i.idade} for i in pessoas]
