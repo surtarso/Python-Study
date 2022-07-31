@@ -5,7 +5,7 @@ from flask_restful import Resource
 habilidades = ['python', 'flask', 'django', 'javascript']
 
 
-class Habilidades(Resource):
+class ListaHabilidades(Resource):
     # inserir nova habilidade
     def post(self):
         pass
