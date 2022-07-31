@@ -1,5 +1,4 @@
-from models import Pessoas, db_session
-
+from models import Pessoas
 
 
 def insere_pessoas():

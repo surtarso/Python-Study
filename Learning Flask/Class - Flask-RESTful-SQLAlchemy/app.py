@@ -1,4 +1,3 @@
-from urllib import response
 from flask import Flask, request
 from flask_restful import Resource, Api
 
