@@ -1,8 +1,11 @@
-from flask import Flask, jsonify, request
+from flask import Flask, request
+from flask_restful import Resource, Api
 import json
 
 app = Flask(__name__)
+api = Api(app)
 
+#---------------MOCK------------------
 desenvolvedores = [
     {
         'id': 0,
@@ -15,11 +18,10 @@ desenvolvedores = [
         'habilidades': ['python', 'django']
     }
 ]
+#-------------------------------------
 
-@app.route('/dev/<int:id>', methods=['GET', 'PUT', 'DELETE'])
-def desenvolvedor(id):
-    
-    if request.method == 'GET':
+class Desenvolvedor(Resource):
+    def get(self, id):
         try:
             response = desenvolvedores[id]
         except IndexError:
@@ -28,37 +30,36 @@ def desenvolvedor(id):
         except Exception:
             response = ({'status': 'erro', 'mensagem': 'erro desconhecido'})
             
-        return jsonify(response)
+        return response
     
-    elif request.method == 'PUT':
+    def put(self, id):
         dados = json.loads(request.data)
         desenvolvedores[id] = dados
-        
-        return jsonify(dados)
+        return dados
     
-    elif request.method == 'DELETE':
+    def delete(self, id):
         desenvolvedores.pop(id)
+        return ({'status': 'sucesso', 'mensagem': 'dev excluido'})
 
-        return jsonify({'status': 'sucesso', 'mensagem': 'registro excluido'})
-          
 
-@app.route('/dev', methods=['POST', 'GET'])
-def lista_desenvolvedores():
+class ListaDesenvolvedores(Resource):
+    def get(self):
+        return desenvolvedores
     
-    if request.method == 'POST':
+    def post(self):
         dados = json.loads(request.data)
         posicao = len(desenvolvedores)
         dados['id'] = posicao
         desenvolvedores.append(dados)
         
-        return jsonify({'status': 'sucesso', 'mensagem': 'registro incluido', 'dados': desenvolvedores[posicao]})
+        return ({'status': 'sucesso', 'mensagem': 'registro incluido', 'dados': desenvolvedores[posicao]})
+    
+    
+    
+api.add_resource(Desenvolvedor, '/dev/<int:id>')
+api.add_resource(ListaDesenvolvedores, '/dev')
 
-    elif request.method == 'GET':
-        
-        return jsonify(desenvolvedores)
 
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
