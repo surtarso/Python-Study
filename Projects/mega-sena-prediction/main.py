@@ -1,68 +1,82 @@
-#this is an artificial intelligence program that will generate 6 random numbers from 1 to 60 based on trained data
-#train data is a list of the past 6 winning numbers, contained in the file mega_sena_sorteio.xlsx as rows
-#it will train the model to predict the next 6 winning numbers
-#in the end, it will print the 6 numbers predicted
-
-import pandas as pd  #import pandas library
-import numpy as np  # for mathematical operations
 import random as rd  #importing random module
-import math as m  #import math module for math functions
-import matplotlib.pyplot as plt #for plotting
-import seaborn as sns #for plotting
-from sklearn.model_selection import train_test_split #split the data into train and test sets
-from sklearn.linear_model import LinearRegression as lr  #import linear regression model
-from sklearn.metrics import mean_squared_error as mse  #import mean squared error
-from sklearn.metrics import r2_score as r2  #import r2 score
-from sklearn.metrics import mean_absolute_error as mae   #import mean absolute error
-from sklearn.metrics import median_absolute_error as medae  #import median absolute error
-from sklearn.metrics import explained_variance_score as evs  #import explained variance score
-from sklearn.metrics import mean_squared_log_error as msle  #import mean squared log error
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+# from sklearn.linear_model import LinearRegression as lr
+from sklearn.ensemble import RandomForestRegressor as rf
+from sklearn import metrics
 
+#read data from mega_sena.csv
+df = pd.read_csv('mega_sena.csv')
 
-#importing the data from the file
-data = pd.read_excel('mega_sena_sorteio.xlsx')
+#split each sequence into 6 integers rows
+df['winning_numbers_1'] = df['winning_numbers'].str.split(' ').str[0].apply(pd.to_numeric)
+df['winning_numbers_2'] = df['winning_numbers'].str.split(' ').str[1].apply(pd.to_numeric)
+df['winning_numbers_3'] = df['winning_numbers'].str.split(' ').str[2].apply(pd.to_numeric)
+df['winning_numbers_4'] = df['winning_numbers'].str.split(' ').str[3].apply(pd.to_numeric)
+df['winning_numbers_5'] = df['winning_numbers'].str.split(' ').str[4].apply(pd.to_numeric)
+df['winning_numbers_6'] = df['winning_numbers'].str.split(' ').str[5].apply(pd.to_numeric)
 
-#splitting the data into train and test sets
-X = data.iloc[:,0:6].values
-y = data.iloc[0:2509].values
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, random_state=0)
+#drop the original winning_numbers column
+df.drop(['winning_numbers'], axis=1, inplace=True)
+# print(df.info())
 
-#fitting the model to the training set
-regressor = lr()
-regressor.fit(X_train, y_train)
-
-#predicting the test set results
-y_pred = regressor.predict(X_test)
-
-#printing the results
-print('Mean Squared Error: ', mse(y_test, y_pred))
-print('R2 Score: ', r2(y_test, y_pred))
-print('Mean Absolute Error: ', mae(y_test, y_pred))
-print('Median Absolute Error: ', medae(y_test, y_pred))
-print('Explained Variance Score: ', evs(y_test, y_pred))
-print('Mean Squared Log Error: ', msle(y_test, y_pred))
-
-#plotting the results
-plt.scatter(y_test, y_pred)
-plt.xlabel('True Values')
-plt.ylabel('Predictions')
+sns.heatmap(df.corr(), annot=True, cmap='RdYlGn')
 plt.show()
 
+#function to generate a random number between 1 and 1000
+def random_number():
+    return rd.randint(1,1000)
 
+#function to generate a random number between 1 and 6
+def random_number_6():
+    return rd.randint(1,6)
 
+win_num = f'winning_numbers_{random_number_6()}'
 
+X = df.drop([win_num], axis=1)  
+y = df[win_num]
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, random_state=random_number())
 
-#generating the next 6 winning numbers
-next_numbers = []
-for i in range(0,6):
-    next_numbers.append(rd.randint(1,60))
-print('Next winning numbers: ', next_numbers)
+#train the AI model
+# regressor = lr()
+# regressor.fit(X_train, y_train)
+forest_regressor = rf()
+forest_regressor.fit(X_train, y_train)
 
+#test the AI models
+# test_regressor_results = regressor.predict(X_test)
+test_forest_results = forest_regressor.predict(X_test)
 
-#generating the next 6 winning numbers based on predictions
-next_numbers = []
-for i in range(0,6):
-    next_numbers.append(rd.randint(1,60))
-    while next_numbers[i] in next_numbers[:i]:
-        next_numbers[i] = rd.randint(1,60)
-print('Next winning numbers: ', next_numbers)
+#test the regression model
+# r2_lin = metrics.r2_score(y_test, test_regressor_results)
+# rmse_lin = np.sqrt(metrics.mean_squared_error(y_test, test_regressor_results))
+# print('R2 Score: ', r2_lin)
+# print('RMSE: ', rmse_lin)
+
+#test the forest model
+# r2_fr = metrics.r2_score(y_test, test_forest_results)
+# rmse_fr = np.sqrt(metrics.mean_squared_error(y_test, test_forest_results))
+# print('R2 Score: ', r2_fr)
+# print('RMSE: ', rmse_fr)
+
+#configure graph
+df_result = pd.DataFrame()
+df_result[win_num] = y_test
+# df_result['regressor_prediction'] = test_regressor_results
+df_result['forest_prediction'] = test_forest_results
+df_result = df_result.reset_index(drop=True)
+
+#show graph
+fig = plt.figure(figsize=(12,8))
+sns.lineplot(data=df_result)
+plt.show()
+# print(df_result)
+
+#print the next 6 winning numbers from prediction)
+print('Next 6 winning numbers: ')
+print(df_result.tail(6)[win_num])
+# print(df_result.tail(6)['regressor_prediction'])
+print(df_result.tail(6)['forest_prediction'])
