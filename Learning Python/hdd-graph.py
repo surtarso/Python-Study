@@ -5,6 +5,7 @@ import subprocess
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
+import pandas as pd
 
 
 
@@ -14,14 +15,17 @@ def get_partitions():
     partitions = partitions[1:]
     return partitions # Returns a list of all partitions
 
+#create a dataframe to store the data
+df = pd.DataFrame(columns=['partition', 'size', 'used', 'available', 'percentage'])
 
-# Function to get the usage of the partitions
-def get_usage(partitions):
-    usage = []
-    for partition in partitions:
-        usage.append(partition.split()[4])
-    return usage # Returns a list of all usage of the partitions
-print(get_usage(get_partitions()))
+
+
+# # Function to get the usage of the partitions
+# def get_usage(partitions):
+#     usage = []
+#     for partition in partitions:
+#         usage.append(partition.split()[4])
+#     return usage # Returns a list of all usage of the partitions
 
 # # Function to get the usage of the partitions in percentages
 # def get_usage_percent(partitions):
