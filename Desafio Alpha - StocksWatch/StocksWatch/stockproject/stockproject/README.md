@@ -1,1 +1,0 @@
-[asgi.py](asgi.py) e [celery.py](celery.py) são quase que diretamente da documentação do Celery e suas configurações estão em [settings.py](settings.py) no final do arquivo, onde também está comentado alguns parametros necessários para deploy/produção.
