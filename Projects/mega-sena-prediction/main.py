@@ -24,7 +24,7 @@ df.drop(['winning_numbers'], axis=1, inplace=True)
 # print(df.info())
 
 sns.heatmap(df.corr(), annot=True, cmap='RdYlGn')
-plt.show()
+#plt.show()
 
 #function to generate a random number between 1 and 1000
 def random_number():
@@ -72,11 +72,23 @@ df_result = df_result.reset_index(drop=True)
 #show graph
 fig = plt.figure(figsize=(12,8))
 sns.lineplot(data=df_result)
-plt.show()
+#plt.show()
 # print(df_result)
 
+def lottery_draw():
+    # Generate 6 unique numbers between 1 and 60
+    numbers = rd.sample(range(1, 61), 6)
+    return sorted(numbers)
+
+#print regular random 6 numbers
+print("Random 6 numbers: ")
+random_numbers = lottery_draw()
+print(random_numbers)
 #print the next 6 winning numbers from prediction)
 print('Next 6 winning numbers: ')
-print(df_result.tail(6)[win_num])
+six_num = sorted(df_result.tail(6)[win_num])
+print(six_num)
 # print(df_result.tail(6)['regressor_prediction'])
-print(df_result.tail(6)['forest_prediction'])
+print('Forest prediction: ')
+forest_num = sorted(df_result.tail(6)['forest_prediction'])
+print(forest_num)
